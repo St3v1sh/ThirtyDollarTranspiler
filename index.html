@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>thirtydollartranspiler</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./utility.js"></script>
+  <script src="./transpiler.js"></script>
+  <script>
+    var spaces = 4;
+    var undoStack = [{ cursorPositionStart: 0, cursorPositionEnd: 0, value: '' }];
+    var redoStack = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const textarea = document.getElementById('input');
+
+      textarea.addEventListener('input', function () {
+        growUndoStack(this.selectionStart - 1, this.selectionStart, this.value);
+      });
+
+      textarea.addEventListener('keydown', function (e) {
+        const cursorPosition = this.selectionStart;
+        const currentValue = this.value;
+
+        if (e.key === 'Tab') {
+          e.preventDefault();
+
+          const beforeString = currentValue.substring(0, cursorPosition);
+          const spacesAdded = spaces - (beforeString.length % spaces) || spaces;
+          this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(cursorPosition);
+
+          this.selectionStart = cursorPosition + spacesAdded;
+          this.selectionEnd = this.selectionStart;
+
+          growUndoStack(cursorPosition, this.selectionStart, this.value);
+        } else if (e.key === 'Backspace') {
+          const tabStartPosition = Math.floor((cursorPosition - 1) / spaces) * spaces;
+          const extraSpaces = currentValue.substring(tabStartPosition, cursorPosition);
+
+          if (extraSpaces.endsWith(' ')) {
+            e.preventDefault();
+
+            var spacesSubstring;
+            const fullSpaces = ' '.repeat(spaces);
+            for (let i = 0; i < fullSpaces.length; i++) {
+              spacesSubstring = fullSpaces.substring(i);
+              if (currentValue.substring(tabStartPosition, cursorPosition).endsWith(spacesSubstring)) {
+                break;
+              }
+            }
+            this.value = currentValue.substring(0, cursorPosition - spacesSubstring.length) + currentValue.substring(cursorPosition)
+
+            this.selectionStart = cursorPosition - spacesSubstring.length;
+            this.selectionEnd = this.selectionStart;
+
+            growUndoStack(cursorPosition, this.selectionStart, this.value);
+          }
+        } else if (/^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[cursorPosition] === ' ') {
+          e.preventDefault();
+          this.value = currentValue.substring(0, cursorPosition) + e.key + currentValue.substring(cursorPosition + 1)
+          this.selectionStart = cursorPosition + 1;
+          this.selectionEnd = this.selectionStart;
+
+          growUndoStack(cursorPosition, this.selectionStart, this.value);
+        } else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          if (undoStack.length > 1) {
+            lastState = undoStack.pop();
+            redoStack.push(lastState);
+            this.value = undoStack[undoStack.length - 1].value;
+            this.selectionStart = lastState.cursorPositionStart;
+            this.selectionEnd = this.selectionStart;
+          }
+        } else if (e.key === 'Z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+          e.preventDefault();
+          if (redoStack.length > 0) {
+            undoStack.push(redoStack.pop());
+            this.value = undoStack[undoStack.length - 1].value;
+            this.selectionStart = undoStack[undoStack.length - 1].cursorPositionEnd;
+            this.selectionEnd = this.selectionStart;
+          }
+        }
+      });
+    });
+
+    function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
+      undoStack.push({ cursorPositionStart, cursorPositionEnd, value });
+      if (undoStack.length > 25) {
+        undoStack.shift();
+      }
+      redoStack = [];
+    }
+
+    function changeFontSize() {
+      var selectedOption = document.getElementById('font').value;
+      var textarea = document.getElementById('input').style.fontSize = selectedOption + 'rem';
+    }
+
+    function changeTabSpace() {
+      var selectedOption = document.getElementById('tab-space').value;
+      spaces = parseInt(selectedOption, 10);
+    }
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <div id="workspace-container">
+      <div id="workspace">
+        <div>
+          <div id="controlbar">
+            <div id="controls">
+              <div id="font-controls">
+                <p>Font size</p>
+                <label for="font"></label>
+                <select name="font" id="font" onchange="changeFontSize()">
+                  <option value=".5">0.5</option>
+                  <option value=".6">0.6</option>
+                  <option value=".7">0.7</option>
+                  <option value=".8">0.8</option>
+                  <option value=".9">0.9</option>
+                  <option selected value="1">1.0</option>
+                  <option value="1.1">1.1</option>
+                  <option value="1.2">1.2</option>
+                  <option value="1.3">1.3</option>
+                  <option value="1.4">1.4</option>
+                  <option value="1.5">1.5</option>
+                </select>
+              </div>
+              <div id="tab-space-controls">
+                <p>Tab spacing</p>
+                <select name="tab-space" id="tab-space" onchange="changeTabSpace()">
+                  <option value="3">3</option>
+                  <option selected value="4">4</option>
+                  <option value=".5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+            <button onclick="transpile()">Transpile & copy</button>
+          </div>
+        </div>
+        <div id="text-input">
+          <label for="input"></label>
+          <textarea id="input" spellcheck="false" placeholder="Enter notation"></textarea>
+        </div>
+        <div id="statusbar">
+          <p id="status">STATUS: OK</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
