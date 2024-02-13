@@ -7,6 +7,7 @@
   <title>thirtydollartranspiler</title>
   <link rel="stylesheet" href="./style.css">
   <script src="./utility.js"></script>
+  <script src="./config.js"></script>
   <script src="./transpiler.js"></script>
   <script>
     var spaces = 4;
@@ -15,8 +16,26 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       const textarea = document.getElementById('input');
+      const button = document.getElementById('conspile-button');
+      const dotIndicator = document.getElementById('dot-indicator');
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          if (document.activeElement === textarea)
+            button.focus();
+          else
+            textarea.focus();
+        }
+      });
+
+      textarea.addEventListener('scroll', function () {
+        dotIndicator.scrollTop = textarea.scrollTop;
+        dotIndicator.scrollLeft = textarea.scrollLeft;
+      });
 
       textarea.addEventListener('input', function () {
+        updateDots();
+        dotIndicator.scrollTop = textarea.scrollTop;
         growUndoStack(this.selectionStart - 1, this.selectionStart, this.value);
       });
 
@@ -26,9 +45,13 @@
 
         if (e.key === 'Tab') {
           e.preventDefault();
+          
+          const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
+          const row = rowsBeforeCursor.length;
+          const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
 
           const beforeString = currentValue.substring(0, cursorPosition);
-          const spacesAdded = spaces - (beforeString.length % spaces) || spaces;
+          const spacesAdded = spaces - (col % spaces) || spaces;
           this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(cursorPosition);
 
           this.selectionStart = cursorPosition + spacesAdded;
@@ -36,7 +59,11 @@
 
           growUndoStack(cursorPosition, this.selectionStart, this.value);
         } else if (e.key === 'Backspace') {
-          const tabStartPosition = Math.floor((cursorPosition - 1) / spaces) * spaces;
+          const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
+          const row = rowsBeforeCursor.length;
+          const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+
+          const tabStartPosition = Math.floor((col - 1) / spaces) * spaces;
           const extraSpaces = currentValue.substring(tabStartPosition, cursorPosition);
 
           if (extraSpaces.endsWith(' ')) {
@@ -82,7 +109,13 @@
             this.selectionEnd = this.selectionStart;
           }
         }
+        updateDots();
       });
+
+      // // Load test code.
+      // fetch('./songs/dancing-in-the-moonlight/dancing-in-the-moonlight.moyai')
+      //   .then(response => response.text())
+      //   .then(data => textarea.value = data);
     });
 
     function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
@@ -95,12 +128,17 @@
 
     function changeFontSize() {
       var selectedOption = document.getElementById('font').value;
-      var textarea = document.getElementById('input').style.fontSize = selectedOption + 'rem';
+      document.getElementById('input').style.fontSize = selectedOption + 'rem';
+      document.getElementById('dot-indicator').style.fontSize = selectedOption + 'rem';
     }
 
     function changeTabSpace() {
       var selectedOption = document.getElementById('tab-space').value;
       spaces = parseInt(selectedOption, 10);
+    }
+
+    function updateDots() {
+      document.getElementById('dot-indicator').value = document.getElementById('input').value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
     }
   </script>
 </head>
@@ -143,12 +181,12 @@
                 </select>
               </div>
             </div>
-            <button onclick="transpile()">Transpile & copy</button>
+            <button id="conspile-button" onclick="transpile()">Transpile & copy</button>
           </div>
         </div>
         <div id="text-input">
-          <label for="input"></label>
-          <textarea id="input" spellcheck="false" placeholder="Enter notation"></textarea>
+          <textarea id="dot-indicator"></textarea>
+          <textarea autofocus id="input" spellcheck="false" placeholder="Enter notation"></textarea>
         </div>
         <div id="statusbar">
           <p id="status">.</p>

@@ -31,7 +31,17 @@ const SYMBOLS = {
     SEGMENT: 'seg',
     SEGMENT_START: 'segstart',
     SEGMENT_END: 'segend',
-  }
+  },
+}
+
+const PITCHES = {
+  C: 0,
+  D: 2,
+  E: 4,
+  F: 5,
+  G: 7,
+  A: 9,
+  B: 11,
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en', {
@@ -40,20 +50,23 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
   second: '2-digit',
 });
 
+var warningCount = 0;
+
+function reportWarning(message) {
+  console.log(`${dateFormatter.format(Date.now())} | Warning: ${message}`);
+  warningCount++;
+}
+
 function reportError(message) {
   const output = document.getElementById('status');
   output.style.color = '#fa4d56';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | Error: ${message}`;
-}
-
-function reportWarning(message) {
-  const output = document.getElementById('status');
-  output.style.color = '#f1c21b';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | Warning: ${message}`;
+  output.innerHTML = `${dateFormatter.format(Date.now())} | Error: ${message} | Warnings logged: ${warningCount}`;
+  warningCount = 0;
 }
 
 function reportOK(message) {
   const output = document.getElementById('status');
   output.style.color = '#24a148';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | OK: ${message}`;
+  output.innerHTML = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message} | Warnings logged: ${warningCount}`;
+  warningCount = 0;
 }
