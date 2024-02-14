@@ -282,3 +282,33 @@ div .option {
     padding-left: .5rem;
     text-align: left;
 }
+
+@media screen and (max-width: 768px) {
+    .responsive-disappear {
+        display: none;
+    }
+
+    #options-menu-text {
+        display: none !important;
+    }
+
+    .menu-active {
+        width: 16rem;
+    }
+
+    #options-container {
+        width: 16rem;
+    }
+
+    .option button {
+        width: 7rem;
+        padding: .2rem 0rem;
+        padding-left: .5rem;
+        text-align: left;
+    }
+
+    #transpile-button {
+        width: 1rem;
+        justify-content: center;
+    }
+}

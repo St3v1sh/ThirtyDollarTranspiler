@@ -299,14 +299,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    document.getElementById('statusbar').addEventListener('click', function() {
+        document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
+        document.getElementById('status').classList.add('hovered');
+    });
+
     document.getElementById('statusbar').addEventListener('mouseenter', function() {
         document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
-        document.getElementById('status').classList.toggle('hovered');
+        document.getElementById('status').classList.add('hovered');
     });
 
     document.getElementById('statusbar').addEventListener('mouseleave', function() {
         document.getElementById('workspace').style.gridTemplateRows = '';
-        document.getElementById('status').classList.toggle('hovered');
+        document.getElementById('status').classList.remove('hovered');
     });
 
     // // Load test code.
