@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
             this.selectionStart = cursorPosition + spacesAdded;
             this.selectionEnd = this.selectionStart;
 
-            growUndoStack(cursorPosition, this.selectionStart, this.value);
+            growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
         } else if (e.key === 'Backspace') {
             const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
             const row = rowsBeforeCursor.length;
@@ -292,13 +292,14 @@ function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
 function toggleOptionsVisibility() {
     if (editorConfigs.showOptions) {
         document.getElementById('options-exit-button').style.display = 'none';
-        document.getElementById('options-button').classList.toggle('menu-active');
+        document.getElementById('options-menu-text').style.display = 'none';
         document.getElementById('options-container').style.display = 'none';
     } else {
         document.getElementById('options-exit-button').style.display = 'block';
-        document.getElementById('options-button').classList.toggle('menu-active');
+        document.getElementById('options-menu-text').style.display = 'block';
         document.getElementById('options-container').style.display = 'block';
     }
+    document.getElementById('options-button').classList.toggle('menu-active');
     editorConfigs.showOptions = !editorConfigs.showOptions;
 }
 

@@ -17,7 +17,7 @@
     <div id="workspace-container">
       <div id="workspace">
         <div id="controlbar">
-          <button id="options-exit-button" onclick="toggleOptionsVisibility()"></button>
+          <button id="options-exit-button" onclick="toggleOptionsVisibility()">Close options menu</button>
           <div id="options-container">
             <div id="options">
               <div class="option">
@@ -46,16 +46,16 @@
               </div>
             </div>
           </div>
-          <button id="options-button" onclick="toggleOptionsVisibility()">⚙️</button>
+          <button id="options-button" onclick="toggleOptionsVisibility()">⚙️<span id="options-menu-text">Left/Right click on options</span></button>
           <button id="transpile-button" onclick="transpile()">Transpile & copy</button>
         </div>
         <div id="text-input-container">
           <div id="line-count">
-            <textarea id="line-count-textarea">1</textarea>
+            <textarea id="line-count-textarea" placeholder="Line counter placeholder">1</textarea>
             <p id="line-count-template">1</p>
           </div>
           <div id="text-input">
-            <textarea id="dot-indicator"></textarea>
+            <textarea id="dot-indicator" placeholder="Dot indicator placeholder"></textarea>
             <textarea autofocus id="input" spellcheck="false" placeholder="Enter notation"></textarea>
           </div>
         </div>
