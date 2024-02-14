@@ -2,6 +2,7 @@ const editorConfigs = {
     fontSize: 5,
     rootSize: 2,
     tabSpaces: 4,
+    undoStackSize: 50,
     replaceSpace: false,
     showLines: true,
     theme: 'ocean',
@@ -40,6 +41,11 @@ const configOptions = {
     tabSpaces: {
         min: 2,
         max: 16,
+    },
+    undoStackSize: {
+        min: 0,
+        max: 100,
+        interval: 25,
     },
     theme: {
         'ocean': {
@@ -175,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('editor-font-button').addEventListener('click', function(e) {
         if (e.button === 0) {
             editorConfigs.fontSize = (editorConfigs.fontSize + 1) % Object.keys(configOptions.editorFontSize).length;
-            updateEditorFontSize();
+            this.textContent = updateEditorFontSize();
         }
     });
 
@@ -183,24 +189,24 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const max = Object.keys(configOptions.editorFontSize).length;
         editorConfigs.fontSize = (editorConfigs.fontSize + max - 1) % max;
-        updateEditorFontSize();
+        this.textContent = updateEditorFontSize();
     });
 
     function updateEditorFontSize() {
         const objectKey = Object.keys(configOptions.editorFontSize)[editorConfigs.fontSize];
         const newFontSize = configOptions.editorFontSize[objectKey];
-        document.getElementById('editor-font-button').textContent = objectKey;
         document.getElementById('input').style.fontSize = newFontSize + 'rem';
         document.getElementById('dot-indicator').style.fontSize = newFontSize + 'rem';
         document.getElementById('line-count-template').style.fontSize = newFontSize + 'rem';
         document.getElementById('line-count-textarea').style.fontSize = newFontSize + 'rem';
+        return objectKey;
     }
     
     // Root font size settings.
     document.getElementById('root-font-button').addEventListener('click', function(e) {
         if (e.button === 0) {
             editorConfigs.rootSize = (editorConfigs.rootSize + 1) % Object.keys(configOptions.rootFontSize).length;
-            updateRootFontSize();
+            this.textContent = updateRootFontSize();
         }
     });
 
@@ -208,61 +214,80 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         const max = Object.keys(configOptions.rootFontSize).length;
         editorConfigs.rootSize = (editorConfigs.rootSize + max - 1) % max;
-        updateRootFontSize();
+        this.textContent = updateRootFontSize();
     });
 
     function updateRootFontSize() {
         const objectKey = Object.keys(configOptions.rootFontSize)[editorConfigs.rootSize];
         const newRootSize = configOptions.rootFontSize[objectKey];
-        document.getElementById('root-font-button').textContent = objectKey;
         document.documentElement.style.fontSize = newRootSize + 'rem';
+        return objectKey
     }
 
     // Tab spaces settings.
     document.getElementById('tab-space-button').addEventListener('click', function(e) {
         if (e.button === 0) {
+            const currentValue = editorConfigs.tabSpaces;
             const min = configOptions.tabSpaces.min;
             const max = configOptions.tabSpaces.max;
-            editorConfigs.tabSpaces = ((editorConfigs.tabSpaces - min + 1) % (max - 1)) + min;
-            document.getElementById('tab-space-button').textContent = editorConfigs.tabSpaces;
+            editorConfigs.tabSpaces = cycleOption(currentValue, min, max, 1);
+            this.textContent = editorConfigs.tabSpaces;
         }
     });
     
     document.getElementById('tab-space-button').addEventListener('contextmenu', function(e) {
         e.preventDefault();
+        const currentValue = editorConfigs.tabSpaces;
         const min = configOptions.tabSpaces.min;
         const max = configOptions.tabSpaces.max;
-        editorConfigs.tabSpaces = ((editorConfigs.tabSpaces + max - min - 2) % (max - 1)) + min;
-        document.getElementById('tab-space-button').textContent = editorConfigs.tabSpaces;
+        editorConfigs.tabSpaces = cycleOption(currentValue, min, max, -1);
+        this.textContent = editorConfigs.tabSpaces;
     });
-    
-    document.getElementById('tab-space-button').addEventListener('contextmenu', function(e) {
+
+    // Undo stack size settings.
+    document.getElementById('stack-size-button').addEventListener('click', function(e) {
+        if (e.button === 0) {
+            const currentValue = editorConfigs.undoStackSize;
+            const min = configOptions.undoStackSize.min;
+            const max = configOptions.undoStackSize.max;
+            const interval = configOptions.undoStackSize.interval;
+            editorConfigs.undoStackSize = cycleOption(currentValue, min, max, 1, interval);
+            this.textContent = editorConfigs.undoStackSize;
+        }
+    });
+
+    document.getElementById('stack-size-button').addEventListener('contextmenu', function(e) {
         e.preventDefault();
+        const currentValue = editorConfigs.undoStackSize;
+        const min = configOptions.undoStackSize.min;
+        const max = configOptions.undoStackSize.max;
+        const interval = configOptions.undoStackSize.interval;
+        editorConfigs.undoStackSize = cycleOption(currentValue, min, max, -1, interval);
+        this.textContent = editorConfigs.undoStackSize;
     });
 
     // Replace spaces settings.
     document.getElementById('replace-space-button').addEventListener('click', function(e) {
-        toggleReplaceSpace();
+        editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
+        this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
     });
 
     document.getElementById('replace-space-button').addEventListener('contextmenu', function(e) {
         e.preventDefault();
-        toggleReplaceSpace();
-    });
-
-    function toggleReplaceSpace() {
         editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
-        document.getElementById('replace-space-button').textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
-    }
+        this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
+    });
 
     // Line number settings.
     document.getElementById('show-lines-button').addEventListener('click', function(e) {
         toggleLines();
+        this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
     });
     
     document.getElementById('show-lines-button').addEventListener('contextmenu', function(e) {
         e.preventDefault();
         toggleLines();
+        this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
     });
 
     function toggleLines() {
@@ -272,7 +297,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.getElementById('text-input-container').style.gridTemplateColumns = '0 1fr';
         }
-        document.getElementById('show-lines-button').textContent = editorConfigs.showLines ? 'Yes' : 'No';
     }
 
     // // Load test code.
@@ -283,7 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
     editorConfigs.undoStack.push({ cursorPositionStart, cursorPositionEnd, value });
-    if (editorConfigs.undoStack.length > 50) {
+    if (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
         editorConfigs.undoStack.shift();
     }
     editorConfigs.redoStack = [];
@@ -294,6 +318,7 @@ function toggleOptionsVisibility() {
         document.getElementById('options-exit-button').style.display = 'none';
         document.getElementById('options-menu-text').style.display = 'none';
         document.getElementById('options-container').style.display = 'none';
+        document.getElementById('input').focus();
     } else {
         document.getElementById('options-exit-button').style.display = 'block';
         document.getElementById('options-menu-text').style.display = 'block';
@@ -301,11 +326,6 @@ function toggleOptionsVisibility() {
     }
     document.getElementById('options-button').classList.toggle('menu-active');
     editorConfigs.showOptions = !editorConfigs.showOptions;
-}
-
-function changeTabSpace() {
-    const selectedOption = document.getElementById('tab-space').value;
-    editorConfigs.tabSpaces = parseInt(selectedOption, 10);
 }
 
 function updateDots() {
@@ -319,4 +339,10 @@ function updateLineCounter() {
     for (let lineNumber = 0; lineNumber < numberOfLines; lineNumber++)
         linesText += (lineNumber + 1) + '\n';
     document.getElementById('line-count-textarea').value = linesText;
+}
+
+function cycleOption(value, min, max, delta, interval = 1) {
+    const valueN = value - min;
+    const maxN = (max - min) + interval;
+    return ((valueN + maxN + delta * interval) % maxN) + min;
 }
