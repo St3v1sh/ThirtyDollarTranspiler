@@ -79,6 +79,10 @@ button:hover {
 }
 
 #transpile-button {
+    display: flex;
+    padding: 0rem 1rem;
+    justify-content: space-between;
+    align-items: center;
     width: 20rem;
     height: 100%;
 }
