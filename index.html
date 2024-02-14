@@ -6,141 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>thirtydollartranspiler</title>
   <link rel="stylesheet" href="./style.css">
+  <script src="./editor.js"></script>
   <script src="./utility.js"></script>
   <script src="./config.js"></script>
   <script src="./transpiler.js"></script>
-  <script>
-    var spaces = 4;
-    var undoStack = [{ cursorPositionStart: 0, cursorPositionEnd: 0, value: '' }];
-    var redoStack = [];
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const textarea = document.getElementById('input');
-      const button = document.getElementById('conspile-button');
-      const dotIndicator = document.getElementById('dot-indicator');
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          if (document.activeElement === textarea)
-            button.focus();
-          else
-            textarea.focus();
-        }
-      });
-
-      textarea.addEventListener('scroll', function () {
-        dotIndicator.scrollTop = textarea.scrollTop;
-        dotIndicator.scrollLeft = textarea.scrollLeft;
-      });
-
-      textarea.addEventListener('input', function () {
-        updateDots();
-        dotIndicator.scrollTop = textarea.scrollTop;
-        growUndoStack(this.selectionStart - 1, this.selectionStart, this.value);
-      });
-
-      textarea.addEventListener('keydown', function (e) {
-        const cursorPosition = this.selectionStart;
-        const currentValue = this.value;
-
-        if (e.key === 'Tab') {
-          e.preventDefault();
-          
-          const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
-          const row = rowsBeforeCursor.length;
-          const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-          const beforeString = currentValue.substring(0, cursorPosition);
-          const spacesAdded = spaces - (col % spaces) || spaces;
-          this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(cursorPosition);
-
-          this.selectionStart = cursorPosition + spacesAdded;
-          this.selectionEnd = this.selectionStart;
-
-          growUndoStack(cursorPosition, this.selectionStart, this.value);
-        } else if (e.key === 'Backspace') {
-          const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
-          const row = rowsBeforeCursor.length;
-          const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-          const tabStartPosition = Math.floor((col - 1) / spaces) * spaces;
-          const extraSpaces = currentValue.substring(tabStartPosition, cursorPosition);
-
-          if (extraSpaces.endsWith(' ')) {
-            e.preventDefault();
-
-            var spacesSubstring;
-            const fullSpaces = ' '.repeat(spaces);
-            for (let i = 0; i < fullSpaces.length; i++) {
-              spacesSubstring = fullSpaces.substring(i);
-              if (currentValue.substring(tabStartPosition, cursorPosition).endsWith(spacesSubstring)) {
-                break;
-              }
-            }
-            this.value = currentValue.substring(0, cursorPosition - spacesSubstring.length) + currentValue.substring(cursorPosition)
-
-            this.selectionStart = cursorPosition - spacesSubstring.length;
-            this.selectionEnd = this.selectionStart;
-
-            growUndoStack(cursorPosition, this.selectionStart, this.value);
-          }
-        } else if (/^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[cursorPosition] === ' ') {
-          e.preventDefault();
-          this.value = currentValue.substring(0, cursorPosition) + e.key + currentValue.substring(cursorPosition + 1)
-          this.selectionStart = cursorPosition + 1;
-          this.selectionEnd = this.selectionStart;
-
-          growUndoStack(cursorPosition, this.selectionStart, this.value);
-        } else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
-          e.preventDefault();
-          if (undoStack.length > 1) {
-            lastState = undoStack.pop();
-            redoStack.push(lastState);
-            this.value = undoStack[undoStack.length - 1].value;
-            this.selectionStart = lastState.cursorPositionStart;
-            this.selectionEnd = this.selectionStart;
-          }
-        } else if (e.key === 'Z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
-          e.preventDefault();
-          if (redoStack.length > 0) {
-            undoStack.push(redoStack.pop());
-            this.value = undoStack[undoStack.length - 1].value;
-            this.selectionStart = undoStack[undoStack.length - 1].cursorPositionEnd;
-            this.selectionEnd = this.selectionStart;
-          }
-        }
-        updateDots();
-      });
-
-      // // Load test code.
-      // fetch('./songs/dancing-in-the-moonlight/dancing-in-the-moonlight.moyai')
-      //   .then(response => response.text())
-      //   .then(data => textarea.value = data);
-    });
-
-    function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
-      undoStack.push({ cursorPositionStart, cursorPositionEnd, value });
-      if (undoStack.length > 25) {
-        undoStack.shift();
-      }
-      redoStack = [];
-    }
-
-    function changeFontSize() {
-      var selectedOption = document.getElementById('font').value;
-      document.getElementById('input').style.fontSize = selectedOption + 'rem';
-      document.getElementById('dot-indicator').style.fontSize = selectedOption + 'rem';
-    }
-
-    function changeTabSpace() {
-      var selectedOption = document.getElementById('tab-space').value;
-      spaces = parseInt(selectedOption, 10);
-    }
-
-    function updateDots() {
-      document.getElementById('dot-indicator').value = document.getElementById('input').value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
-    }
-  </script>
 </head>
 
 <body>
@@ -184,9 +53,15 @@
             <button id="conspile-button" onclick="transpile()">Transpile & copy</button>
           </div>
         </div>
-        <div id="text-input">
-          <textarea id="dot-indicator"></textarea>
-          <textarea autofocus id="input" spellcheck="false" placeholder="Enter notation"></textarea>
+        <div id="text-input-container">
+          <div id="line-count">
+            <textarea id="line-count-textarea">1</textarea>
+            <p id="line-count-template">1</p>
+          </div>
+          <div id="text-input">
+            <textarea id="dot-indicator"></textarea>
+            <textarea autofocus id="input" spellcheck="false" placeholder="Enter notation"></textarea>
+          </div>
         </div>
         <div id="statusbar">
           <p id="status">.</p>

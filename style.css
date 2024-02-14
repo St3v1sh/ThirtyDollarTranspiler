@@ -101,50 +101,72 @@ button:hover {
     background-color: rgba(var(--lighterRGB), 0.2);
 }
 
+#text-input-container {
+    display: grid;
+    min-height: 100%;
+    max-height: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+#line-count {
+    position: relative;
+    display: flex;
+    box-sizing: content-box;
+    flex-direction: column;
+    align-items: end;
+    padding: .5rem 1rem;
+    padding-left: .5rem;
+    background-color: var(--darker);
+    overflow-y: hidden;
+}
+
 #text-input {
     position: relative;
     background-color: var(--darker);
+}
+
+textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    padding: .5rem;
+    text-align: left;
+    vertical-align: top;
+    font-family: monospace;
+    font-size: 1rem;
+    resize: none;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+#line-count-textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--dark);
+    text-align: right;
+    padding: .5rem 1rem;
+    padding-left: .5rem;
+    user-select: none;
+    pointer-events: none;
+    overflow: hidden;
 }
 
 #dot-indicator {
     position: absolute;
     top: 0;
     left: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: transparent;
     color: var(--darker);
-    padding: .5rem;
-    text-align: left;
-    vertical-align: top;
-    font-family: monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    resize: none;
-    overflow: auto;
-    white-space: nowrap;
+    font-weight: bolder;
     user-select: none;
     pointer-events: none;
 }
 
 #input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: transparent;
     color: var(--lighter);
     padding: .5rem;
-    text-align: left;
-    vertical-align: top;
-    font-family: monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    resize: none;
-    overflow: auto;
-    white-space: nowrap;
     caret-color: white;
 }
 
@@ -182,7 +204,7 @@ textarea:focus {
 }
 
 p {
-    margin: 0;
+    margin: 0px;
     padding: 0px;
     font-family: monospace;
     font-size: .9rem;
@@ -193,4 +215,10 @@ p {
 
 #statusbar p {
     margin-left: .5rem;
+}
+
+#line-count p {
+    font-size: 1rem;
+    font-weight: normal;
+    color: transparent;
 }
