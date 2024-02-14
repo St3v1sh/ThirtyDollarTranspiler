@@ -60,13 +60,13 @@ function reportWarning(message) {
 function reportError(message) {
   const output = document.getElementById('status');
   output.style.color = '#fa4d56';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | Error: ${message} | Warnings logged: ${warningCount}`;
+  output.innerHTML = `${dateFormatter.format(Date.now())} | Error: ${message} | Warnings: ${warningCount}`;
   warningCount = 0;
 }
 
 function reportOK(message) {
   const output = document.getElementById('status');
   output.style.color = '#24a148';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message} | Warnings logged: ${warningCount}`;
+  output.innerHTML = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message} | Warnings: ${warningCount}`;
   warningCount = 0;
 }

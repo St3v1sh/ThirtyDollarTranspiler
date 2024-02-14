@@ -1,19 +1,67 @@
 const editorConfigs = {
-    spaces: 4,
+    fontSize: 5,
+    rootSize: 2,
+    tabSpaces: 4,
+    replaceSpace: false,
+    showLines: true,
+    theme: 'ocean',
     undoStack: [{ cursorPositionStart: 0, cursorPositionEnd: 0, value: '' }],
     redoStack: [],
+    showOptions: false,
+}
+
+const configOptions = {
+    editorFontSize: {
+        '50%': 0.5,
+        '60%': 0.6,
+        '70%': 0.7,
+        '80%': 0.8,
+        '90%': 0.9,
+        '100%': 1.0,
+        '110%': 1.1,
+        '120%': 1.2,
+        '130%': 1.3,
+        '140%': 1.4,
+        '150%': 1.5,
+    },
+    rootFontSize: {
+        '80%': 0.8,
+        '90%': 0.9,
+        '100%': 1.0,
+        '110%': 1.1,
+        '120%': 1.2,
+        '130%': 1.3,
+        '140%': 1.4,
+        '150%': 1.5,
+        '160%': 1.6,
+        '170%': 1.7,
+        '180%': 1.8,
+    },
+    tabSpaces: {
+        min: 2,
+        max: 16,
+    },
+    theme: {
+        'ocean': {
+            darker: '#0A2647',
+            dark: '#144272',
+            light: '#205295',
+            lighter: '#2C74B3',
+            lighterRGB: [44, 116, 179],
+        },
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('input');
-    const button = document.getElementById('conspile-button');
+    const transpileButton = document.getElementById('conspile-button');
     const dotIndicator = document.getElementById('dot-indicator');
     const lineCounter = document.getElementById('line-count-textarea');
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             if (document.activeElement === textarea)
-                button.focus();
+                transpileButton.focus();
             else
                 textarea.focus();
         }
@@ -46,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
 
             const beforeString = currentValue.substring(0, cursorPosition);
-            const spacesAdded = editorConfigs.spaces - (col % editorConfigs.spaces) || editorConfigs.spaces;
+            const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
             this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(cursorPosition);
 
             this.selectionStart = cursorPosition + spacesAdded;
@@ -58,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const row = rowsBeforeCursor.length;
             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
 
-            const tabStartPosition = Math.floor((col - 1) / editorConfigs.spaces) * editorConfigs.spaces;
+            const tabStartPosition = Math.floor((col - 1) / editorConfigs.tabSpaces) * editorConfigs.tabSpaces;
             const extraSpaces = currentValue.substring(tabStartPosition, cursorPosition);
 
             if (this.selectionStart != this.selectionEnd) {
@@ -77,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
 
                 var spacesSubstring;
-                const fullSpaces = ' '.repeat(editorConfigs.spaces);
+                const fullSpaces = ' '.repeat(editorConfigs.tabSpaces);
                 for (let i = 0; i < fullSpaces.length; i++) {
                     spacesSubstring = fullSpaces.substring(i);
                     if (currentValue.substring(tabStartPosition, cursorPosition).endsWith(spacesSubstring)) {
@@ -91,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 growUndoStack(cursorPosition, this.selectionStart, this.value);
             }
-        } else if (/^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[cursorPosition] === ' ') {
+        } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[cursorPosition] === ' ') {
             e.preventDefault();
             this.value = currentValue.substring(0, cursorPosition) + e.key + currentValue.substring(cursorPosition + 1)
             this.selectionStart = cursorPosition + 1;
@@ -103,8 +151,11 @@ document.addEventListener('DOMContentLoaded', function () {
             if (editorConfigs.undoStack.length > 1) {
                 lastState = editorConfigs.undoStack.pop();
                 editorConfigs.redoStack.push(lastState);
-                this.value = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value;
-                this.selectionStart = lastState.cursorPositionStart;
+
+                const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
+                const lengthDifference = this.value.length - oldText.length;
+                this.value = oldText;
+                this.selectionStart = lastState.cursorPositionStart - (lengthDifference + 1);
                 this.selectionEnd = this.selectionStart;
             }
         } else if (e.key === 'Z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
@@ -120,6 +171,110 @@ document.addEventListener('DOMContentLoaded', function () {
         updateLineCounter();
     });
 
+    // Editor font size settings.
+    document.getElementById('editor-font-button').addEventListener('click', function(e) {
+        if (e.button === 0) {
+            editorConfigs.fontSize = (editorConfigs.fontSize + 1) % Object.keys(configOptions.editorFontSize).length;
+            updateEditorFontSize();
+        }
+    });
+
+    document.getElementById('editor-font-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const max = Object.keys(configOptions.editorFontSize).length;
+        editorConfigs.fontSize = (editorConfigs.fontSize + max - 1) % max;
+        updateEditorFontSize();
+    });
+
+    function updateEditorFontSize() {
+        const objectKey = Object.keys(configOptions.editorFontSize)[editorConfigs.fontSize];
+        const newFontSize = configOptions.editorFontSize[objectKey];
+        document.getElementById('editor-font-button').textContent = objectKey;
+        document.getElementById('input').style.fontSize = newFontSize + 'rem';
+        document.getElementById('dot-indicator').style.fontSize = newFontSize + 'rem';
+        document.getElementById('line-count-template').style.fontSize = newFontSize + 'rem';
+        document.getElementById('line-count-textarea').style.fontSize = newFontSize + 'rem';
+    }
+    
+    // Root font size settings.
+    document.getElementById('root-font-button').addEventListener('click', function(e) {
+        if (e.button === 0) {
+            editorConfigs.rootSize = (editorConfigs.rootSize + 1) % Object.keys(configOptions.rootFontSize).length;
+            updateRootFontSize();
+        }
+    });
+
+    document.getElementById('root-font-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const max = Object.keys(configOptions.rootFontSize).length;
+        editorConfigs.rootSize = (editorConfigs.rootSize + max - 1) % max;
+        updateRootFontSize();
+    });
+
+    function updateRootFontSize() {
+        const objectKey = Object.keys(configOptions.rootFontSize)[editorConfigs.rootSize];
+        const newRootSize = configOptions.rootFontSize[objectKey];
+        document.getElementById('root-font-button').textContent = objectKey;
+        document.documentElement.style.fontSize = newRootSize + 'rem';
+    }
+
+    // Tab spaces settings.
+    document.getElementById('tab-space-button').addEventListener('click', function(e) {
+        if (e.button === 0) {
+            const min = configOptions.tabSpaces.min;
+            const max = configOptions.tabSpaces.max;
+            editorConfigs.tabSpaces = ((editorConfigs.tabSpaces - min + 1) % (max - 1)) + min;
+            document.getElementById('tab-space-button').textContent = editorConfigs.tabSpaces;
+        }
+    });
+    
+    document.getElementById('tab-space-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const min = configOptions.tabSpaces.min;
+        const max = configOptions.tabSpaces.max;
+        editorConfigs.tabSpaces = ((editorConfigs.tabSpaces + max - min - 2) % (max - 1)) + min;
+        document.getElementById('tab-space-button').textContent = editorConfigs.tabSpaces;
+    });
+    
+    document.getElementById('tab-space-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Replace spaces settings.
+    document.getElementById('replace-space-button').addEventListener('click', function(e) {
+        toggleReplaceSpace();
+    });
+
+    document.getElementById('replace-space-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        toggleReplaceSpace();
+    });
+
+    function toggleReplaceSpace() {
+        editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
+        document.getElementById('replace-space-button').textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
+    }
+
+    // Line number settings.
+    document.getElementById('show-lines-button').addEventListener('click', function(e) {
+        toggleLines();
+    });
+    
+    document.getElementById('show-lines-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        toggleLines();
+    });
+
+    function toggleLines() {
+        editorConfigs.showLines = !editorConfigs.showLines;
+        if (editorConfigs.showLines) {
+            document.getElementById('text-input-container').style.gridTemplateColumns = 'auto 1fr';
+        } else {
+            document.getElementById('text-input-container').style.gridTemplateColumns = '0 1fr';
+        }
+        document.getElementById('show-lines-button').textContent = editorConfigs.showLines ? 'Yes' : 'No';
+    }
+
     // // Load test code.
     // fetch('./songs/dancing-in-the-moonlight/dancing-in-the-moonlight.moyai')
     //   .then(response => response.text())
@@ -134,17 +289,22 @@ function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
     editorConfigs.redoStack = [];
 }
 
-function changeFontSize() {
-    const selectedOption = document.getElementById('font').value;
-    document.getElementById('input').style.fontSize = selectedOption + 'rem';
-    document.getElementById('dot-indicator').style.fontSize = selectedOption + 'rem';
-    document.getElementById('line-count-template').style.fontSize = selectedOption + 'rem';
-    document.getElementById('line-count-textarea').style.fontSize = selectedOption + 'rem';
+function toggleOptionsVisibility() {
+    if (editorConfigs.showOptions) {
+        document.getElementById('options-exit-button').style.display = 'none';
+        document.getElementById('options-button').classList.toggle('menu-active');
+        document.getElementById('options-container').style.display = 'none';
+    } else {
+        document.getElementById('options-exit-button').style.display = 'block';
+        document.getElementById('options-button').classList.toggle('menu-active');
+        document.getElementById('options-container').style.display = 'block';
+    }
+    editorConfigs.showOptions = !editorConfigs.showOptions;
 }
 
 function changeTabSpace() {
     const selectedOption = document.getElementById('tab-space').value;
-    editorConfigs.spaces = parseInt(selectedOption, 10);
+    editorConfigs.tabSpaces = parseInt(selectedOption, 10);
 }
 
 function updateDots() {

@@ -16,42 +16,38 @@
   <div id="app">
     <div id="workspace-container">
       <div id="workspace">
-        <div>
-          <div id="controlbar">
-            <div id="controls">
-              <div id="font-controls">
-                <p>Font size</p>
-                <label for="font"></label>
-                <select name="font" id="font" onchange="changeFontSize()">
-                  <option value=".5">0.5</option>
-                  <option value=".6">0.6</option>
-                  <option value=".7">0.7</option>
-                  <option value=".8">0.8</option>
-                  <option value=".9">0.9</option>
-                  <option selected value="1">1.0</option>
-                  <option value="1.1">1.1</option>
-                  <option value="1.2">1.2</option>
-                  <option value="1.3">1.3</option>
-                  <option value="1.4">1.4</option>
-                  <option value="1.5">1.5</option>
-                </select>
+        <div id="controlbar">
+          <button id="options-exit-button" onclick="toggleOptionsVisibility()"></button>
+          <div id="options-container">
+            <div id="options">
+              <div class="option">
+                <p>Editor font</p>
+                <button id="editor-font-button">100%</button>
               </div>
-              <div id="tab-space-controls">
-                <p>Tab spacing</p>
-                <select name="tab-space" id="tab-space" onchange="changeTabSpace()">
-                  <option value="3">3</option>
-                  <option selected value="4">4</option>
-                  <option value=".5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                </select>
+              <div class="option">
+                <p>Root font</p>
+                <button id="root-font-button">100%</button>
+              </div>
+              <div class="option">
+                <p>Tab spaces</p>
+                <button id="tab-space-button">4</button>
+              </div>
+              <div class="option">
+                <p>Replace space</p>
+                <button id="replace-space-button">No</button>
+              </div>
+              <div class="option">
+                <p>Line numbers</p>
+                <button id="show-lines-button">Yes</button>
+              </div>
+              <div class="option">
+                <p>Theme</p>
+                <button>Ocean</button>
               </div>
             </div>
-            <button id="conspile-button" onclick="transpile()">Transpile & copy</button>
           </div>
+          <button id="options-button" onclick="toggleOptionsVisibility()">⚙️</button>
+          <button id="transpile-button" onclick="transpile()">Transpile & copy</button>
         </div>
         <div id="text-input-container">
           <div id="line-count">
