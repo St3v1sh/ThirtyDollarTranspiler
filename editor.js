@@ -60,7 +60,7 @@ const configOptions = {
 
 document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('input');
-    const transpileButton = document.getElementById('conspile-button');
+    const transpileButton = document.getElementById('transpile-button');
     const dotIndicator = document.getElementById('dot-indicator');
     const lineCounter = document.getElementById('line-count-textarea');
 
@@ -298,6 +298,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('text-input-container').style.gridTemplateColumns = '0 1fr';
         }
     }
+
+    document.getElementById('statusbar').addEventListener('mouseenter', function() {
+        document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
+        document.getElementById('status').classList.toggle('hovered');
+    });
+
+    document.getElementById('statusbar').addEventListener('mouseleave', function() {
+        document.getElementById('workspace').style.gridTemplateRows = '';
+        document.getElementById('status').classList.toggle('hovered');
+    });
 
     // // Load test code.
     // fetch('./songs/dancing-in-the-moonlight/dancing-in-the-moonlight.moyai')
