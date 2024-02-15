@@ -5,7 +5,7 @@ const editorConfigs = {
     undoStackSize: 50,
     replaceSpace: false,
     showLines: true,
-    theme: 'ocean',
+    theme: 0,
     undoStack: [{ cursorPositionStart: 0, cursorPositionEnd: 0, value: '' }],
     redoStack: [],
     showOptions: false,
@@ -47,13 +47,27 @@ const configOptions = {
         max: 100,
         interval: 25,
     },
-    theme: {
+    themes: {
+        'modern': {
+            darker: '#16181f',
+            dark: '#2b2d34',
+            light: '#414755',
+            lighter: '#a0a0a0',
+            lighterRGB: '160, 160, 160',
+        },
+        'contrast': {
+            darker: '#777777',
+            dark: '#18262e',
+            light: '#5d5d5d',
+            lighter: '#e1e1e1',
+            lighterRGB: '225, 225, 225',
+        },
         'ocean': {
-            darker: '#0A2647',
-            dark: '#144272',
-            light: '#205295',
-            lighter: '#2C74B3',
-            lighterRGB: [44, 116, 179],
+            darker: '#092749',
+            dark: '#111111',
+            light: '#0c3d75',
+            lighter: '#7ea7c9',
+            lighterRGB: '126, 167, 201',
         },
     }
 }
@@ -297,6 +311,30 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.getElementById('text-input-container').style.gridTemplateColumns = '0 1fr';
         }
+    }
+
+    // Color theme settings.
+    document.getElementById('change-theme-button').addEventListener('click', function(e) {
+        if (e.button === 0) {
+            editorConfigs.theme = (editorConfigs.theme + 1) % Object.keys(configOptions.themes).length;
+            this.textContent = cycleThemes();
+        }
+    });
+
+    document.getElementById('change-theme-button').addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        const max = Object.keys(configOptions.themes).length;
+        editorConfigs.theme = (editorConfigs.theme + max - 1) % Object.keys(configOptions.themes).length;
+        this.textContent = cycleThemes();
+    });
+
+    function cycleThemes() {
+        const objectKey = Object.keys(configOptions.themes)[editorConfigs.theme];
+        const newThemeColors = configOptions.themes[objectKey];
+        Object.entries(newThemeColors).forEach(([color, value]) => {
+            document.documentElement.style.setProperty(`--${color}`, value);
+        });
+        return objectKey;
     }
 
     document.getElementById('statusbar').addEventListener('click', function() {

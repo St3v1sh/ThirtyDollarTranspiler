@@ -1,9 +1,9 @@
 :root {
-    --darker: #0A2647;
-    --dark: #144272;
-    --light: #205295;
-    --lighter: #2C74B3;
-    --lighterRGB: 44, 116, 179;
+    --darker: #16181f;
+    --dark: #2b2d34;
+    --light: #414755;
+    --lighter: #a0a0a0;
+    --lighterRGB: 160, 160, 160;
 }
 
 html, body {
@@ -52,7 +52,7 @@ button {
     font-weight: bold;
     font-size: .9rem;
     color: var(--lighter);
-    border: 1px solid var(--lighter);
+    border: 1px solid var(--light);
     border-radius: .5rem;
     cursor: pointer;
     user-select: none;
@@ -142,11 +142,11 @@ textarea::-webkit-scrollbar-corner {
 }
 
 textarea::selection {
-    background-color: var(--dark);
+    background-color: var(--light);
 }
 
 textarea::placeholder {
-    color: var(--dark);
+    color: rgba(var(--lighterRGB), 0.3);
 }
 
 textarea:focus {
@@ -157,7 +157,7 @@ textarea:focus {
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--dark);
+    color: rgba(var(--lighterRGB), 0.6);
     text-align: right;
     padding: .5rem 1rem;
     user-select: none;
