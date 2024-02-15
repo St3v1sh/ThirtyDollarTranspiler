@@ -133,14 +133,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.preventDefault();
 
                 const originalStart = this.selectionStart;
-                const originalEnd = this.selectionEnd;
 
                 const beforeSelection = currentValue.substring(0, this.selectionStart);
                 this.value = beforeSelection + currentValue.substring(this.selectionEnd);
                 this.selectionStart = beforeSelection.length;
                 this.selectionEnd = this.selectionStart;
 
-                growUndoStack(originalEnd, originalStart, this.value);
+                growUndoStack(originalStart + 1, this.selectionEnd, this.value);
             } else if (extraSpaces.endsWith(' ')) {
                 e.preventDefault();
 
@@ -175,13 +174,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
                 const lengthDifference = this.value.length - oldText.length;
                 this.value = oldText;
-                this.selectionStart = lastState.cursorPositionStart - (lengthDifference + 1);
-                this.selectionEnd = this.selectionStart;
+
+                if (lengthDifference < 0) {
+                    this.selectionStart = lastState.cursorPositionStart - 1;
+                    this.selectionEnd = this.selectionStart - lengthDifference;
+                } else {
+                    this.selectionStart = lastState.cursorPositionEnd - lengthDifference;
+                    this.selectionEnd = this.selectionStart;
+                }
             }
         } else if (e.key === 'Z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
             e.preventDefault();
             if (editorConfigs.redoStack.length > 0) {
                 editorConfigs.undoStack.push(editorConfigs.redoStack.pop());
+
                 this.value = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value;
                 this.selectionStart = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].cursorPositionEnd;
                 this.selectionEnd = this.selectionStart;
@@ -359,6 +365,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
+    if (editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value === value)
+        return;
+
     editorConfigs.undoStack.push({ cursorPositionStart, cursorPositionEnd, value });
     if (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
         editorConfigs.undoStack.shift();
