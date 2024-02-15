@@ -6,7 +6,7 @@ const editorConfigs = {
     replaceSpace: false,
     showLines: true,
     theme: 0,
-    undoStack: [{ cursorPositionStart: 0, cursorPositionEnd: 0, value: '' }],
+    undoStack: [{ selectionStart: 0, selectionEnd: 0, value: '', tabbed: false }],
     redoStack: [],
     showOptions: false,
 }
@@ -103,31 +103,59 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     textarea.addEventListener('keydown', function (e) {
-        const cursorPosition = this.selectionStart;
+        const selectionStart = this.selectionStart;
+        const selectionEnd = this.selectionEnd;
         const currentValue = this.value;
 
         if (e.key === 'Tab') {
             e.preventDefault();
 
-            const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
-            const row = rowsBeforeCursor.length;
-            const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+            const beforeString = currentValue.substring(0, selectionStart);
+            if (selectionStart === selectionEnd) {
+                const rowsBeforeCursor = beforeString.split('\n');
+                const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
 
-            const beforeString = currentValue.substring(0, cursorPosition);
-            const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-            this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(cursorPosition);
+                const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+                this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
 
-            this.selectionStart = cursorPosition + spacesAdded;
-            this.selectionEnd = this.selectionStart;
+                this.selectionStart = selectionStart + spacesAdded;
+                this.selectionEnd = this.selectionStart;
 
-            growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
+                growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
+            } else {
+                const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
+                const beforeStringEnd = currentValue.substring(0, selectionEnd);
+                const rows = beforeStringEnd.split('\n');
+                const rowStart = (beforeString.match(/\n/g) || []).length;
+                const rowEnd = rows.length;
+
+                var lineGrowths = { first: 0, total: 0 };
+                this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+                for (let row = rowStart; row < rowEnd; row++) {
+                    const col = rows[row].search(/\S/);
+                    const colN = col === -1 ? rows[row].length : col;
+                    const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+                    const spacesAddedN = rows[row].length > 0 ? spacesAdded : 0;
+                    this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + rows[row];
+
+                    lineGrowths.total += spacesAddedN;
+                    if (row === rowStart)
+                        lineGrowths.first = spacesAddedN;
+                }
+                this.value += currentValue.substring(selectionEnd);
+
+                this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
+                this.selectionEnd = selectionEnd + lineGrowths.total;
+
+                growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+            }
         } else if (e.key === 'Backspace') {
-            const rowsBeforeCursor = currentValue.substring(0, cursorPosition).split('\n');
+            const rowsBeforeCursor = currentValue.substring(0, selectionStart).split('\n');
             const row = rowsBeforeCursor.length;
             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
 
             const tabStartPosition = Math.floor((col - 1) / editorConfigs.tabSpaces) * editorConfigs.tabSpaces;
-            const extraSpaces = currentValue.substring(tabStartPosition, cursorPosition);
+            const extraSpaces = currentValue.substring(tabStartPosition, selectionStart);
 
             if (this.selectionStart != this.selectionEnd) {
                 e.preventDefault();
@@ -147,50 +175,63 @@ document.addEventListener('DOMContentLoaded', function () {
                 const fullSpaces = ' '.repeat(editorConfigs.tabSpaces);
                 for (let i = 0; i < fullSpaces.length; i++) {
                     spacesSubstring = fullSpaces.substring(i);
-                    if (currentValue.substring(tabStartPosition, cursorPosition).endsWith(spacesSubstring)) {
+                    if (currentValue.substring(tabStartPosition, selectionStart).endsWith(spacesSubstring)) {
                         break;
                     }
                 }
-                this.value = currentValue.substring(0, cursorPosition - spacesSubstring.length) + currentValue.substring(cursorPosition)
+                this.value = currentValue.substring(0, selectionStart - spacesSubstring.length) + currentValue.substring(selectionStart)
 
-                this.selectionStart = cursorPosition - spacesSubstring.length;
+                this.selectionStart = selectionStart - spacesSubstring.length;
                 this.selectionEnd = this.selectionStart;
 
-                growUndoStack(cursorPosition, this.selectionStart, this.value);
+                growUndoStack(selectionStart, this.selectionStart, this.value);
             }
-        } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[cursorPosition] === ' ') {
+        } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[selectionStart] === ' ') {
             e.preventDefault();
-            this.value = currentValue.substring(0, cursorPosition) + e.key + currentValue.substring(cursorPosition + 1)
-            this.selectionStart = cursorPosition + 1;
+            this.value = currentValue.substring(0, selectionStart) + e.key + currentValue.substring(selectionStart + 1)
+            this.selectionStart = selectionStart + 1;
             this.selectionEnd = this.selectionStart;
 
-            growUndoStack(cursorPosition, this.selectionStart, this.value);
-        } else if (e.key === 'z' && (e.ctrlKey || e.metaKey)) {
+            growUndoStack(selectionStart, this.selectionStart, this.value);
+        } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+            e.preventDefault();
+            if (editorConfigs.redoStack.length > 0) {
+                const lastState = editorConfigs.redoStack.pop();
+                editorConfigs.undoStack.push(lastState);
+
+                console.log(lastState);
+                if (lastState.tabbed) {
+                    console.log('here');
+                    const delta = lastState.value.length - this.value.length;
+                    this.value = lastState.value;
+                    this.selectionStart = lastState.selectionStart + (lastState.selectionStart === 0 ? 0 : editorConfigs.tabSpaces);
+                    this.selectionEnd = lastState.selectionEnd + delta;
+                } else {
+                    this.value = lastState.value;
+                    this.selectionStart = lastState.selectionEnd;
+                    this.selectionEnd = this.selectionStart;
+                }
+            }
+        } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
             if (editorConfigs.undoStack.length > 1) {
                 lastState = editorConfigs.undoStack.pop();
                 editorConfigs.redoStack.push(lastState);
 
                 const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
-                const lengthDifference = this.value.length - oldText.length;
+                const delta = this.value.length - oldText.length;
                 this.value = oldText;
 
-                if (lengthDifference < 0) {
-                    this.selectionStart = lastState.cursorPositionStart - 1;
-                    this.selectionEnd = this.selectionStart - lengthDifference;
+                if (delta < 0) {
+                    this.selectionStart = lastState.selectionStart - 1;
+                    this.selectionEnd = this.selectionStart - delta;
+                } else if (lastState.tabbed) {
+                    this.selectionStart = lastState.selectionStart;
+                    this.selectionEnd = lastState.selectionEnd;
                 } else {
-                    this.selectionStart = lastState.cursorPositionEnd - lengthDifference;
+                    this.selectionStart = lastState.selectionEnd - delta;
                     this.selectionEnd = this.selectionStart;
                 }
-            }
-        } else if (e.key === 'Z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
-            e.preventDefault();
-            if (editorConfigs.redoStack.length > 0) {
-                editorConfigs.undoStack.push(editorConfigs.redoStack.pop());
-
-                this.value = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value;
-                this.selectionStart = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].cursorPositionEnd;
-                this.selectionEnd = this.selectionStart;
             }
         }
         updateDots();
@@ -198,14 +239,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Editor font size settings.
-    document.getElementById('editor-font-button').addEventListener('click', function(e) {
+    document.getElementById('editor-font-button').addEventListener('click', function (e) {
         if (e.button === 0) {
             editorConfigs.fontSize = (editorConfigs.fontSize + 1) % Object.keys(configOptions.editorFontSize).length;
             this.textContent = updateEditorFontSize();
         }
     });
 
-    document.getElementById('editor-font-button').addEventListener('contextmenu', function(e) {
+    document.getElementById('editor-font-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         const max = Object.keys(configOptions.editorFontSize).length;
         editorConfigs.fontSize = (editorConfigs.fontSize + max - 1) % max;
@@ -221,16 +262,16 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('line-count-textarea').style.fontSize = newFontSize + 'rem';
         return objectKey;
     }
-    
+
     // Root font size settings.
-    document.getElementById('root-font-button').addEventListener('click', function(e) {
+    document.getElementById('root-font-button').addEventListener('click', function (e) {
         if (e.button === 0) {
             editorConfigs.rootSize = (editorConfigs.rootSize + 1) % Object.keys(configOptions.rootFontSize).length;
             this.textContent = updateRootFontSize();
         }
     });
 
-    document.getElementById('root-font-button').addEventListener('contextmenu', function(e) {
+    document.getElementById('root-font-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         const max = Object.keys(configOptions.rootFontSize).length;
         editorConfigs.rootSize = (editorConfigs.rootSize + max - 1) % max;
@@ -245,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Tab spaces settings.
-    document.getElementById('tab-space-button').addEventListener('click', function(e) {
+    document.getElementById('tab-space-button').addEventListener('click', function (e) {
         if (e.button === 0) {
             const currentValue = editorConfigs.tabSpaces;
             const min = configOptions.tabSpaces.min;
@@ -254,8 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
             this.textContent = editorConfigs.tabSpaces;
         }
     });
-    
-    document.getElementById('tab-space-button').addEventListener('contextmenu', function(e) {
+
+    document.getElementById('tab-space-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         const currentValue = editorConfigs.tabSpaces;
         const min = configOptions.tabSpaces.min;
@@ -265,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Undo stack size settings.
-    document.getElementById('stack-size-button').addEventListener('click', function(e) {
+    document.getElementById('stack-size-button').addEventListener('click', function (e) {
         if (e.button === 0) {
             const currentValue = editorConfigs.undoStackSize;
             const min = configOptions.undoStackSize.min;
@@ -276,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('stack-size-button').addEventListener('contextmenu', function(e) {
+    document.getElementById('stack-size-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         const currentValue = editorConfigs.undoStackSize;
         const min = configOptions.undoStackSize.min;
@@ -287,24 +328,24 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Replace spaces settings.
-    document.getElementById('replace-space-button').addEventListener('click', function(e) {
+    document.getElementById('replace-space-button').addEventListener('click', function (e) {
         editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
         this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
     });
 
-    document.getElementById('replace-space-button').addEventListener('contextmenu', function(e) {
+    document.getElementById('replace-space-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
         this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
     });
 
     // Line number settings.
-    document.getElementById('show-lines-button').addEventListener('click', function(e) {
+    document.getElementById('show-lines-button').addEventListener('click', function (e) {
         toggleLines();
         this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
     });
-    
-    document.getElementById('show-lines-button').addEventListener('contextmenu', function(e) {
+
+    document.getElementById('show-lines-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         toggleLines();
         this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
@@ -320,14 +361,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Color theme settings.
-    document.getElementById('change-theme-button').addEventListener('click', function(e) {
+    document.getElementById('change-theme-button').addEventListener('click', function (e) {
         if (e.button === 0) {
             editorConfigs.theme = (editorConfigs.theme + 1) % Object.keys(configOptions.themes).length;
             this.textContent = cycleThemes();
         }
     });
 
-    document.getElementById('change-theme-button').addEventListener('contextmenu', function(e) {
+    document.getElementById('change-theme-button').addEventListener('contextmenu', function (e) {
         e.preventDefault();
         const max = Object.keys(configOptions.themes).length;
         editorConfigs.theme = (editorConfigs.theme + max - 1) % Object.keys(configOptions.themes).length;
@@ -343,17 +384,17 @@ document.addEventListener('DOMContentLoaded', function () {
         return objectKey;
     }
 
-    document.getElementById('statusbar').addEventListener('click', function() {
+    document.getElementById('statusbar').addEventListener('click', function () {
         document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
         document.getElementById('status').classList.add('hovered');
     });
 
-    document.getElementById('statusbar').addEventListener('mouseenter', function() {
+    document.getElementById('statusbar').addEventListener('mouseenter', function () {
         document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
         document.getElementById('status').classList.add('hovered');
     });
 
-    document.getElementById('statusbar').addEventListener('mouseleave', function() {
+    document.getElementById('statusbar').addEventListener('mouseleave', function () {
         document.getElementById('workspace').style.gridTemplateRows = '';
         document.getElementById('status').classList.remove('hovered');
     });
@@ -364,11 +405,11 @@ document.addEventListener('DOMContentLoaded', function () {
     //   .then(data => textarea.value = data);
 });
 
-function growUndoStack(cursorPositionStart, cursorPositionEnd, value) {
+function growUndoStack(selectionStart, selectionEnd, value, tabbed=false) {
     if (editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value === value)
         return;
 
-    editorConfigs.undoStack.push({ cursorPositionStart, cursorPositionEnd, value });
+    editorConfigs.undoStack.push({ selectionStart: selectionStart, selectionEnd: selectionEnd, value, tabbed });
     if (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
         editorConfigs.undoStack.shift();
     }
