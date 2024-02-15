@@ -6,22 +6,27 @@
     --lighterRGB: 44, 116, 179;
 }
 
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 body {
     background-color: var(--dark);
     overflow: hidden;
-    padding: 0;
-    margin: 0;
 }
 
 #app {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: 100%;
 }
 
 #workspace-container {
-    display: flex;
     width: 100%;
-    height: 100vh;
+    height: 100%;
 }
 
 #workspace {
@@ -54,10 +59,6 @@ button {
     -webkit-user-select: none;
     padding: 0rem .5rem;
     margin: 0px;
-}
-
-button:hover {
-    background-color: rgba(var(--lighterRGB), 0.2);
 }
 
 .menu-active {
@@ -310,5 +311,11 @@ div .option {
     #transpile-button {
         width: 1rem;
         justify-content: center;
+    }
+}
+
+@media (hover: hover) {
+    button:hover {
+        background-color: rgba(var(--lighterRGB), 0.2);
     }
 }
