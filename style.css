@@ -299,7 +299,7 @@ div .option {
     text-align: left;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .responsive-disappear {
         display: none;
     }
@@ -313,6 +313,7 @@ div .option {
     }
 
     #options-container {
+        left: .5rem;
         width: 14rem;
     }
 
