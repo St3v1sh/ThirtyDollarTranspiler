@@ -56,11 +56,11 @@ const configOptions = {
             lighterRGB: '160, 160, 160',
         },
         'contrast': {
-            darker: '#777777',
+            darker: '#a5a5a5',
             dark: '#18262e',
-            light: '#5d5d5d',
-            lighter: '#e1e1e1',
-            lighterRGB: '225, 225, 225',
+            light: '#7b7b7b',
+            lighter: '#ffffff',
+            lighterRGB: '255, 255, 255',
         },
         'ocean': {
             darker: '#092749',
