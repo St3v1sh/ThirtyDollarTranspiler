@@ -6,7 +6,7 @@ const editorConfigs = {
     replaceSpace: false,
     showLines: true,
     theme: 0,
-    undoStack: [{ selectionStart: 0, selectionEnd: 0, value: '', tabbed: false }],
+    undoStack: [],
     redoStack: [],
     showOptions: false,
 }
@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const transpileButton = document.getElementById('transpile-button');
     const dotIndicator = document.getElementById('dot-indicator');
     const lineCounter = document.getElementById('line-count-textarea');
+    const lineCounterTemplate = document.getElementById('line-count-template');
+
+    const preInputState = { selectionStart: 0, selectionEnd: 0, selectionDirection: 'forward', value: '' };
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
@@ -88,200 +91,301 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     textarea.addEventListener('scroll', function () {
-        dotIndicator.scrollTop = textarea.scrollTop;
-        dotIndicator.scrollLeft = textarea.scrollLeft;
-        lineCounter.scrollTop = textarea.scrollTop;
+        updateScrolling();
     });
 
-    textarea.addEventListener('input', function () {
-        dotIndicator.scrollTop = textarea.scrollTop;
-        dotIndicator.scrollLeft = textarea.scrollLeft;
-        lineCounter.scrollTop = textarea.scrollTop;
-        growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
+    textarea.addEventListener('input', function() {
+        growUndoStack(preInputState);
+        updateScrolling();
         updateDots();
         updateLineCounter();
     });
 
-    textarea.addEventListener('keydown', function (e) {
-        const selectionStart = this.selectionStart;
-        const selectionEnd = this.selectionEnd;
-        const currentValue = this.value;
+    textarea.addEventListener('keydown', function(e) {
+        preInputState.selectionStart = this.selectionStart;
+        preInputState.selectionEnd = this.selectionEnd;
+        preInputState.selectionDirection = this.selectionDirection;
+        preInputState.value = this.value;
 
-        if (e.key === 'Tab' && e.shiftKey) {
-            e.preventDefault();
+        const undo = () => {
+            if (editorConfigs.undoStack.length < 1)
+                return;
 
-            if (selectionStart === selectionEnd) {
+            const undoState = editorConfigs.undoStack.pop();
+            editorConfigs.redoStack.push({ ...preInputState });
 
-            } else {
-                const beforeString = currentValue.substring(0, selectionStart);
-                const rowsBeforeCursor = beforeString.split('\n');
-                const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-                const selectionLineEnd = currentValue.indexOf('\n', selectionEnd);
-                const selectionLineEndN = selectionLineEnd === -1 ? currentValue.length : selectionLineEnd;
-                const beforeSelectionLineEnd = currentValue.substring(0, selectionLineEndN);
-                const rows = beforeSelectionLineEnd.split('\n');
-                const rowStart = (beforeString.match(/\n/g) || []).length;
-                const rowEnd = rows.length;
+            restoreState(undoState);
+        };
 
-                const rowsBeforeCursorEnd = currentValue.substring(0, selectionEnd).split('\n');
-                const colEnd = rowsBeforeCursorEnd[rowsBeforeCursorEnd.length - 1].length;
+        const redo = () => {
+            if (editorConfigs.redoStack.length < 1)
+                return;
 
-                var lineShrinks = { first: 0, last: 0, total: 0 };
-                this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
-                rows.slice(rowStart, rowEnd).forEach((row, index) => {
-                    const tabbingRegex = new RegExp(`^ {1,${editorConfigs.tabSpaces}}`, 'g');
+            const redoState = editorConfigs.redoStack.pop();
+            editorConfigs.undoStack.push({ ...preInputState });
 
-                    const spacesRemoved = (row.match(tabbingRegex) || [''])[0].length;
-                    lineShrinks.total += spacesRemoved;
-                    if (index === 0) {
-                        if (col < editorConfigs.tabSpaces)
-                            lineShrinks.first = col;
-                        else
-                            lineShrinks.first = spacesRemoved;
-                    } else if (index === rowEnd - rowStart - 1) {
-                        if (colEnd < editorConfigs.tabSpaces)
-                            lineShrinks.last = colEnd;
-                        else
-                            lineShrinks.last = 0;
-                    }
+            restoreState(redoState);
+        };
 
-                    this.value += (this.value.length > 0 ? '\n' : '') + row.replace(tabbingRegex, '');
-                });
-                this.value += currentValue.substring(selectionLineEndN);
+        const restoreState =  ({ selectionStart, selectionEnd, selectionDirection, value }) => {
+            this.value = value;
+            this.selectionStart = selectionStart;
+            this.selectionEnd = selectionEnd;
+            this.selectionDirection = selectionDirection;
 
-                this.selectionStart = selectionStart - lineShrinks.first;
-                this.selectionEnd = selectionEnd - lineShrinks.total + (colEnd > editorConfigs.tabSpaces ? 0 : editorConfigs.tabSpaces - lineShrinks.last);
-
-                growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
-            }
-        } else if (e.key === 'Tab') {
-            e.preventDefault();
-
-            const beforeString = currentValue.substring(0, selectionStart);
-            if (selectionStart === selectionEnd) {
-                const rowsBeforeCursor = beforeString.split('\n');
-                const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-                const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-                this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
-
-                this.selectionStart = selectionStart + spacesAdded;
-                this.selectionEnd = this.selectionStart;
-
-                growUndoStack(this.selectionStart, this.selectionStart, this.value);
-            } else {
-                const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
-                const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
-                const rows = beforeSelectionEnd.split('\n');
-                const rowStart = (beforeString.match(/\n/g) || []).length;
-                const rowEnd = rows.length;
-
-                var lineGrowths = { first: 0, total: 0 };
-                this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
-                rows.slice(rowStart, rowEnd).forEach((row, index) => {
-                    const col = row.search(/\S/);
-                    const colN = col === -1 ? row.length : col;
-                    const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-                    const spacesAddedN = row.length > 0 ? spacesAdded : 0;
-                    this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
-
-                    lineGrowths.total += spacesAddedN;
-                    if (index === 0)
-                        lineGrowths.first = spacesAddedN;
-                });
-                this.value += currentValue.substring(selectionEnd);
-
-                this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
-                this.selectionEnd = selectionEnd + lineGrowths.total;
-
-                growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
-            }
-        } else if (e.key === 'Backspace') {
-            const rowsBeforeCursor = currentValue.substring(0, selectionStart).split('\n');
-            const row = rowsBeforeCursor.length;
-            const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-            const tabStartPosition = Math.floor((col - 1) / editorConfigs.tabSpaces) * editorConfigs.tabSpaces;
-            const extraSpaces = currentValue.substring(tabStartPosition, selectionStart);
-
-            if (this.selectionStart != this.selectionEnd) {
-                e.preventDefault();
-
-                const originalStart = this.selectionStart;
-
-                const beforeSelection = currentValue.substring(0, this.selectionStart);
-                this.value = beforeSelection + currentValue.substring(this.selectionEnd);
-                this.selectionStart = beforeSelection.length;
-                this.selectionEnd = this.selectionStart;
-
-                growUndoStack(originalStart + 1, this.selectionEnd, this.value);
-            } else if (extraSpaces.endsWith(' ')) {
-                e.preventDefault();
-
-                var spacesSubstring;
-                const fullSpaces = ' '.repeat(editorConfigs.tabSpaces);
-                for (let i = 0; i < fullSpaces.length; i++) {
-                    spacesSubstring = fullSpaces.substring(i);
-                    if (currentValue.substring(tabStartPosition, selectionStart).endsWith(spacesSubstring)) {
-                        break;
-                    }
-                }
-                this.value = currentValue.substring(0, selectionStart - spacesSubstring.length) + currentValue.substring(selectionStart)
-
-                this.selectionStart = selectionStart - spacesSubstring.length;
-                this.selectionEnd = this.selectionStart;
-
-                growUndoStack(selectionStart, this.selectionStart, this.value);
-            }
-        } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[selectionStart] === ' ') {
-            e.preventDefault();
-            this.value = currentValue.substring(0, selectionStart) + e.key + currentValue.substring(selectionStart + 1)
-            this.selectionStart = selectionStart + 1;
-            this.selectionEnd = this.selectionStart;
-
-            growUndoStack(selectionStart, this.selectionStart, this.value);
-        } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
-            e.preventDefault();
-            if (editorConfigs.redoStack.length > 0) {
-                const lastState = editorConfigs.redoStack.pop();
-                editorConfigs.undoStack.push(lastState);
-
-                if (lastState.tabbed) {
-                    const delta = lastState.value.length - this.value.length;
-                    this.value = lastState.value;
-                    this.selectionStart = lastState.selectionStart + (lastState.selectionStart === 0 ? 0 : editorConfigs.tabSpaces);
-                    this.selectionEnd = lastState.selectionEnd + delta;
-                } else {
-                    this.value = lastState.value;
-                    this.selectionStart = lastState.selectionEnd;
-                    this.selectionEnd = this.selectionStart;
-                }
-            }
-        } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey)) {
-            e.preventDefault();
-            if (editorConfigs.undoStack.length > 1) {
-                lastState = editorConfigs.undoStack.pop();
-                editorConfigs.redoStack.push(lastState);
-
-                const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
-                const delta = this.value.length - oldText.length;
-                this.value = oldText;
-
-                if (lastState.tabbed) {
-                    this.selectionStart = lastState.selectionStart;
-                    this.selectionEnd = lastState.selectionEnd;
-                } else if (delta < 0) {
-                    this.selectionStart = lastState.selectionStart - 1;
-                    this.selectionEnd = this.selectionStart - delta;
-                } else {
-                    this.selectionStart = lastState.selectionEnd - delta;
-                    this.selectionEnd = this.selectionStart;
-                }
-            }
+            updateScrolling();
+            updateDots();
+            updateLineCounter();
         }
-        updateDots();
-        updateLineCounter();
+
+        switch(e.key.toLowerCase()) {
+            case 'z':
+                if (!(e.ctrlKey || e.metaKey))
+                    break;
+                e.preventDefault();
+
+                // ctrl + shift + z to redo.
+                if (e.shiftKey) {
+                    redo();
+                    break;
+                }
+
+                // ctrl + z to undo.
+                undo();
+                break;
+
+            case 'y':
+                if (!(e.ctrlKey || e.metaKey))
+                    break;
+                e.preventDefault();
+
+                // ctrl + y to redo.
+                redo();
+                break;
+            default:
+        }
     });
+
+    function updateScrolling() {
+        dotIndicator.scrollTop = textarea.scrollTop;
+        dotIndicator.scrollLeft = textarea.scrollLeft;
+        lineCounter.scrollTop = textarea.scrollTop;
+    }
+
+    function updateDots() {
+        dotIndicator.value = textarea.value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
+    }
+    
+    function updateLineCounter() {
+        const numberOfLines = (textarea.value.match(/\n/g) || []).length + 1;
+        lineCounterTemplate.textContent = `${numberOfLines}`;
+        var linesText = '';
+        for (let lineNumber = 0; lineNumber < numberOfLines; lineNumber++)
+            linesText += (lineNumber + 1) + '\n';
+        lineCounter.value = linesText;
+    }
+
+    function growUndoStack({ selectionStart, selectionEnd, selectionDirection, value }) {
+        const undoStackLength = editorConfigs.undoStack.length;
+        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === value)
+            return;
+    
+        editorConfigs.undoStack.push({ selectionStart, selectionEnd, selectionDirection, value });
+        if (undoStackLength > editorConfigs.undoStackSize) {
+            editorConfigs.undoStack.shift();
+        }
+        editorConfigs.redoStack = [];
+    }
+
+    // textarea.addEventListener('input', function () {
+    //     dotIndicator.scrollTop = textarea.scrollTop;
+    //     dotIndicator.scrollLeft = textarea.scrollLeft;
+    //     lineCounter.scrollTop = textarea.scrollTop;
+    //     growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
+    //     updateDots();
+    //     updateLineCounter();
+    // });
+
+    // textarea.addEventListener('keydown', function (e) {
+    //     const selectionStart = this.selectionStart;
+    //     const selectionEnd = this.selectionEnd;
+    //     const currentValue = this.value;
+
+    //     if (e.key === 'Tab' && e.shiftKey) {
+    //         e.preventDefault();
+
+    //         if (selectionStart === selectionEnd) {
+
+    //         } else {
+    //             const beforeString = currentValue.substring(0, selectionStart);
+    //             const rowsBeforeCursor = beforeString.split('\n');
+    //             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+    //             const selectionLineEnd = currentValue.indexOf('\n', selectionEnd);
+    //             const selectionLineEndN = selectionLineEnd === -1 ? currentValue.length : selectionLineEnd;
+    //             const beforeSelectionLineEnd = currentValue.substring(0, selectionLineEndN);
+    //             const rows = beforeSelectionLineEnd.split('\n');
+    //             const rowStart = (beforeString.match(/\n/g) || []).length;
+    //             const rowEnd = rows.length;
+
+    //             const rowsBeforeCursorEnd = currentValue.substring(0, selectionEnd).split('\n');
+    //             const colEnd = rowsBeforeCursorEnd[rowsBeforeCursorEnd.length - 1].length;
+
+    //             var lineShrinks = { first: 0, last: 0, total: 0 };
+    //             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+    //             rows.slice(rowStart, rowEnd).forEach((row, index) => {
+    //                 const tabbingRegex = new RegExp(`^ {1,${editorConfigs.tabSpaces}}`, 'g');
+
+    //                 const spacesRemoved = (row.match(tabbingRegex) || [''])[0].length;
+    //                 lineShrinks.total += spacesRemoved;
+    //                 if (index === 0) {
+    //                     if (col < editorConfigs.tabSpaces)
+    //                         lineShrinks.first = col;
+    //                     else
+    //                         lineShrinks.first = spacesRemoved;
+    //                 } else if (index === rowEnd - rowStart - 1) {
+    //                     if (colEnd < editorConfigs.tabSpaces)
+    //                         lineShrinks.last = colEnd;
+    //                     else
+    //                         lineShrinks.last = 0;
+    //                 }
+
+    //                 this.value += (this.value.length > 0 ? '\n' : '') + row.replace(tabbingRegex, '');
+    //             });
+    //             this.value += currentValue.substring(selectionLineEndN);
+
+    //             this.selectionStart = selectionStart - lineShrinks.first;
+    //             this.selectionEnd = selectionEnd - lineShrinks.total + (colEnd > editorConfigs.tabSpaces ? 0 : editorConfigs.tabSpaces - lineShrinks.last);
+
+    //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+    //         }
+    //     } else if (e.key === 'Tab') {
+    //         e.preventDefault();
+
+    //         const beforeString = currentValue.substring(0, selectionStart);
+    //         if (selectionStart === selectionEnd) {
+    //             const rowsBeforeCursor = beforeString.split('\n');
+    //             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+
+    //             const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+    //             this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
+
+    //             this.selectionStart = selectionStart + spacesAdded;
+    //             this.selectionEnd = this.selectionStart;
+
+    //             growUndoStack(this.selectionStart, this.selectionStart, this.value);
+    //         } else {
+    //             const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
+    //             const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
+    //             const rows = beforeSelectionEnd.split('\n');
+    //             const rowStart = (beforeString.match(/\n/g) || []).length;
+    //             const rowEnd = rows.length;
+
+    //             var lineGrowths = { first: 0, total: 0 };
+    //             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+    //             rows.slice(rowStart, rowEnd).forEach((row, index) => {
+    //                 const col = row.search(/\S/);
+    //                 const colN = col === -1 ? row.length : col;
+    //                 const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+    //                 const spacesAddedN = row.length > 0 ? spacesAdded : 0;
+    //                 this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
+
+    //                 lineGrowths.total += spacesAddedN;
+    //                 if (index === 0)
+    //                     lineGrowths.first = spacesAddedN;
+    //             });
+    //             this.value += currentValue.substring(selectionEnd);
+
+    //             this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
+    //             this.selectionEnd = selectionEnd + lineGrowths.total;
+
+    //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+    //         }
+    //     } else if (e.key === 'Backspace') {
+    //         const rowsBeforeCursor = currentValue.substring(0, selectionStart).split('\n');
+    //         const row = rowsBeforeCursor.length;
+    //         const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+
+    //         const tabStartPosition = Math.floor((col - 1) / editorConfigs.tabSpaces) * editorConfigs.tabSpaces;
+    //         const extraSpaces = currentValue.substring(tabStartPosition, selectionStart);
+
+    //         if (this.selectionStart != this.selectionEnd) {
+    //             e.preventDefault();
+
+    //             const originalStart = this.selectionStart;
+
+    //             const beforeSelection = currentValue.substring(0, this.selectionStart);
+    //             this.value = beforeSelection + currentValue.substring(this.selectionEnd);
+    //             this.selectionStart = beforeSelection.length;
+    //             this.selectionEnd = this.selectionStart;
+
+    //             growUndoStack(originalStart + 1, this.selectionEnd, this.value);
+    //         } else if (extraSpaces.endsWith(' ')) {
+    //             e.preventDefault();
+
+    //             var spacesSubstring;
+    //             const fullSpaces = ' '.repeat(editorConfigs.tabSpaces);
+    //             for (let i = 0; i < fullSpaces.length; i++) {
+    //                 spacesSubstring = fullSpaces.substring(i);
+    //                 if (currentValue.substring(tabStartPosition, selectionStart).endsWith(spacesSubstring)) {
+    //                     break;
+    //                 }
+    //             }
+    //             this.value = currentValue.substring(0, selectionStart - spacesSubstring.length) + currentValue.substring(selectionStart)
+
+    //             this.selectionStart = selectionStart - spacesSubstring.length;
+    //             this.selectionEnd = this.selectionStart;
+
+    //             growUndoStack(selectionStart, this.selectionStart, this.value);
+    //         }
+    //     } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[selectionStart] === ' ') {
+    //         e.preventDefault();
+    //         this.value = currentValue.substring(0, selectionStart) + e.key + currentValue.substring(selectionStart + 1)
+    //         this.selectionStart = selectionStart + 1;
+    //         this.selectionEnd = this.selectionStart;
+
+    //         growUndoStack(selectionStart, this.selectionStart, this.value);
+    //     } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+    //         e.preventDefault();
+    //         if (editorConfigs.redoStack.length > 0) {
+    //             const lastState = editorConfigs.redoStack.pop();
+    //             editorConfigs.undoStack.push(lastState);
+
+    //             if (lastState.tabbed) {
+    //                 const delta = lastState.value.length - this.value.length;
+    //                 this.value = lastState.value;
+    //                 this.selectionStart = lastState.selectionStart + (lastState.selectionStart === 0 ? 0 : editorConfigs.tabSpaces);
+    //                 this.selectionEnd = lastState.selectionEnd + delta;
+    //             } else {
+    //                 this.value = lastState.value;
+    //                 this.selectionStart = lastState.selectionEnd;
+    //                 this.selectionEnd = this.selectionStart;
+    //             }
+    //         }
+    //     } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey)) {
+    //         e.preventDefault();
+    //         if (editorConfigs.undoStack.length > 1) {
+    //             lastState = editorConfigs.undoStack.pop();
+    //             editorConfigs.redoStack.push(lastState);
+
+    //             const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
+    //             const delta = this.value.length - oldText.length;
+    //             this.value = oldText;
+
+    //             if (lastState.tabbed) {
+    //                 this.selectionStart = lastState.selectionStart;
+    //                 this.selectionEnd = lastState.selectionEnd;
+    //             } else if (delta < 0) {
+    //                 this.selectionStart = lastState.selectionStart - 1;
+    //                 this.selectionEnd = this.selectionStart - delta;
+    //             } else {
+    //                 this.selectionStart = lastState.selectionEnd - delta;
+    //                 this.selectionEnd = this.selectionStart;
+    //             }
+    //         }
+    //     }
+    //     updateDots();
+    //     updateLineCounter();
+    // });
 
     // Editor font size settings.
     document.getElementById('editor-font-button').addEventListener('click', function (e) {
@@ -301,10 +405,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateEditorFontSize() {
         const objectKey = Object.keys(configOptions.editorFontSize)[editorConfigs.fontSize];
         const newFontSize = configOptions.editorFontSize[objectKey];
-        document.getElementById('input').style.fontSize = newFontSize + 'rem';
-        document.getElementById('dot-indicator').style.fontSize = newFontSize + 'rem';
-        document.getElementById('line-count-template').style.fontSize = newFontSize + 'rem';
-        document.getElementById('line-count-textarea').style.fontSize = newFontSize + 'rem';
+        textarea.style.fontSize = newFontSize + 'rem';
+        dotIndicator.style.fontSize = newFontSize + 'rem';
+        lineCounterTemplate.style.fontSize = newFontSize + 'rem';
+        lineCounter.style.fontSize = newFontSize + 'rem';
         return objectKey;
     }
 
@@ -373,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Replace spaces settings.
-    document.getElementById('replace-space-button').addEventListener('click', function (e) {
+    document.getElementById('replace-space-button').addEventListener('click', function () {
         editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
         this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
     });
@@ -385,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Line number settings.
-    document.getElementById('show-lines-button').addEventListener('click', function (e) {
+    document.getElementById('show-lines-button').addEventListener('click', function () {
         toggleLines();
         this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
     });
@@ -429,6 +533,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return objectKey;
     }
 
+    // Status bar logic.
     document.getElementById('statusbar').addEventListener('click', function () {
         document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
         document.getElementById('status').classList.add('hovered');
@@ -450,17 +555,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //   .then(data => textarea.value = data);
 });
 
-function growUndoStack(selectionStart, selectionEnd, value, tabbed=false) {
-    if (editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value === value)
-        return;
-
-    editorConfigs.undoStack.push({ selectionStart: selectionStart, selectionEnd: selectionEnd, value, tabbed });
-    if (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
-        editorConfigs.undoStack.shift();
-    }
-    editorConfigs.redoStack = [];
-}
-
 function toggleOptionsVisibility() {
     if (editorConfigs.showOptions) {
         document.getElementById('options-exit-button').style.display = 'none';
@@ -474,19 +568,6 @@ function toggleOptionsVisibility() {
     }
     document.getElementById('options-button').classList.toggle('menu-active');
     editorConfigs.showOptions = !editorConfigs.showOptions;
-}
-
-function updateDots() {
-    document.getElementById('dot-indicator').value = document.getElementById('input').value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
-}
-
-function updateLineCounter() {
-    const numberOfLines = (document.getElementById('input').value.match(/\n/g) || []).length + 1;
-    document.getElementById('line-count-template').textContent = `${numberOfLines}`;
-    var linesText = '';
-    for (let lineNumber = 0; lineNumber < numberOfLines; lineNumber++)
-        linesText += (lineNumber + 1) + '\n';
-    document.getElementById('line-count-textarea').value = linesText;
 }
 
 function cycleOption(value, min, max, delta, interval = 1) {
