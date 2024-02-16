@@ -107,7 +107,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectionEnd = this.selectionEnd;
         const currentValue = this.value;
 
-        if (e.key === 'Tab') {
+        if (e.key === 'Tab' && e.shiftKey) {
+            e.preventDefault();
+        } else if (e.key === 'Tab') {
             e.preventDefault();
 
             const beforeString = currentValue.substring(0, selectionStart);
@@ -199,9 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const lastState = editorConfigs.redoStack.pop();
                 editorConfigs.undoStack.push(lastState);
 
-                console.log(lastState);
                 if (lastState.tabbed) {
-                    console.log('here');
                     const delta = lastState.value.length - this.value.length;
                     this.value = lastState.value;
                     this.selectionStart = lastState.selectionStart + (lastState.selectionStart === 0 ? 0 : editorConfigs.tabSpaces);
