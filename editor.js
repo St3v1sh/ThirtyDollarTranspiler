@@ -95,10 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     textarea.addEventListener('input', function() {
-        growUndoStack(preInputState);
-        updateScrolling();
-        updateDots();
-        updateLineCounter();
+        growUndoStack();
     });
 
     textarea.addEventListener('keydown', function(e) {
@@ -107,50 +104,19 @@ document.addEventListener('DOMContentLoaded', function () {
         preInputState.selectionDirection = this.selectionDirection;
         preInputState.value = this.value;
 
-        const undo = () => {
-            if (editorConfigs.undoStack.length < 1)
-                return;
-
-            const undoState = editorConfigs.undoStack.pop();
-            editorConfigs.redoStack.push({ ...preInputState });
-
-            restoreState(undoState);
-        };
-
-        const redo = () => {
-            if (editorConfigs.redoStack.length < 1)
-                return;
-
-            const redoState = editorConfigs.redoStack.pop();
-            editorConfigs.undoStack.push({ ...preInputState });
-
-            restoreState(redoState);
-        };
-
-        const restoreState =  ({ selectionStart, selectionEnd, selectionDirection, value }) => {
-            this.value = value;
-            this.selectionStart = selectionStart;
-            this.selectionEnd = selectionEnd;
-            this.selectionDirection = selectionDirection;
-
-            updateScrolling();
-            updateDots();
-            updateLineCounter();
-        }
-
         switch(e.key.toLowerCase()) {
             case 'z':
                 if (!(e.ctrlKey || e.metaKey))
                     break;
                 e.preventDefault();
 
-                // ctrl + shift + z to redo.
+                // Ctrl + shift + z to redo.
                 if (e.shiftKey) {
                     redo();
                     break;
                 }
 
-                // ctrl + z to undo.
+                // Ctrl + z to undo.
                 undo();
                 break;
 
@@ -159,12 +125,73 @@ document.addEventListener('DOMContentLoaded', function () {
                     break;
                 e.preventDefault();
 
-                // ctrl + y to redo.
+                // Ctrl + y to redo.
                 redo();
                 break;
             default:
+                if (e.ctrlKey || e.metaKey)
+                    break;
+
+                // Space replacing.
+                if (editorConfigs.replaceSpace && this.selectionStart === this.selectionEnd && e.key.length === 1 && e.key !== ' ' && this.value[this.selectionStart] === ' ') {
+                    e.preventDefault();
+
+                    this.value = this.value.substring(0, this.selectionStart) + e.key + this.value.substring(this.selectionStart + 1);
+                    this.selectionStart = preInputState.selectionStart + 1;
+                    this.selectionEnd = this.selectionStart;
+
+                    growUndoStack();
+                }
         }
     });
+
+    function growUndoStack() {
+        const undoStackLength = editorConfigs.undoStack.length;
+        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === preInputState.value)
+            return;
+    
+        while (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
+            editorConfigs.undoStack.shift();
+        }
+        editorConfigs.undoStack.push({ ...preInputState });
+        editorConfigs.redoStack = [];
+        
+        updateScrolling();
+        updateDots();
+        updateLineCounter();
+    }
+
+    function undo() {
+        if (editorConfigs.undoStack.length < 1)
+            return;
+
+        const undoState = editorConfigs.undoStack.pop();
+        editorConfigs.redoStack.push({ ...preInputState });
+
+        restoreState(undoState);
+        
+    }
+
+    function redo() {
+        if (editorConfigs.redoStack.length < 1)
+            return;
+
+        const redoState = editorConfigs.redoStack.pop();
+        editorConfigs.undoStack.push({ ...preInputState });
+
+        restoreState(redoState);
+    }
+
+    function restoreState({ selectionStart, selectionEnd, selectionDirection, value }) {
+        textarea.value = value;
+        textarea.selectionStart = selectionStart;
+        textarea.selectionEnd = selectionEnd;
+        textarea.selectionDirection = selectionDirection;
+
+        updateScrolling();
+        updateDots();
+        updateLineCounter();
+    }
 
     function updateScrolling() {
         dotIndicator.scrollTop = textarea.scrollTop;
@@ -183,18 +210,6 @@ document.addEventListener('DOMContentLoaded', function () {
         for (let lineNumber = 0; lineNumber < numberOfLines; lineNumber++)
             linesText += (lineNumber + 1) + '\n';
         lineCounter.value = linesText;
-    }
-
-    function growUndoStack({ selectionStart, selectionEnd, selectionDirection, value }) {
-        const undoStackLength = editorConfigs.undoStack.length;
-        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === value)
-            return;
-    
-        editorConfigs.undoStack.push({ selectionStart, selectionEnd, selectionDirection, value });
-        if (undoStackLength > editorConfigs.undoStackSize) {
-            editorConfigs.undoStack.shift();
-        }
-        editorConfigs.redoStack = [];
     }
 
     // textarea.addEventListener('input', function () {
@@ -337,54 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     //             growUndoStack(selectionStart, this.selectionStart, this.value);
     //         }
-    //     } else if (editorConfigs.replaceSpace && /^\S$/.test(e.key) && !(e.ctrlKey || e.metaKey) && currentValue[selectionStart] === ' ') {
-    //         e.preventDefault();
-    //         this.value = currentValue.substring(0, selectionStart) + e.key + currentValue.substring(selectionStart + 1)
-    //         this.selectionStart = selectionStart + 1;
-    //         this.selectionEnd = this.selectionStart;
-
-    //         growUndoStack(selectionStart, this.selectionStart, this.value);
-    //     } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
-    //         e.preventDefault();
-    //         if (editorConfigs.redoStack.length > 0) {
-    //             const lastState = editorConfigs.redoStack.pop();
-    //             editorConfigs.undoStack.push(lastState);
-
-    //             if (lastState.tabbed) {
-    //                 const delta = lastState.value.length - this.value.length;
-    //                 this.value = lastState.value;
-    //                 this.selectionStart = lastState.selectionStart + (lastState.selectionStart === 0 ? 0 : editorConfigs.tabSpaces);
-    //                 this.selectionEnd = lastState.selectionEnd + delta;
-    //             } else {
-    //                 this.value = lastState.value;
-    //                 this.selectionStart = lastState.selectionEnd;
-    //                 this.selectionEnd = this.selectionStart;
-    //             }
-    //         }
-    //     } else if (e.key.toLowerCase() === 'z' && (e.ctrlKey || e.metaKey)) {
-    //         e.preventDefault();
-    //         if (editorConfigs.undoStack.length > 1) {
-    //             lastState = editorConfigs.undoStack.pop();
-    //             editorConfigs.redoStack.push(lastState);
-
-    //             const oldText = editorConfigs.undoStack[editorConfigs.undoStack.length - 1].value
-    //             const delta = this.value.length - oldText.length;
-    //             this.value = oldText;
-
-    //             if (lastState.tabbed) {
-    //                 this.selectionStart = lastState.selectionStart;
-    //                 this.selectionEnd = lastState.selectionEnd;
-    //             } else if (delta < 0) {
-    //                 this.selectionStart = lastState.selectionStart - 1;
-    //                 this.selectionEnd = this.selectionStart - delta;
-    //             } else {
-    //                 this.selectionStart = lastState.selectionEnd - delta;
-    //                 this.selectionEnd = this.selectionStart;
-    //             }
-    //         }
     //     }
-    //     updateDots();
-    //     updateLineCounter();
     // });
 
     // Editor font size settings.
@@ -556,18 +524,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function toggleOptionsVisibility() {
+    editorConfigs.showOptions = !editorConfigs.showOptions;
     if (editorConfigs.showOptions) {
-        document.getElementById('options-exit-button').style.display = 'none';
-        document.getElementById('options-menu-text').style.display = 'none';
-        document.getElementById('options-container').style.display = 'none';
-        document.getElementById('input').focus();
-    } else {
         document.getElementById('options-exit-button').style.display = 'block';
         document.getElementById('options-menu-text').style.display = 'block';
         document.getElementById('options-container').style.display = 'block';
+        document.getElementById('options-button').classList.add('menu-active')
+    } else {
+        document.getElementById('options-exit-button').style.display = 'none';
+        document.getElementById('options-menu-text').style.display = 'none';
+        document.getElementById('options-container').style.display = 'none';
+        document.getElementById('options-button').classList.remove('menu-active')
+        document.getElementById('input').focus();
     }
-    document.getElementById('options-button').classList.toggle('menu-active');
-    editorConfigs.showOptions = !editorConfigs.showOptions;
 }
 
 function cycleOption(value, min, max, delta, interval = 1) {
