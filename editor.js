@@ -109,6 +109,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (e.key === 'Tab' && e.shiftKey) {
             e.preventDefault();
+
+            if (selectionStart === selectionEnd) {
+
+            } else {
+                const beforeString = currentValue.substring(0, selectionStart);
+                const rowsBeforeCursor = beforeString.split('\n');
+                const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+                const selectionLineEnd = currentValue.indexOf('\n', selectionEnd);
+                const selectionLineEndN = selectionLineEnd === -1 ? currentValue.length : selectionLineEnd;
+                const beforeSelectionLineEnd = currentValue.substring(0, selectionLineEndN);
+                const rows = beforeSelectionLineEnd.split('\n');
+                const rowStart = (beforeString.match(/\n/g) || []).length;
+                const rowEnd = rows.length;
+
+                const rowsBeforeCursorEnd = currentValue.substring(0, selectionEnd).split('\n');
+                const colEnd = rowsBeforeCursorEnd[rowsBeforeCursorEnd.length - 1].length;
+
+                var lineShrinks = { first: 0, last: 0, total: 0 };
+                this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+                rows.slice(rowStart, rowEnd).forEach((row, index) => {
+                    const tabbingRegex = new RegExp(`^ {1,${editorConfigs.tabSpaces}}`, 'g');
+
+                    const spacesRemoved = (row.match(tabbingRegex) || [''])[0].length;
+                    lineShrinks.total += spacesRemoved;
+                    if (index === 0) {
+                        if (col < editorConfigs.tabSpaces)
+                            lineShrinks.first = col;
+                        else
+                            lineShrinks.first = spacesRemoved;
+                    } else if (index === rowEnd - rowStart - 1) {
+                        if (colEnd < editorConfigs.tabSpaces)
+                            lineShrinks.last = colEnd;
+                        else
+                            lineShrinks.last = 0;
+                    }
+
+                    this.value += (this.value.length > 0 ? '\n' : '') + row.replace(tabbingRegex, '');
+                });
+                this.value += currentValue.substring(selectionLineEndN);
+
+                this.selectionStart = selectionStart - lineShrinks.first;
+                this.selectionEnd = selectionEnd - lineShrinks.total + (colEnd > editorConfigs.tabSpaces ? 0 : editorConfigs.tabSpaces - lineShrinks.last);
+
+                growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+            }
         } else if (e.key === 'Tab') {
             e.preventDefault();
 
@@ -123,27 +168,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.selectionStart = selectionStart + spacesAdded;
                 this.selectionEnd = this.selectionStart;
 
-                growUndoStack(this.selectionStart + 1, this.selectionStart, this.value);
+                growUndoStack(this.selectionStart, this.selectionStart, this.value);
             } else {
                 const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
-                const beforeStringEnd = currentValue.substring(0, selectionEnd);
-                const rows = beforeStringEnd.split('\n');
+                const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
+                const rows = beforeSelectionEnd.split('\n');
                 const rowStart = (beforeString.match(/\n/g) || []).length;
                 const rowEnd = rows.length;
 
                 var lineGrowths = { first: 0, total: 0 };
                 this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
-                for (let row = rowStart; row < rowEnd; row++) {
-                    const col = rows[row].search(/\S/);
-                    const colN = col === -1 ? rows[row].length : col;
+                rows.slice(rowStart, rowEnd).forEach((row, index) => {
+                    const col = row.search(/\S/);
+                    const colN = col === -1 ? row.length : col;
                     const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-                    const spacesAddedN = rows[row].length > 0 ? spacesAdded : 0;
-                    this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + rows[row];
+                    const spacesAddedN = row.length > 0 ? spacesAdded : 0;
+                    this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
 
                     lineGrowths.total += spacesAddedN;
-                    if (row === rowStart)
+                    if (index === 0)
                         lineGrowths.first = spacesAddedN;
-                }
+                });
                 this.value += currentValue.substring(selectionEnd);
 
                 this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
@@ -222,12 +267,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const delta = this.value.length - oldText.length;
                 this.value = oldText;
 
-                if (delta < 0) {
-                    this.selectionStart = lastState.selectionStart - 1;
-                    this.selectionEnd = this.selectionStart - delta;
-                } else if (lastState.tabbed) {
+                if (lastState.tabbed) {
                     this.selectionStart = lastState.selectionStart;
                     this.selectionEnd = lastState.selectionEnd;
+                } else if (delta < 0) {
+                    this.selectionStart = lastState.selectionStart - 1;
+                    this.selectionEnd = this.selectionStart - delta;
                 } else {
                     this.selectionStart = lastState.selectionEnd - delta;
                     this.selectionEnd = this.selectionStart;
