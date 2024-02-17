@@ -104,9 +104,11 @@ document.addEventListener('DOMContentLoaded', function () {
         preInputState.selectionDirection = this.selectionDirection;
         preInputState.value = this.value;
 
+        const ctrlKey = e.ctrlKey || e.metaKey;
+
         switch(e.key.toLowerCase()) {
             case 'z':
-                if (!(e.ctrlKey || e.metaKey))
+                if (!ctrlKey)
                     break;
                 e.preventDefault();
 
@@ -121,15 +123,55 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
 
             case 'y':
-                if (!(e.ctrlKey || e.metaKey))
+                if (!ctrlKey)
                     break;
                 e.preventDefault();
 
                 // Ctrl + y to redo.
                 redo();
                 break;
+
+            case 'backspace':
+                if (this.textLength && this.selectionStart === this.selectionEnd && this.value[this.selectionStart - 1] === ' ') {
+                    const col = getCol(this.selectionStart);
+                    const lineBeforeSelectionStart = this.value.substring(this.selectionStart - col, this.selectionStart);
+
+                    // Delete until the last word or until the last space.
+                    if (ctrlKey) {
+                        e.preventDefault();
+
+                        const trimmedLineBeforeSelectionStart = lineBeforeSelectionStart.trimEnd();
+                        const spacesRemoved = lineBeforeSelectionStart.length - trimmedLineBeforeSelectionStart.length;
+                        var amountRemoved = spacesRemoved;
+                        if (spacesRemoved === 1 && trimmedLineBeforeSelectionStart.length) {
+                            console.log(trimmedLineBeforeSelectionStart.lastIndexOf(' '));
+                            const lastWordPosition = trimmedLineBeforeSelectionStart.lastIndexOf(' ') + 1;
+                            amountRemoved = lineBeforeSelectionStart.length - lastWordPosition;
+                        }
+
+                        this.value = this.value.substring(0, this.selectionStart - amountRemoved) + this.value.substring(this.selectionStart);
+                        this.selectionStart = preInputState.selectionStart - amountRemoved;
+                        this.selectionEnd = this.selectionStart;
+
+                        growUndoStack();
+
+                    // Delete spaces, snapping to tab spaces grid.
+                    } else {
+                        if (lineBeforeSelectionStart.length === 0 || lineBeforeSelectionStart.trim().length !== 0)
+                            break;
+                        e.preventDefault();
+
+                        const spacesRemoved = (lineBeforeSelectionStart.length % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+                        this.value = this.value.substring(0, this.selectionStart - spacesRemoved) + this.value.substring(this.selectionStart);
+                        this.selectionStart = preInputState.selectionStart - spacesRemoved;
+                        this.selectionEnd = this.selectionStart;
+
+                        growUndoStack();
+                    }
+                }
+
             default:
-                if (e.ctrlKey || e.metaKey)
+                if (ctrlKey)
                     break;
 
                 // Space replacing.
@@ -145,20 +187,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function growUndoStack() {
-        const undoStackLength = editorConfigs.undoStack.length;
-        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === preInputState.value)
-            return;
-    
-        while (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
-            editorConfigs.undoStack.shift();
-        }
-        editorConfigs.undoStack.push({ ...preInputState });
-        editorConfigs.redoStack = [];
-        
-        updateScrolling();
-        updateDots();
-        updateLineCounter();
+    function getRow(position) {
+        return (textarea.value.substring(0, position).match(/\n/g) || []).length;
+    }
+
+    function getCol(position) {
+        const prePositionText = textarea.value.substring(0, position);
+        return prePositionText.length - prePositionText.lastIndexOf('\n') - 1
+    }
+
+    function getRowCol(position) {
+        const prePositionText = textarea.value.substring(0, position);
+        const row = (prePositionText.match(/\n/g) || []).length;
+        const col = prePositionText.length - prePositionText.lastIndexOf('\n') - 1;
+
+        return { row, col };
     }
 
     function undo() {
@@ -169,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
         editorConfigs.redoStack.push({ ...preInputState });
 
         restoreState(undoState);
-        
     }
 
     function redo() {
@@ -188,6 +230,22 @@ document.addEventListener('DOMContentLoaded', function () {
         textarea.selectionEnd = selectionEnd;
         textarea.selectionDirection = selectionDirection;
 
+        updateScrolling();
+        updateDots();
+        updateLineCounter();
+    }
+
+    function growUndoStack() {
+        const undoStackLength = editorConfigs.undoStack.length;
+        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === preInputState.value)
+            return;
+    
+        while (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
+            editorConfigs.undoStack.shift();
+        }
+        editorConfigs.undoStack.push({ ...preInputState });
+        editorConfigs.redoStack = [];
+        
         updateScrolling();
         updateDots();
         updateLineCounter();
@@ -314,43 +372,6 @@ document.addEventListener('DOMContentLoaded', function () {
     //             this.selectionEnd = selectionEnd + lineGrowths.total;
 
     //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
-    //         }
-    //     } else if (e.key === 'Backspace') {
-    //         const rowsBeforeCursor = currentValue.substring(0, selectionStart).split('\n');
-    //         const row = rowsBeforeCursor.length;
-    //         const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-    //         const tabStartPosition = Math.floor((col - 1) / editorConfigs.tabSpaces) * editorConfigs.tabSpaces;
-    //         const extraSpaces = currentValue.substring(tabStartPosition, selectionStart);
-
-    //         if (this.selectionStart != this.selectionEnd) {
-    //             e.preventDefault();
-
-    //             const originalStart = this.selectionStart;
-
-    //             const beforeSelection = currentValue.substring(0, this.selectionStart);
-    //             this.value = beforeSelection + currentValue.substring(this.selectionEnd);
-    //             this.selectionStart = beforeSelection.length;
-    //             this.selectionEnd = this.selectionStart;
-
-    //             growUndoStack(originalStart + 1, this.selectionEnd, this.value);
-    //         } else if (extraSpaces.endsWith(' ')) {
-    //             e.preventDefault();
-
-    //             var spacesSubstring;
-    //             const fullSpaces = ' '.repeat(editorConfigs.tabSpaces);
-    //             for (let i = 0; i < fullSpaces.length; i++) {
-    //                 spacesSubstring = fullSpaces.substring(i);
-    //                 if (currentValue.substring(tabStartPosition, selectionStart).endsWith(spacesSubstring)) {
-    //                     break;
-    //                 }
-    //             }
-    //             this.value = currentValue.substring(0, selectionStart - spacesSubstring.length) + currentValue.substring(selectionStart)
-
-    //             this.selectionStart = selectionStart - spacesSubstring.length;
-    //             this.selectionEnd = this.selectionStart;
-
-    //             growUndoStack(selectionStart, this.selectionStart, this.value);
     //         }
     //     }
     // });
