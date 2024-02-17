@@ -169,6 +169,35 @@ document.addEventListener('DOMContentLoaded', function () {
                         growUndoStack();
                     }
                 }
+                break;
+
+            case 'tab':
+                e.preventDefault();
+
+                // Outdent selected lines back to their previous grid lines.
+                if (e.shiftKey) {
+                    break;
+                }
+
+                // Indent to the next grid line.
+                if (this.selectionStart === this.selectionEnd) {
+                    const col = getCol(this.selectionStart);
+                    const spacesAdded = (editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces)) || editorConfigs.tabSpaces;
+
+                    this.value = this.value.substring(0, this.selectionStart) + ' '.repeat(spacesAdded) + this.value.substring(this.selectionStart);
+                    this.selectionStart = preInputState.selectionStart + spacesAdded;
+                    this.selectionEnd = this.selectionStart;
+
+                // Indent selected lines to their next grid lines.
+                } else {
+                    const colStart = getCol(this.selectionStart);
+                    const selectionEndLineEnd = this.value.indexOf('\n', this.value[this.selectionEnd - 1] == '\n' ? this.selectionEnd - 1 : this.selectionEnd);
+                    const selectionEndLineEndN = selectionEndLineEnd === -1 ? this.value.length : selectionEndLineEnd;
+                    const valueSlice = this.value.substring(this.selectionStart - colStart, selectionEndLineEndN);
+                }
+
+                growUndoStack();
+                break;
 
             default:
                 if (ctrlKey)
@@ -186,6 +215,50 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
         }
     });
+
+    //     } else if (e.key === 'Tab') {
+    //         e.preventDefault();
+
+    //         const beforeString = currentValue.substring(0, selectionStart);
+    //         if (selectionStart === selectionEnd) {
+    //             const rowsBeforeCursor = beforeString.split('\n');
+    //             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+
+    //             const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+    //             this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
+
+    //             this.selectionStart = selectionStart + spacesAdded;
+    //             this.selectionEnd = this.selectionStart;
+
+    //             growUndoStack(this.selectionStart, this.selectionStart, this.value);
+    //         } else {
+    //             const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
+    //             const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
+    //             const rows = beforeSelectionEnd.split('\n');
+    //             const rowStart = (beforeString.match(/\n/g) || []).length;
+    //             const rowEnd = rows.length;
+
+    //             var lineGrowths = { first: 0, total: 0 };
+    //             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+    //             rows.slice(rowStart, rowEnd).forEach((row, index) => {
+    //                 const col = row.search(/\S/);
+    //                 const colN = col === -1 ? row.length : col;
+    //                 const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
+    //                 const spacesAddedN = row.length > 0 ? spacesAdded : 0;
+    //                 this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
+
+    //                 lineGrowths.total += spacesAddedN;
+    //                 if (index === 0)
+    //                     lineGrowths.first = spacesAddedN;
+    //             });
+    //             this.value += currentValue.substring(selectionEnd);
+
+    //             this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
+    //             this.selectionEnd = selectionEnd + lineGrowths.total;
+
+    //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+    //         }
+    //     }
 
     function getRow(position) {
         return (textarea.value.substring(0, position).match(/\n/g) || []).length;
@@ -237,9 +310,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function growUndoStack() {
         const undoStackLength = editorConfigs.undoStack.length;
-        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === preInputState.value)
+        if ((undoStackLength && editorConfigs.undoStack[undoStackLength - 1].value) === preInputState.value) {
+            updateScrolling();
+            updateDots();
+            updateLineCounter();
             return;
-    
+        }
+
         while (editorConfigs.undoStack.length > editorConfigs.undoStackSize) {
             editorConfigs.undoStack.shift();
         }
