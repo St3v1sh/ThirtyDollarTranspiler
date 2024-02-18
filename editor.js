@@ -174,35 +174,67 @@ document.addEventListener('DOMContentLoaded', function () {
         const { row: rowStart, col: colStart } = getRowCol(this.selectionStart);
         const { row: rowEnd, col: colEnd } = getRowCol(this.selectionEnd);
 
-        if (e.shiftKey) {
-          // Outdent selected lines back to their previous grid lines.
-          break;
-        }
-
         const isEndOfLineSelected = this.selectionEnd < this.value.length ? this.value[this.selectionEnd] === '\n' : true;
         const isLineSectionSelection = rowStart === rowEnd && !(colStart === 0 && isEndOfLineSelected);
-        if (this.selectionStart === this.selectionEnd || isLineSectionSelection) {
+        if (!e.shiftKey && (this.selectionStart === this.selectionEnd || isLineSectionSelection)) {
           // Indent to the next grid line.
-          console.log('1');
           const spacesAdded = (editorConfigs.tabSpaces - (colStart % editorConfigs.tabSpaces)) || editorConfigs.tabSpaces;
 
           this.value = this.value.substring(0, this.selectionStart) + ' '.repeat(spacesAdded) + this.value.substring(this.selectionEnd);
           this.selectionStart = preInputState.selectionStart + spacesAdded;
           this.selectionEnd = this.selectionStart;
+
+          growUndoStack();
+          break;
+        }
+
+        const selectionEndLineEnd = this.value.indexOf('\n', this.value[this.selectionEnd - 1] == '\n' ? this.selectionEnd - 1 : this.selectionEnd);
+        const selectionEndLineEndN = selectionEndLineEnd === -1 ? this.value.length : selectionEndLineEnd;
+        const rowsSlice = this.value.substring(this.selectionStart - colStart, selectionEndLineEndN).split('\n');
+        if (e.shiftKey) {
+          // Outdent selected lines back to their previous grid lines.
+          const lineShrinks = { first: 0, last: 0, total: 0 };
+          this.value = preInputState.value.substring(0, this.selectionStart - colStart);
+          rowsSlice.forEach((row, index) => {
+            const colContentStart = row.search(/\S/);
+            const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
+            const spacesRemoved = row.length > 0 ? (
+              colContentStartN % editorConfigs.tabSpaces || editorConfigs.tabSpaces
+            ) : (
+              0
+            );
+
+            if (index === 0) {
+              lineShrinks.first = colContentStart < colStart ? (
+                spacesRemoved
+              ) : (
+                colContentStart - colStart < editorConfigs.tabSpaces ? (
+                  spacesRemoved - (colContentStart - colStart)
+                ) : (
+                  0
+                )
+              );
+            }
+            if (index === rowsSlice.length - 1)
+              lineShrinks.last = spacesRemoved;
+            lineShrinks.total += spacesRemoved;
+
+            this.value += (index !== 0 ? '\n' : '') + row.substring(spacesRemoved);
+          });
+          this.value += preInputState.value.substring(selectionEndLineEndN);
+
+          console.log(lineShrinks.first);
+          this.selectionStart = preInputState.selectionStart - lineShrinks.first;
+          this.selectionEnd = preInputState.selectionEnd - lineShrinks.total;
         } else {
           // Indent selected lines to their next grid lines.
-          console.log('2');
-          const selectionEndLineEnd = this.value.indexOf('\n', this.value[this.selectionEnd - 1] == '\n' ? this.selectionEnd - 1 : this.selectionEnd);
-          const selectionEndLineEndN = selectionEndLineEnd === -1 ? this.value.length : selectionEndLineEnd;
-          const rowsSlice = this.value.substring(this.selectionStart - colStart, selectionEndLineEndN).split('\n');
-
           const lineGrowths = { first: 0, last: 0, total: 0 };
           this.value = preInputState.value.substring(0, this.selectionStart - colStart);
           rowsSlice.forEach((row, index) => {
             const colContentStart = row.search(/\S/);
             const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
             const spacesAdded = row.length > 0 ? (
-              editorConfigs.tabSpaces - (colContentStartN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces
+              editorConfigs.tabSpaces - (colContentStartN % editorConfigs.tabSpaces)
             ) : (
               0
             );
@@ -210,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (index === 0)
               lineGrowths.first = colContentStart < colStart ? spacesAdded : 0;
             if (index === rowsSlice.length - 1)
-              lineGrowths.last = colContentStart < colEnd ? 0 : spacesAdded;
+              lineGrowths.last = (colEnd === 0 || colContentStart < colEnd) ? 0 : spacesAdded;              
             lineGrowths.total += spacesAdded;
 
             this.value += (index !== 0 ? '\n' : '') + ' '.repeat(spacesAdded) + row;
@@ -220,6 +252,55 @@ document.addEventListener('DOMContentLoaded', function () {
           this.selectionStart = preInputState.selectionStart + lineGrowths.first;
           this.selectionEnd = preInputState.selectionEnd + lineGrowths.total - lineGrowths.last;
         }
+
+//     if (e.key === 'Tab' && e.shiftKey) {
+//         e.preventDefault();
+
+//         if (selectionStart === selectionEnd) {
+
+//         } else {
+//             const beforeString = currentValue.substring(0, selectionStart);
+//             const rowsBeforeCursor = beforeString.split('\n');
+//             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
+//             const selectionLineEnd = currentValue.indexOf('\n', selectionEnd);
+//             const selectionLineEndN = selectionLineEnd === -1 ? currentValue.length : selectionLineEnd;
+//             const beforeSelectionLineEnd = currentValue.substring(0, selectionLineEndN);
+//             const rows = beforeSelectionLineEnd.split('\n');
+//             const rowStart = (beforeString.match(/\n/g) || []).length;
+//             const rowEnd = rows.length;
+
+//             const rowsBeforeCursorEnd = currentValue.substring(0, selectionEnd).split('\n');
+//             const colEnd = rowsBeforeCursorEnd[rowsBeforeCursorEnd.length - 1].length;
+
+//             var lineShrinks = { first: 0, last: 0, total: 0 };
+//             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
+//             rows.slice(rowStart, rowEnd).forEach((row, index) => {
+//                 const tabbingRegex = new RegExp(`^ {1,${editorConfigs.tabSpaces}}`, 'g');
+
+//                 const spacesRemoved = (row.match(tabbingRegex) || [''])[0].length;
+//                 lineShrinks.total += spacesRemoved;
+//                 if (index === 0) {
+//                     if (col < editorConfigs.tabSpaces)
+//                         lineShrinks.first = col;
+//                     else
+//                         lineShrinks.first = spacesRemoved;
+//                 } else if (index === rowEnd - rowStart - 1) {
+//                     if (colEnd < editorConfigs.tabSpaces)
+//                         lineShrinks.last = colEnd;
+//                     else
+//                         lineShrinks.last = 0;
+//                 }
+
+//                 this.value += (this.value.length > 0 ? '\n' : '') + row.replace(tabbingRegex, '');
+//             });
+//             this.value += currentValue.substring(selectionLineEndN);
+
+//             this.selectionStart = selectionStart - lineShrinks.first;
+//             this.selectionEnd = selectionEnd - lineShrinks.total + (colEnd > editorConfigs.tabSpaces ? 0 : editorConfigs.tabSpaces - lineShrinks.last);
+
+//             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
+//         }
+//     }
 
         growUndoStack();
         break;
@@ -240,50 +321,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
   });
-
-  //     } else if (e.key === 'Tab') {
-  //         e.preventDefault();
-
-  //         const beforeString = currentValue.substring(0, selectionStart);
-  //         if (selectionStart === selectionEnd) {
-  //             const rowsBeforeCursor = beforeString.split('\n');
-  //             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-  //             const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-  //             this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
-
-  //             this.selectionStart = selectionStart + spacesAdded;
-  //             this.selectionEnd = this.selectionStart;
-
-  //             growUndoStack(this.selectionStart, this.selectionStart, this.value);
-  //         } else {
-  //             const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
-  //             const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
-  //             const rows = beforeSelectionEnd.split('\n');
-  //             const rowStart = (beforeString.match(/\n/g) || []).length;
-  //             const rowEnd = rows.length;
-
-  //             var lineGrowths = { first: 0, total: 0 };
-  //             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
-  //             rows.slice(rowStart, rowEnd).forEach((row, index) => {
-  //                 const col = row.search(/\S/);
-  //                 const colN = col === -1 ? row.length : col;
-  //                 const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-  //                 const spacesAddedN = row.length > 0 ? spacesAdded : 0;
-  //                 this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
-
-  //                 lineGrowths.total += spacesAddedN;
-  //                 if (index === 0)
-  //                     lineGrowths.first = spacesAddedN;
-  //             });
-  //             this.value += currentValue.substring(selectionEnd);
-
-  //             this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
-  //             this.selectionEnd = selectionEnd + lineGrowths.total;
-
-  //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
-  //         }
-  //     }
 
   function getRow(position) {
     return (textarea.value.substring(0, position).match(/\n/g) || []).length;
@@ -429,48 +466,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //             this.selectionStart = selectionStart - lineShrinks.first;
   //             this.selectionEnd = selectionEnd - lineShrinks.total + (colEnd > editorConfigs.tabSpaces ? 0 : editorConfigs.tabSpaces - lineShrinks.last);
-
-  //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
-  //         }
-  //     } else if (e.key === 'Tab') {
-  //         e.preventDefault();
-
-  //         const beforeString = currentValue.substring(0, selectionStart);
-  //         if (selectionStart === selectionEnd) {
-  //             const rowsBeforeCursor = beforeString.split('\n');
-  //             const col = rowsBeforeCursor[rowsBeforeCursor.length - 1].length;
-
-  //             const spacesAdded = editorConfigs.tabSpaces - (col % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-  //             this.value = beforeString + ' '.repeat(spacesAdded) + currentValue.substring(selectionStart);
-
-  //             this.selectionStart = selectionStart + spacesAdded;
-  //             this.selectionEnd = this.selectionStart;
-
-  //             growUndoStack(this.selectionStart, this.selectionStart, this.value);
-  //         } else {
-  //             const shouldFollow = /^\S$/.test(currentValue[selectionStart - 1]) ? true : false;
-  //             const beforeSelectionEnd = currentValue.substring(0, selectionEnd);
-  //             const rows = beforeSelectionEnd.split('\n');
-  //             const rowStart = (beforeString.match(/\n/g) || []).length;
-  //             const rowEnd = rows.length;
-
-  //             var lineGrowths = { first: 0, total: 0 };
-  //             this.value = beforeString.substring(0, beforeString.lastIndexOf('\n'));
-  //             rows.slice(rowStart, rowEnd).forEach((row, index) => {
-  //                 const col = row.search(/\S/);
-  //                 const colN = col === -1 ? row.length : col;
-  //                 const spacesAdded = editorConfigs.tabSpaces - (colN % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
-  //                 const spacesAddedN = row.length > 0 ? spacesAdded : 0;
-  //                 this.value += (this.value.length > 0 ? '\n' : '') + ' '.repeat(spacesAddedN) + row;
-
-  //                 lineGrowths.total += spacesAddedN;
-  //                 if (index === 0)
-  //                     lineGrowths.first = spacesAddedN;
-  //             });
-  //             this.value += currentValue.substring(selectionEnd);
-
-  //             this.selectionStart = selectionStart + (shouldFollow ? lineGrowths.first : 0);
-  //             this.selectionEnd = selectionEnd + lineGrowths.total;
 
   //             growUndoStack(selectionStart, selectionEnd, this.value, tabbed = true);
   //         }
