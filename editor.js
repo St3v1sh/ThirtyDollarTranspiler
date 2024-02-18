@@ -187,77 +187,69 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
         }
 
+        const selectionStartLineStart = this.selectionStart - colStart;
         const selectionEndLineEnd = this.value.indexOf('\n', this.value[this.selectionEnd - 1] == '\n' ? this.selectionEnd - 1 : this.selectionEnd);
-        const selectionEndLineEndN = selectionEndLineEnd === -1 ? this.value.length : selectionEndLineEnd;
-        const rowsSlice = this.value.substring(this.selectionStart - colStart, selectionEndLineEndN).split('\n');
-        if (e.shiftKey) {
-          // Outdent selected lines back to their previous grid lines.
-          const lineShrinks = { first: 0, last: 0, total: 0 };
-          this.value = preInputState.value.substring(0, this.selectionStart - colStart);
-          rowsSlice.forEach((row, index) => {
-            const colContentStart = row.search(/\S/);
-            const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
-            const spacesRemoved = (row.length > 0 && colContentStartN > 0) ? (
-              colContentStartN % editorConfigs.tabSpaces || editorConfigs.tabSpaces
-            ) : (
-              0
-            );
+        const selectionEndLineEndN = selectionEndLineEnd < selectionStartLineStart ? this.value.length : Math.max(selectionStartLineStart, selectionEndLineEnd);
+        const rowsSlice = this.value.substring(selectionStartLineStart, selectionEndLineEndN).split('\n');
 
-            if (index === 0)
-              lineShrinks.first = colContentStartN < colStart ? (
-                spacesRemoved
+        // Indent or outdent selected lines forwards or backwards a grid line.
+        const lineDeltas = { first: 0, lastCorrection: 0, total: 0}
+        var newValue = this.value.substring(0, this.selectionStart - colStart);
+        rowsSlice.forEach((row, index) => {
+          const colContentStart = row.search(/\S/);
+          const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
+          const spacesDelta = (row.length > 0) ? (
+            (e.shiftKey) ? (
+              (colContentStartN > 0) ? (
+                colContentStartN % editorConfigs.tabSpaces || editorConfigs.tabSpaces
               ) : (
-                colContentStartN - colStart < editorConfigs.tabSpaces ? (
-                  spacesRemoved - (colContentStartN - colStart)
-                ) : (
-                  0
-                )
-              );
-            if (index === rowsSlice.length - 1)
-              lineShrinks.last = (colEnd === 0 || colContentStartN < colEnd) ? (
                 0
-              ) : (
-                colContentStartN - colEnd <= spacesRemoved ? (
-                  colContentStartN - colEnd
-                ) : (
-                  spacesRemoved
-                )
-              );
-            lineShrinks.total += spacesRemoved;
-
-            this.value += (index !== 0 ? '\n' : '') + row.substring(spacesRemoved);
-          });
-          this.value += preInputState.value.substring(selectionEndLineEndN);
-
-          setSelection(preInputState.selectionStart - lineShrinks.first, preInputState.selectionEnd - lineShrinks.total + lineShrinks.last, preInputState.selectionDirection);
-
-          if (lineShrinks.total === 0)
-            break;
-        } else {
-          // Indent selected lines to their next grid lines.
-          const lineGrowths = { first: 0, last: 0, total: 0 };
-          this.value = preInputState.value.substring(0, this.selectionStart - colStart);
-          rowsSlice.forEach((row, index) => {
-            const colContentStart = row.search(/\S/);
-            const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
-            const spacesAdded = row.length > 0 ? (
-              editorConfigs.tabSpaces - (colContentStartN % editorConfigs.tabSpaces)
+              )
             ) : (
-              0
+              editorConfigs.tabSpaces - (colContentStartN % editorConfigs.tabSpaces)
+            )
+          ) : (
+            0
+          );
+
+          if (index === 0)
+            lineDeltas.first = (colContentStartN < colStart) ? (
+              spacesDelta
+            ) : (
+              (e.shiftKey && (colContentStartN - colStart < editorConfigs.tabSpaces)) ? (
+                spacesDelta - (colContentStartN - colStart)
+              ) : (
+                0
+              )
             );
+          if (index === rowsSlice.length - 1)
+            lineDeltas.lastCorrection = (colEnd === 0 || colContentStartN < colEnd) ? (
+              0
+            ) : (
+              (e.shiftKey && (colContentStartN - colEnd <= spacesDelta)) ? (
+                colContentStartN - colEnd
+              ) : (
+                spacesDelta
+              )
+            );
+          lineDeltas.total += spacesDelta;
 
-            if (index === 0)
-              lineGrowths.first = colContentStartN < colStart ? spacesAdded : 0;
-            if (index === rowsSlice.length - 1)
-              lineGrowths.last = (colEnd === 0 || colContentStartN < colEnd) ? 0 : spacesAdded;              
-            lineGrowths.total += spacesAdded;
+          newValue += (index !== 0 ? '\n' : '');
+          newValue += (e.shiftKey) ? (
+            row.substring(spacesDelta)
+          ) : (
+            ' '.repeat(spacesDelta) + row
+          );
+        });
+        this.value = newValue + this.value.substring(selectionEndLineEndN);
 
-            this.value += (index !== 0 ? '\n' : '') + ' '.repeat(spacesAdded) + row;
-          });
-          this.value += preInputState.value.substring(selectionEndLineEndN);
+        if (lineDeltas.total === 0)
+          break;
 
-          setSelection(preInputState.selectionStart + lineGrowths.first, preInputState.selectionEnd + lineGrowths.total - lineGrowths.last, preInputState.selectionDirection);
-        }
+        if (e.shiftKey)
+          setSelection(preInputState.selectionStart - lineDeltas.first, preInputState.selectionEnd - lineDeltas.total + lineDeltas.lastCorrection, preInputState.selectionDirection);
+        else
+          setSelection(preInputState.selectionStart + lineDeltas.first, preInputState.selectionEnd + lineDeltas.total - lineDeltas.lastCorrection, preInputState.selectionDirection);
 
         growUndoStack();
         break;
