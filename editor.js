@@ -82,6 +82,44 @@ document.addEventListener('DOMContentLoaded', function () {
   const preInputState = { selectionStart: 0, selectionEnd: 0, selectionDirection: 'forward', value: '' };
   var cutLine = '';
 
+  // Load settings from localstorage.
+  const fontSize = localStorage.getItem('fontSize');
+  const rootSize = localStorage.getItem('rootSize');
+  const tabSpaces = localStorage.getItem('tabSpaces');
+  const undoStackSize = localStorage.getItem('undoStackSize');
+  const replaceSpace = localStorage.getItem('replaceSpace');
+  const showLines = localStorage.getItem('showLines');
+  const theme = localStorage.getItem('theme');
+
+  if (fontSize) {
+    editorConfigs.fontSize = parseInt(fontSize, 10);
+    updateEditorFontSize();
+  }
+  if (rootSize) {
+    editorConfigs.rootSize = parseInt(rootSize, 10);
+    updateRootFontSize();
+  }
+  if (tabSpaces) {
+    editorConfigs.tabSpaces = parseInt(tabSpaces, 10);
+    document.getElementById('tab-space-button').textContent = tabSpaces;
+  }
+  if (undoStackSize) {
+    editorConfigs.undoStackSize = parseInt(undoStackSize, 10);
+    document.getElementById('stack-size-button').textContent = undoStackSize;
+  }
+  if (replaceSpace) {
+    editorConfigs.replaceSpace = JSON.parse(replaceSpace);
+    document.getElementById('replace-space-button').textContent = replaceSpace ? 'Yes' : 'No';
+  }
+  if (showLines) {
+    editorConfigs.showLines = JSON.parse(showLines);
+    updateLinesVisibility();
+  }
+  if (theme) {
+    editorConfigs.theme = theme;
+    updateTheme();
+  }
+
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
       if (document.activeElement === textarea)
@@ -467,7 +505,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('editor-font-button').addEventListener('click', function (e) {
     if (e.button === 0) {
       editorConfigs.fontSize = (editorConfigs.fontSize + 1) % Object.keys(configOptions.editorFontSize).length;
-      this.textContent = updateEditorFontSize();
+      updateEditorFontSize();
+
+      localStorage.setItem('fontSize', editorConfigs.fontSize);
     }
   });
 
@@ -475,24 +515,28 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     const max = Object.keys(configOptions.editorFontSize).length;
     editorConfigs.fontSize = (editorConfigs.fontSize + max - 1) % max;
-    this.textContent = updateEditorFontSize();
+    updateEditorFontSize();
+
+    localStorage.setItem('fontSize', editorConfigs.fontSize);
   });
 
   function updateEditorFontSize() {
     const objectKey = Object.keys(configOptions.editorFontSize)[editorConfigs.fontSize];
-    const newFontSize = configOptions.editorFontSize[objectKey];
-    textarea.style.fontSize = newFontSize + 'rem';
-    dotIndicator.style.fontSize = newFontSize + 'rem';
-    lineCounterTemplate.style.fontSize = newFontSize + 'rem';
-    lineCounter.style.fontSize = newFontSize + 'rem';
-    return objectKey;
+    const fontSize = configOptions.editorFontSize[objectKey];
+    textarea.style.fontSize = fontSize + 'rem';
+    dotIndicator.style.fontSize = fontSize + 'rem';
+    lineCounterTemplate.style.fontSize = fontSize + 'rem';
+    lineCounter.style.fontSize = fontSize + 'rem';
+    document.getElementById('editor-font-button').textContent = objectKey;
   }
 
   // Root font size settings.
   document.getElementById('root-font-button').addEventListener('click', function (e) {
     if (e.button === 0) {
       editorConfigs.rootSize = (editorConfigs.rootSize + 1) % Object.keys(configOptions.rootFontSize).length;
-      this.textContent = updateRootFontSize();
+      updateRootFontSize();
+
+      localStorage.setItem('rootSize', editorConfigs.rootSize);
     }
   });
 
@@ -500,14 +544,16 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     const max = Object.keys(configOptions.rootFontSize).length;
     editorConfigs.rootSize = (editorConfigs.rootSize + max - 1) % max;
-    this.textContent = updateRootFontSize();
+    updateRootFontSize();
+
+    localStorage.setItem('rootSize', editorConfigs.rootSize);
   });
 
   function updateRootFontSize() {
     const objectKey = Object.keys(configOptions.rootFontSize)[editorConfigs.rootSize];
     const newRootSize = configOptions.rootFontSize[objectKey];
     document.documentElement.style.fontSize = newRootSize + 'rem';
-    return objectKey
+    document.getElementById('root-font-button').textContent = objectKey;
   }
 
   // Tab spaces settings.
@@ -518,6 +564,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const max = configOptions.tabSpaces.max;
       editorConfigs.tabSpaces = cycleOption(currentValue, min, max, 1);
       this.textContent = editorConfigs.tabSpaces;
+
+      localStorage.setItem('tabSpaces', editorConfigs.tabSpaces);
     }
   });
 
@@ -528,6 +576,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const max = configOptions.tabSpaces.max;
     editorConfigs.tabSpaces = cycleOption(currentValue, min, max, -1);
     this.textContent = editorConfigs.tabSpaces;
+
+    localStorage.setItem('tabSpaces', editorConfigs.tabSpaces);
   });
 
   // Undo stack size settings.
@@ -539,6 +589,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const interval = configOptions.undoStackSize.interval;
       editorConfigs.undoStackSize = cycleOption(currentValue, min, max, 1, interval);
       this.textContent = editorConfigs.undoStackSize;
+
+      localStorage.setItem('undoStackSize', editorConfigs.undoStackSize);
     }
   });
 
@@ -550,37 +602,48 @@ document.addEventListener('DOMContentLoaded', function () {
     const interval = configOptions.undoStackSize.interval;
     editorConfigs.undoStackSize = cycleOption(currentValue, min, max, -1, interval);
     this.textContent = editorConfigs.undoStackSize;
+
+    localStorage.setItem('undoStackSize', editorConfigs.undoStackSize);
   });
 
   // Replace spaces settings.
   document.getElementById('replace-space-button').addEventListener('click', function () {
     editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
     this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
+
+    localStorage.setItem('replaceSpace', editorConfigs.replaceSpace);
   });
 
   document.getElementById('replace-space-button').addEventListener('contextmenu', function (e) {
     e.preventDefault();
     editorConfigs.replaceSpace = !editorConfigs.replaceSpace;
     this.textContent = editorConfigs.replaceSpace ? 'Yes' : 'No';
+
+    localStorage.setItem('replaceSpace', editorConfigs.replaceSpace);
   });
 
   // Line number settings.
   document.getElementById('show-lines-button').addEventListener('click', function () {
-    toggleLines();
-    this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
+    editorConfigs.showLines = !editorConfigs.showLines;
+    updateLinesVisibility();
+
+    localStorage.setItem('showLines', editorConfigs.showLines);
   });
 
   document.getElementById('show-lines-button').addEventListener('contextmenu', function (e) {
     e.preventDefault();
-    toggleLines();
-    this.textContent = editorConfigs.showLines ? 'Yes' : 'No';
+    editorConfigs.showLines = !editorConfigs.showLines;
+    updateLinesVisibility();
+
+    localStorage.setItem('showLines', editorConfigs.showLines);
   });
 
-  function toggleLines() {
-    editorConfigs.showLines = !editorConfigs.showLines;
+  function updateLinesVisibility() {
     if (editorConfigs.showLines) {
+      document.getElementById('show-lines-button').textContent = 'Yes';
       document.getElementById('text-input-container').style.gridTemplateColumns = 'auto 1fr';
     } else {
+      document.getElementById('show-lines-button').textContent = 'No';
       document.getElementById('text-input-container').style.gridTemplateColumns = '0 1fr';
     }
   }
@@ -589,7 +652,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('change-theme-button').addEventListener('click', function (e) {
     if (e.button === 0) {
       editorConfigs.theme = (editorConfigs.theme + 1) % Object.keys(configOptions.themes).length;
-      this.textContent = cycleThemes();
+      this.textContent = updateTheme();
+
+      localStorage.setItem('theme', editorConfigs.theme);
     }
   });
 
@@ -597,10 +662,12 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     const max = Object.keys(configOptions.themes).length;
     editorConfigs.theme = (editorConfigs.theme + max - 1) % Object.keys(configOptions.themes).length;
-    this.textContent = cycleThemes();
+    this.textContent = updateTheme();
+
+    localStorage.setItem('theme', editorConfigs.theme);
   });
 
-  function cycleThemes() {
+  function updateTheme() {
     const objectKey = Object.keys(configOptions.themes)[editorConfigs.theme];
     const newThemeColors = configOptions.themes[objectKey];
     Object.entries(newThemeColors).forEach(([color, value]) => {
@@ -646,4 +713,8 @@ function cycleOption(value, min, max, delta, interval = 1) {
   const valueN = value - min;
   const maxN = (max - min) + interval;
   return ((valueN + maxN + delta * interval) % maxN) + min;
+}
+
+window.onbeforeunload = function() {
+  return true;
 }
