@@ -130,6 +130,42 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ctrl + y to redo.
         redo();
         break;
+      
+      case 'arrowup':
+        // Go one line above the selection.
+        if (this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
+          e.preventDefault();
+
+          const { row, col } = getRowCol(this.selectionStart);
+          if (row === 0) {
+            this.selectionStart = 0;
+          } else {
+            const lineStart = this.value.substring(0, this.selectionStart).lastIndexOf('\n');
+            const previousLineStart = this.value.substring(0, lineStart).lastIndexOf('\n');
+            this.selectionStart = Math.min(previousLineStart + col + 1, lineStart);
+          }
+          this.selectionEnd = this.selectionStart;
+        }
+        break;
+
+      case 'arrowdown':
+        // Go one line below the selection.
+        if (this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
+          e.preventDefault();
+
+          const { row, col } = getRowCol(this.selectionEnd);
+          const rowFinal = getRow(this.value.length);
+          if (row === rowFinal) {
+            this.selectionStart = this.value.length;
+          } else {
+            const lineEnd = this.value.indexOf('\n', this.selectionEnd);
+            const nextLineEnd = this.value.indexOf('\n', lineEnd + 1);
+            const nextLineEndN = nextLineEnd === -1 ? this.value.length : nextLineEnd;
+            this.selectionStart = Math.min(lineEnd + col + 1, nextLineEndN);
+          }
+          this.selectionEnd = this.selectionStart;
+        }
+        break;
 
       case 'backspace':
         if (this.textLength && this.selectionStart === this.selectionEnd && this.value[this.selectionStart - 1] === ' ') {
@@ -193,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const rowsSlice = this.value.substring(selectionStartLineStart, selectionEndLineEndN).split('\n');
 
         // Indent or outdent selected lines forwards or backwards a grid line.
-        const lineDeltas = { first: 0, lastCorrection: 0, total: 0}
+        const lineDeltas = { firstCorrection: 0, lastCorrection: 0, total: 0 }
         var newValue = this.value.substring(0, this.selectionStart - colStart);
         rowsSlice.forEach((row, index) => {
           const colContentStart = row.search(/\S/);
@@ -213,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
           );
 
           if (index === 0)
-            lineDeltas.first = (colContentStartN < colStart) ? (
+            lineDeltas.firstCorrection = (colContentStartN < colStart) ? (
               spacesDelta
             ) : (
               (e.shiftKey && (colContentStartN - colStart < editorConfigs.tabSpaces)) ? (
@@ -247,9 +283,9 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
 
         if (e.shiftKey)
-          setSelection(preInputState.selectionStart - lineDeltas.first, preInputState.selectionEnd - lineDeltas.total + lineDeltas.lastCorrection, preInputState.selectionDirection);
+          setSelection(preInputState.selectionStart - lineDeltas.firstCorrection, preInputState.selectionEnd - lineDeltas.total + lineDeltas.lastCorrection, preInputState.selectionDirection);
         else
-          setSelection(preInputState.selectionStart + lineDeltas.first, preInputState.selectionEnd + lineDeltas.total - lineDeltas.lastCorrection, preInputState.selectionDirection);
+          setSelection(preInputState.selectionStart + lineDeltas.firstCorrection, preInputState.selectionEnd + lineDeltas.total - lineDeltas.lastCorrection, preInputState.selectionDirection);
 
         growUndoStack();
         break;
