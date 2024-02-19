@@ -143,15 +143,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const lineStart = this.selectionStart - colStart;
         const lineEnd = this.value.indexOf('\n', this.selectionStart);
 
-        if (lineEnd === -1)
+        if (lineEnd === -1) {
           cutLine = this.value.substring(lineStart, this.value.length) + '\n';
-        else
+          this.value = preInputState.value.substring(0, lineStart - 1);
+        } else {
           cutLine = this.value.substring(lineStart, lineEnd + 1);
-        navigator.clipboard.writeText(cutLine);
+          this.value = preInputState.value.substring(0, lineStart) + preInputState.value.substring(lineStart + cutLine.length);
+        }
 
-        this.value = preInputState.value.substring(0, lineStart) + preInputState.value.substring(lineStart + cutLine.length);
-        if (lineEnd === -1)
-          this.value = this.value.trimEnd();
+        navigator.clipboard.writeText(cutLine);
         setSelection(lineStart, lineStart, preInputState.selectionDirection);
 
         growUndoStack();
