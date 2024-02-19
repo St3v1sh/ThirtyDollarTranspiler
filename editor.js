@@ -134,7 +134,25 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
       }
 
+      case 'enter': {
+        // Preserve line indent for new line.
+        e.preventDefault();
+
+        const colStart = getCol(this.selectionStart);
+        const spacesPadding = this.value.substring(this.selectionStart - colStart, this.selectionStart).search(/\S/);
+        const spacesPaddingN = spacesPadding === -1 ? colStart : spacesPadding;
+
+        this.value = preInputState.value.substring(0, preInputState.selectionStart) + '\n' + ' '.repeat(spacesPaddingN) + preInputState.value.substring(preInputState.selectionEnd);
+
+        const selectionStart = preInputState.selectionStart + spacesPaddingN + 1;
+        setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
+
+        growUndoStack()
+        break;
+      }
+
       case 'x': {
+        // Ctrl + x to cut line if there's no selection.
         if (!(ctrlKey && this.selectionStart === this.selectionEnd))
           break;
         e.preventDefault();
@@ -336,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   textarea.addEventListener('paste', function (e) {
+    // If the pasted line is the cut line, paste like the caret is at the beginning of the line.
     const pastedText = (e.clipboardData || window.clipboardData).getData('text').replace(/\r/g, '');
     if (pastedText !== cutLine || this.selectionStart === this.value.length)
       return;
