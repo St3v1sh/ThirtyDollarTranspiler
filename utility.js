@@ -50,23 +50,22 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
   second: '2-digit',
 });
 
-var warningCount = 0;
+var warnings = [];
 
 function reportWarning(message) {
-  console.log(`${dateFormatter.format(Date.now())} | Warning: ${message}`);
-  warningCount++;
+  warnings.push(message);
 }
 
 function reportError(message) {
   const output = document.getElementById('status');
   output.style.color = '#fa4d56';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | Error: ${message} | Warnings: ${warningCount}`;
-  warningCount = 0;
+  output.textContent = `${dateFormatter.format(Date.now())} | Error: ${message}` + (warnings.length > 0 ? (' | Warnings:' + warnings.join(' | ')) : '');
+  warnings = [];
 }
 
 function reportOK(message) {
   const output = document.getElementById('status');
   output.style.color = '#24a148';
-  output.innerHTML = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message} | Warnings: ${warningCount}`;
-  warningCount = 0;
+  output.textContent = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message}` + (warnings.length > 0 ? (' | Warnings:' + warnings.join(' | ')) : '');
+  warnings = [];
 }

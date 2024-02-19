@@ -28,12 +28,16 @@ function transpile() {
         config.name = args[0];
         break;
       case SYMBOLS.CONFIG.BPM:
+        config.bpm = args[0];
         break;
       case SYMBOLS.CONFIG.TRANSPOSE:
+        config.transpose = parseInt(args[0]);
         break;
       case SYMBOLS.CONFIG.SHARP:
+        config.sharp = args;
         break;
       case SYMBOLS.CONFIG.FLAT:
+        config.flat = args;
         break;
       case SYMBOLS.INSTRUMENTS.INSTRUMENT:
         break;
@@ -41,6 +45,7 @@ function transpile() {
         reportWarning(`Bad config "${line}" ignored.`);
     }
   });
+  console.log(config.name, config.bpm, config.sharp, config.flat, config.transpose, config.instrumentConfigs);
 
   reportOK('Song successfully transpiled.');
 }

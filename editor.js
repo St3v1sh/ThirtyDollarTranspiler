@@ -691,6 +691,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('workspace').style.gridTemplateRows = '';
     document.getElementById('status').classList.remove('hovered');
   });
+
+  // // Load test code.
+  // fetch('./songs/dancing-in-the-moonlight/dancing-in-the-moonlight.moyai')
+  //   .then(response => response.text())
+  //   .then(data => textarea.value = data);
 });
 
 function toggleOptionsVisibility() {
