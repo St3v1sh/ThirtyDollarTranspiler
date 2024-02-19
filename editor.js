@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const lineCounterTemplate = document.getElementById('line-count-template');
 
   const preInputState = { selectionStart: 0, selectionEnd: 0, selectionDirection: 'forward', value: '' };
+  var cutLine = '';
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const ctrlKey = e.ctrlKey || e.metaKey;
 
     switch (e.key.toLowerCase()) {
-      case 'z':
+      case 'z': {
         if (!ctrlKey)
           break;
         e.preventDefault();
@@ -121,8 +122,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ctrl + z to undo.
         undo();
         break;
+      }
 
-      case 'y':
+      case 'y': {
         if (!ctrlKey)
           break;
         e.preventDefault();
@@ -130,44 +132,62 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ctrl + y to redo.
         redo();
         break;
+      }
+
+      case 'x': {
+        if (!(ctrlKey && this.selectionStart === this.selectionEnd))
+          break;
+        e.preventDefault();
+
+        const colStart = getCol(this.selectionStart);
+        const lineStart = this.selectionStart - colStart;
+        const lineEnd = this.value.indexOf('\n', this.selectionStart);
+
+        if (lineEnd === -1)
+          cutLine = this.value.substring(lineStart, this.value.length) + '\n';
+        else
+          cutLine = this.value.substring(lineStart, lineEnd + 1);
+        navigator.clipboard.writeText(cutLine);
+
+        this.value = preInputState.value.substring(0, lineStart) + preInputState.value.substring(lineStart + cutLine.length);
+        if (lineEnd === -1)
+          this.value = this.value.trimEnd();
+        setSelection(lineStart, lineStart, preInputState.selectionDirection);
+
+        growUndoStack();
+        break;
+      }
 
       case 'arrowup':
-        // Go one line above the selection.
-        if (this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
-          e.preventDefault();
+      case 'arrowdown': {
+        if (e.shiftKey || !this.value.substring(this.selectionStart, this.selectionEnd).includes('\n'))
+          break;
+        e.preventDefault();
 
-          const { row, col } = getRowCol(this.selectionStart);
-          if (row === 0) {
-            this.selectionStart = 0;
-          } else {
-            const lineStart = this.value.substring(0, this.selectionStart).lastIndexOf('\n');
-            const previousLineStart = this.value.substring(0, lineStart).lastIndexOf('\n');
-            this.selectionStart = Math.min(previousLineStart + col + 1, lineStart);
-          }
-          this.selectionEnd = this.selectionStart;
+        const lineMarkers = { column: 0, current: 0, next: 0 };
+        if (e.key.toLowerCase() === 'arrowup') {
+          lineMarkers.column = getCol(this.selectionStart);
+
+          const lineStart = this.value.substring(0, this.selectionStart).lastIndexOf('\n');
+          lineMarkers.current = lineStart === -1 ? 0 : lineStart;
+
+          lineMarkers.next = this.value.substring(0, lineMarkers.current).lastIndexOf('\n');
+        } else {
+          lineMarkers.column = getCol(this.selectionEnd);
+
+          const lineEnd = this.value.indexOf('\n', this.selectionEnd);
+          lineMarkers.next = lineEnd === -1 ? this.value.length : lineEnd;
+
+          const nextLineEnd = this.value.indexOf('\n', lineMarkers.next + 1);
+          lineMarkers.current = nextLineEnd === -1 ? this.value.length : nextLineEnd;
         }
+
+        const selectionStart = Math.min(lineMarkers.next + lineMarkers.column + 1, lineMarkers.current);
+        setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
         break;
+      }
 
-      case 'arrowdown':
-        // Go one line below the selection.
-        if (this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
-          e.preventDefault();
-
-          const { row, col } = getRowCol(this.selectionEnd);
-          const rowFinal = getRow(this.value.length);
-          if (row === rowFinal) {
-            this.selectionStart = this.value.length;
-          } else {
-            const lineEnd = this.value.indexOf('\n', this.selectionEnd);
-            const nextLineEnd = this.value.indexOf('\n', lineEnd + 1);
-            const nextLineEndN = nextLineEnd === -1 ? this.value.length : nextLineEnd;
-            this.selectionStart = Math.min(lineEnd + col + 1, nextLineEndN);
-          }
-          this.selectionEnd = this.selectionStart;
-        }
-        break;
-
-      case 'backspace':
+      case 'backspace': {
         if (this.textLength && this.selectionStart === this.selectionEnd && this.value[this.selectionStart - 1] === ' ') {
           const col = getCol(this.selectionStart);
           const lineBeforeSelectionStart = this.value.substring(this.selectionStart - col, this.selectionStart);
@@ -184,9 +204,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             this.value = this.value.substring(0, this.selectionStart - amountRemoved) + this.value.substring(this.selectionStart);
-            setSelection(preInputState.selectionStart - amountRemoved, this.selectionStart, preInputState.selectionDirection);
 
-            growUndoStack();
+            const selectionStart = preInputState.selectionStart - amountRemoved;
+            setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
           } else {
             // Delete spaces, snapping to tab spaces grid.
             if (lineBeforeSelectionStart.length === 0 || lineBeforeSelectionStart.trim().length !== 0)
@@ -195,14 +215,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const spacesRemoved = (lineBeforeSelectionStart.length % editorConfigs.tabSpaces) || editorConfigs.tabSpaces;
             this.value = this.value.substring(0, this.selectionStart - spacesRemoved) + this.value.substring(this.selectionStart);
-            setSelection(preInputState.selectionStart - spacesRemoved, this.selectionStart, preInputState.selectionDirection);
 
-            growUndoStack();
+            const selectionStart = preInputState.selectionStart - spacesRemoved;
+            setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
           }
+          growUndoStack();
         }
         break;
+      }
 
-      case 'tab':
+      case 'tab': {
         e.preventDefault();
 
         const { row: rowStart, col: colStart } = getRowCol(this.selectionStart);
@@ -215,9 +237,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const spacesAdded = (editorConfigs.tabSpaces - (colStart % editorConfigs.tabSpaces)) || editorConfigs.tabSpaces;
 
           this.value = this.value.substring(0, this.selectionStart) + ' '.repeat(spacesAdded) + this.value.substring(this.selectionEnd);
-          this.selectionStart = preInputState.selectionStart + spacesAdded;
-          this.selectionEnd = this.selectionStart;
-          this.selectionDirection = preInputState.selectionDirection;
+
+          const selectionStart = preInputState.selectionStart + spacesAdded;
+          setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
 
           growUndoStack();
           break;
@@ -292,8 +314,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         growUndoStack();
         break;
+      }
 
-      default:
+      default: {
         if (ctrlKey)
           break;
 
@@ -302,11 +325,29 @@ document.addEventListener('DOMContentLoaded', function () {
           e.preventDefault();
 
           this.value = this.value.substring(0, this.selectionStart) + e.key + this.value.substring(this.selectionStart + 1);
-          setSelection(preInputState.selectionStart + 1, this.selectionStart, preInputState.selectionDirection);
+
+          const selectionStart = preInputState.selectionStart + 1;
+          setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
 
           growUndoStack();
         }
+      }
     }
+  });
+
+  textarea.addEventListener('paste', function (e) {
+    const pastedText = (e.clipboardData || window.clipboardData).getData('text').replace(/\r/g, '');
+    if (pastedText !== cutLine || this.selectionStart === this.value.length)
+      return;
+    e.preventDefault();
+
+    const colStart = getCol(this.selectionStart);
+    const lineStart = this.selectionStart - colStart;
+
+    this.value = preInputState.value.substring(0, lineStart) + cutLine + preInputState.value.substring(lineStart);
+    setSelection(lineStart, lineStart, preInputState.selectionDirection);
+
+    growUndoStack();
   });
 
   function setSelection(selectionStart, selectionEnd, selectionDirection) {
