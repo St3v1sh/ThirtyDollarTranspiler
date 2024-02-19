@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Ctrl + y to redo.
         redo();
         break;
-      
+
       case 'arrowup':
         // Go one line above the selection.
         if (this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
@@ -210,8 +210,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const isEndOfLineSelected = this.selectionEnd < this.value.length ? this.value[this.selectionEnd] === '\n' : true;
         const isLineSectionSelection = rowStart === rowEnd && !(colStart === 0 && isEndOfLineSelected);
+        // Case: no line selection. Indent to the next grid line.
         if (!e.shiftKey && (this.selectionStart === this.selectionEnd || isLineSectionSelection)) {
-          // Indent to the next grid line.
           const spacesAdded = (editorConfigs.tabSpaces - (colStart % editorConfigs.tabSpaces)) || editorConfigs.tabSpaces;
 
           this.value = this.value.substring(0, this.selectionStart) + ' '.repeat(spacesAdded) + this.value.substring(this.selectionEnd);
@@ -228,12 +228,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectionEndLineEndN = selectionEndLineEnd < selectionStartLineStart ? this.value.length : Math.max(selectionStartLineStart, selectionEndLineEnd);
         const rowsSlice = this.value.substring(selectionStartLineStart, selectionEndLineEndN).split('\n');
 
-        // Indent or outdent selected lines forwards or backwards a grid line.
         const lineDeltas = { firstCorrection: 0, lastCorrection: 0, total: 0 }
         var newValue = this.value.substring(0, this.selectionStart - colStart);
+        // Case: multi-line selection. Indent or outdent selected lines forwards or backwards a grid line.
         rowsSlice.forEach((row, index) => {
           const colContentStart = row.search(/\S/);
           const colContentStartN = colContentStart === -1 ? row.length : colContentStart;
+          // Calculate the number of spaces added / removed.
           const spacesDelta = (row.length > 0) ? (
             (e.shiftKey) ? (
               (colContentStartN > 0) ? (
@@ -248,6 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
             0
           );
 
+          // Calculate the first line selection correction.
           if (index === 0)
             lineDeltas.firstCorrection = (colContentStartN < colStart) ? (
               spacesDelta
@@ -258,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 0
               )
             );
+          // Calculate the last line selection correction.
           if (index === rowsSlice.length - 1)
             lineDeltas.lastCorrection = (colEnd === 0 || colContentStartN < colEnd) ? (
               0
@@ -295,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
           break;
 
         if (editorConfigs.replaceSpace && this.selectionStart === this.selectionEnd && e.key.length === 1 && e.key !== ' ' && this.value[this.selectionStart] === ' ') {
-          // Space replacing.
+          // Replace space in front.
           e.preventDefault();
 
           this.value = this.value.substring(0, this.selectionStart) + e.key + this.value.substring(this.selectionStart + 1);
