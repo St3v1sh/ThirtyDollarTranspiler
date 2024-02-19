@@ -345,7 +345,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const lineStart = this.selectionStart - colStart;
 
     this.value = preInputState.value.substring(0, lineStart) + cutLine + preInputState.value.substring(lineStart);
-    setSelection(lineStart, lineStart, preInputState.selectionDirection);
+
+    const selectionStart = lineStart + cutLine.length;
+    setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
 
     growUndoStack();
   });
