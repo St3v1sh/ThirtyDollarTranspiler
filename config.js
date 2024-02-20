@@ -11,10 +11,13 @@ class InstrumentConfig {
     const { name = '', instrument = '', defaultVolume = '100', defaultKey: defaultPitch = 'c' } = config || {};
     /** @type {string} */
     this.name = name;
+
     /** @type {string} */
     this.instrument = instrument;
+
     /** @type {string} */
     this.defaultVolume = defaultVolume;
+
     /** @type {string} */
     this.defaultPitch = defaultPitch;
   }
@@ -35,14 +38,19 @@ class Config {
     const { name = 'untitled', bpm = '140', sharp = [], flat = [], transpose = 0, instrumentConfigs = [] } = config || {};
     /** @type {string} */
     this.name = name;
+
     /** @type {string} */
     this.bpm = bpm;
+
     /** @type {string[]} */
     this.sharp = sharp;
+
     /** @type {string[]} */
     this.flat = flat;
+
     /** @type {number} */
     this.transpose = transpose;
+    
     /** @type {InstrumentConfig[]} */
     this.instrumentConfigs = instrumentConfigs;
   }

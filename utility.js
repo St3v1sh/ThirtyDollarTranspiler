@@ -46,6 +46,7 @@ const PITCHES = {
 
 const REGEX = {
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
+  PITCH_WITHOUT_OCTAVE_LOWERCASE: /^[a-g]$/,
   PITCH_WITH_OCTAVE: /^[a-gA-G](-?\d+)?$/,
 }
 

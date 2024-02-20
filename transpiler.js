@@ -18,7 +18,7 @@ function transpile() {
     const pieces = line.split(' ');
     // Configs need at least two parameters.
     if (pieces.length < 2) {
-      reportWarning(`Bad config line "${line}" ignored.`);
+      reportWarning(`Invalid config line "${line}" ignored.`);
       return;
     }
 
@@ -37,17 +37,33 @@ function transpile() {
         break;
       }
       case SYMBOLS.CONFIG.SHARP: {
-        config.sharp = args.map((note) => note.trim());
+        if (config.flat.length > 0) {
+          reportWarning(`Flats config are already defined, sharps config "${args}" ignored.`);
+          break;
+        }
+        if (args.some((note) => !REGEX.PITCH_WITHOUT_OCTAVE_LOWERCASE.test(note))) {
+          reportWarning(`Invalid pitch in sharps config "${args}", all notes ignored.`);
+          break;
+        }
+        config.sharp = args;
         break;
       }
       case SYMBOLS.CONFIG.FLAT: {
-        config.flat = args.map((note) => note.trim());
+        if (config.sharp.length > 0) {
+          reportWarning(`Sharps config are already defined, flats config "${args}" ignored.`);
+          break;
+        }
+        if (args.some((note) => !REGEX.PITCH_WITHOUT_OCTAVE_LOWERCASE.test(note))) {
+          reportWarning(`Invalid pitch in flats config "${args}", all notes ignored.`);
+          break;
+        }
+        config.flat = args;
         break;
       }
       case SYMBOLS.INSTRUMENTS.INSTRUMENT: {
         // inst configs must have exactly 3 arguments.
         if (args.length !== 3) {
-          reportWarning(`Bad instrument config "${line}" ignored.`);
+          reportWarning(`Invalid instrument config "${line}" ignored.`);
           break;
         }
 
@@ -58,11 +74,9 @@ function transpile() {
         break;
       }
       default: {
-        reportWarning(`Bad config option "${command}" ignored.`);
+        reportWarning(`Invalid config option "${command}" ignored.`);
       }
     }
-
-    // Check if sharps and flats are formatted correctly.
   });
   console.log(config.name, config.bpm, config.sharp, config.flat, config.transpose, config.instrumentConfigs);
 
