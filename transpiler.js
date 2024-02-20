@@ -79,14 +79,30 @@ function transpile() {
     }
   });
 
-  // Transpile the song.
+  // Generate song data structures.
 
   /** @type {TrackPiece[]} */
   var track = [];
 
-  const section = new Section();
-  const segment = new Segment();
+  var section = new Section();
+  var segment = new Segment();
   var isInSegment = false;
+
+  songLines.forEach(line => {
+    if (line === SYMBOLS.SONG.DIVIDER) {
+      section.addData(new Divider());
+
+      if (isInSegment)
+        segment.addData(section);
+      else
+        track.push(section);
+
+      section = new Section();
+      return;
+    }
+  });
+
+  // Transpile the song to moyai format.
 
   reportOK('Song successfully transpiled.');
 }
