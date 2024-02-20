@@ -78,7 +78,15 @@ function transpile() {
       }
     }
   });
-  console.log(config.name, config.bpm, config.sharp, config.flat, config.transpose, config.instrumentConfigs);
+
+  // Transpile the song.
+
+  /** @type {TrackPiece[]} */
+  var track = [];
+
+  const section = new Section();
+  const segment = new Segment();
+  var isInSegment = false;
 
   reportOK('Song successfully transpiled.');
 }
