@@ -12,8 +12,8 @@ const SYMBOLS = {
   INSTRUMENTS: {
     INSTRUMENT: 'inst',
     SET: 'set',
-    VOLUME: 'volume',
-    PITCH: 'pitch',
+    VOLUME: 'vol',
+    PITCH: 'pit',
   },
   SONG: {
     DELIMITER: ':',
@@ -44,6 +44,11 @@ const PITCHES = {
   B: 11,
 }
 
+const REGEX = {
+  NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
+  PITCH_WITH_OCTAVE: /^[a-gA-G](-?\d+)?$/,
+}
+
 const dateFormatter = new Intl.DateTimeFormat('en', {
   hour: '2-digit',
   minute: '2-digit',
@@ -52,20 +57,29 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
 
 var warnings = [];
 
+/**
+ * @param {string} message 
+ */
 function reportWarning(message) {
   warnings.push(message);
 }
 
+/**
+ * @param {string} message 
+ */
 function reportError(message) {
   const output = document.getElementById('status');
   output.style.color = '#fa4d56';
-  output.textContent = `${dateFormatter.format(Date.now())} | Error: ${message}` + (warnings.length > 0 ? (' | Warnings:' + warnings.join(' | ')) : '');
+  output.textContent = `${dateFormatter.format(Date.now())} | Error: ${message}` + (warnings.length > 0 ? (' | Warnings: ' + warnings.join(' | ')) : '');
   warnings = [];
 }
 
+/**
+ * @param {string} message 
+ */
 function reportOK(message) {
   const output = document.getElementById('status');
-  output.style.color = '#24a148';
-  output.textContent = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message}` + (warnings.length > 0 ? (' | Warnings:' + warnings.join(' | ')) : '');
+  output.style.color = warnings.length > 0 ? '#f1c21b' : '#24a148';
+  output.textContent = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message}` + (warnings.length > 0 ? (' | Warnings: ' + warnings.join(' | ')) : '');
   warnings = [];
 }
