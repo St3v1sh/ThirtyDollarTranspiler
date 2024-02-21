@@ -81,7 +81,7 @@ class Segment extends TrackPiece {
   }
 }
 
-// TrackData types: Divider, Instrument, GlobalVolume, Clear, Tempo, Goto, Label
+// TrackData types: Divider, InstrumentTrack, InstrumentNotes, GlobalVolume, Clear, Tempo, Goto, and Label.
 
 /**
  * @abstract
@@ -107,9 +107,40 @@ class Divider extends TrackData {
   }
 }
 
-class Instrument extends TrackData {
-  /** @type {{ pitchData: string[], volumeData: number[] }} */
-  data = { pitchData: [], volumeData: [] }
+class InstrumentTrack extends TrackData {
+  /** @type {{ instrumentNotes: InstrumentNotes[], globalVolume: GlobalVolume, clear: Clear, tempo: Tempo }} */
+  data = { instrumentNotes: [], globalVolume: undefined, clear: undefined, tempo: undefined };
+
+  constructor () {
+    super();
+  }
+}
+
+class Goto extends TrackData {
+  /**
+   * @param {number} data 
+   */
+  constructor (data) {
+    super();
+    this.data = data;
+  }
+}
+
+class Label extends TrackData {
+  /**
+   * @param {number} data 
+   */
+  constructor (data) {
+    super();
+    this.data = data;
+  }
+}
+
+// InstrumentTracks contain InstrumentNotes, GlobalVolume, Clear, and Tempo.
+
+class InstrumentNotes extends TrackData {
+  /** @type {{ name: string, pitchData: string[], volumeData: string[] }} */
+  data = { name: undefined, pitchData: [], volumeData: [] };
 
   constructor () {
     super();
@@ -140,25 +171,5 @@ class Tempo extends TrackData {
 
   constructor () {
     super();
-  }
-}
-
-class Goto extends TrackData {
-  /**
-   * @param {number} data 
-   */
-  constructor (data) {
-    super();
-    this.data = data;
-  }
-}
-
-class Label extends TrackData {
-  /**
-   * @param {number} data 
-   */
-  constructor (data) {
-    super();
-    this.data = data;
   }
 }

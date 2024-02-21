@@ -17,6 +17,15 @@ inst bell:  c3  d3  e3  f3
 segend
 div
 inst bell:  c3  c3  c3  c3
+vol:        40  .   /   .
 seg 0
 div
 seg 0
+inst bell:  c3  c3  c3  c3
+vol:        40  .   /   .
+clear:      .   .   .   .
+div
+inst bell:  c3  .   c3  c3
+vol:        40  .   .   /
+clear:      .   .   .   .
+tempo:      2x  .   .25x /

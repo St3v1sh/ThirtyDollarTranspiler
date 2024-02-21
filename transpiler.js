@@ -183,9 +183,12 @@ function transpile() {
       }
       continue;
     }
+
+    // Handle delimiter symbols.
+    console.log('commands:', commands, 'trackArgs:', trackArgs);
   }
-  console.log(track);
-  console.log(section);
+  // console.log(track);
+  // console.log(section);
 
   // Transpile the song to moyai format.
 
