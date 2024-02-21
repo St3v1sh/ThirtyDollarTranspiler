@@ -81,7 +81,7 @@ class Segment extends TrackPiece {
   }
 }
 
-// TrackData types: Divider, InstrumentTrack, InstrumentNotes, GlobalVolume, Clear, Tempo, Goto, and Label.
+// TrackData types: Divider, InstrumentTrack, Goto, and Label.
 
 /**
  * @abstract
@@ -114,6 +114,20 @@ class InstrumentTrack extends TrackData {
   constructor () {
     super();
   }
+
+  /**
+   * @param {InstrumentNotes} instrumentNotes 
+   */
+  addInstrumentNotes (instrumentNotes) {
+    this.data.instrumentNotes.push(instrumentNotes);
+  }
+
+  /**
+   * @returns {InstrumentNotes | undefined}
+   */
+  getLastInstrumentNotes () {
+    return this.data.instrumentNotes.length === 0 ? undefined : this.data.instrumentNotes[this.data.instrumentNotes.length - 1];
+  }
 }
 
 class Goto extends TrackData {
@@ -144,6 +158,34 @@ class InstrumentNotes extends TrackData {
 
   constructor () {
     super();
+  }
+
+  /**
+   * @param {string} name 
+   */
+  setName(name) {
+    this.data.name = name;
+  }
+
+  /**
+   * @param {string[]} pitchData 
+   */
+  setPitchData(pitchData) {
+    this.data.pitchData = pitchData;
+  }
+
+  /**
+   * @returns {string[]}
+   */
+  getPitchData() {
+    return this.data.pitchData;
+  }
+
+  /**
+   * @param {string[]} volumeData 
+   */
+  setVolumeData(volumeData) {
+    this.data.volumeData = volumeData;
   }
 }
 

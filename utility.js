@@ -34,6 +34,12 @@ const SYMBOLS = {
   },
 }
 
+const NOTES = {
+  DEFAULT: '/',
+  REST: '.',
+  MULTIPLY_TAG: 'x',
+}
+
 const PITCHES = {
   C: 0,
   D: 2,
