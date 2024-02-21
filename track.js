@@ -65,6 +65,20 @@ class Segment extends TrackPiece {
   addData(section) {
     this.data.push(section);
   }
+
+  /**
+   * @param {number} label 
+   */
+  addPrepend(label) {
+    this.prepend.push(label)
+  }
+
+  /**
+   * @param {number} label 
+   */
+  addAppend(label) {
+    this.append.push(label)
+  }
 }
 
 // TrackData types: Divider, Instrument, GlobalVolume, Clear, Tempo, Goto, Label
@@ -130,19 +144,21 @@ class Tempo extends TrackData {
 }
 
 class Goto extends TrackData {
-  /** @type {number} */
-  data;
-
-  constructor () {
+  /**
+   * @param {number} data 
+   */
+  constructor (data) {
     super();
+    this.data = data;
   }
 }
 
 class Label extends TrackData {
-  /** @type {number} */
-  data;
-
-  constructor () {
+  /**
+   * @param {number} data 
+   */
+  constructor (data) {
     super();
+    this.data = data;
   }
 }

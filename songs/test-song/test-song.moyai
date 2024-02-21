@@ -1,0 +1,22 @@
+name TestSong
+bpm 140
+flat b
+
+transpose -36
+
+inst bell set mariopaint_star
+inst bell vol 30
+
+start
+inst bell:  .   .   .   .
+div
+segstart 0 
+inst bell:  c2  d2  e2  f2
+div
+inst bell:  c3  d3  e3  f3
+segend
+div
+inst bell:  c3  c3  c3  c3
+seg 0
+div
+seg 0

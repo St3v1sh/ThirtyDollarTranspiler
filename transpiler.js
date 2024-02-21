@@ -74,7 +74,7 @@ function transpile() {
         break;
       }
       default: {
-        reportWarning(`Invalid config option "${command}" ignored.`);
+        reportWarning(`Unrecognized config option "${command}" ignored.`);
       }
     }
   });
@@ -85,22 +85,107 @@ function transpile() {
   var track = [];
 
   var section = new Section();
-  var segment = new Segment();
+  var segment;
   var isInSegment = false;
+  var gotoCounter = 1;
 
-  songLines.forEach(line => {
-    if (line === SYMBOLS.SONG.DIVIDER) {
-      section.addData(new Divider());
+  for (const line of songLines) {
+    const [commands, ...trackArgs] = line.split(SYMBOLS.SONG.DELIMITER).map(arg => arg.trim());
 
-      if (isInSegment)
-        segment.addData(section);
-      else
-        track.push(section);
+    // Handle non-delimiter symbols.
+    if (trackArgs.length === 0) {
+      const [first, ...rest] = commands.split(' ');
+      switch (first) {
+        case SYMBOLS.SONG.DIVIDER: {
+          if (rest.length !== 0) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.DIVIDER} expects no parameters.`);
+            return;
+          }
 
-      section = new Section();
-      return;
+          section.addData(new Divider());
+          if (isInSegment)
+            segment.addData(section);
+          else
+            track.push(section);
+
+          section = new Section();
+          break;
+        }
+        case SYMBOLS.SONG.SEGMENT_START: {
+          if (rest.length !== 1) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_START} expects exactly one label.`);
+            return;
+          }
+          if (isInSegment) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_START} cannot be nested.`);
+            return;
+          }
+          isInSegment = true;
+
+          const [alias] = rest;
+          segment = new Segment();
+
+          segment.alias = alias;
+          segment.label = gotoCounter;
+          gotoCounter++;
+          break;
+        }
+
+        case SYMBOLS.SONG.SEGMENT_END: {
+          if (rest.length !== 0) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_END} expects no parameters.`);
+            return;
+          }
+          if (!isInSegment) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_END} has no ${SYMBOLS.SONG.SEGMENT_START} to end.`);
+            return;
+          }
+          isInSegment = false;
+
+          if (section.data.length > 0) {
+            segment.addData(section);
+            section = new Section();
+          }
+          track.push(segment);
+          break;
+        }
+
+        case SYMBOLS.SONG.SEGMENT: {
+          if (rest.length !== 1) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT} expects exactly one label.`);
+            return;
+          }
+          if (isInSegment) {
+            reportError(`Invalid track at "${commands}", Cannot play segments inside segments.`);
+            return;
+          }
+          
+          const [alias] = rest;
+          const foundSegment = findSegment(track, alias);
+          if (!foundSegment) {
+            reportError(`Invalid track at "${commands}", no segment with alias "${alias}" found.`);
+            return;
+          }
+
+          section.addData(new Goto(gotoCounter));
+          foundSegment.addPrepend(gotoCounter);
+          gotoCounter++;
+          section.addData(new Label(gotoCounter));
+          foundSegment.addAppend(gotoCounter);
+          gotoCounter++;
+          break;
+        }
+
+        default: {
+          reportError(`Invalid track at "${commands}", unrecognized symbol "${first}" found.`);
+          return;
+        }
+      }
+      continue;
     }
-  });
+  }
+  console.log(track);
+  console.log(section);
 
   // Transpile the song to moyai format.
 
@@ -154,4 +239,14 @@ function parseInstrumentConfig(config, name, command, value) {
     }
   }
   return { success: true, message: '' };
+}
+
+/**
+ * @param {TrackPiece[]} track 
+ * @param {string} alias 
+ * @returns {Segment | undefined}
+ */
+function findSegment(track, alias) {
+  const segment = track.filter(trackPiece => trackPiece instanceof Segment && trackPiece.alias === alias);
+  return segment.length > 0 ? segment[0] : undefined;
 }
