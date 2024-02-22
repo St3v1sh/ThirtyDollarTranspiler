@@ -9,12 +9,14 @@ const SYMBOLS = {
     FLAT: 'flat',
     TRANSPOSE: 'transpose',
   },
+
   INSTRUMENTS: {
     INSTRUMENT: 'inst',
     SET: 'set',
     VOLUME: 'vol',
     PITCH: 'pit',
   },
+
   SONG: {
     DELIMITER: ':',
 
@@ -32,12 +34,27 @@ const SYMBOLS = {
     SEGMENT_START: 'segstart',
     SEGMENT_END: 'segend',
   },
-}
 
-const NOTES = {
-  DEFAULT: '/',
-  REST: '.',
-  MULTIPLY_TAG: 'x',
+  NOTES: {
+    DEFAULT: '/',
+    REST: '.',
+    MULTIPLY_TAG: 'x',
+  },
+
+  TRANSLATION: {
+    NOTE_DELIMITER: '|',
+    GENERAL_DELIMITER: '@',
+    VOLUME_DELIMITER: '%',
+    GLOBAL_VOLUME: '!volume', // GENERAL_DELIMITER + number + MULTIPLY_TAG.
+    REST: '_pause',
+    CLEAR: '!cut',
+    TEMPO: '!speed', // GENERAL_DELIMITER + number + MULTIPLY_TAG.
+    TEMPO_MULTIPLY_TAG: '@x',
+    COMBINE: '!combine',
+    LABEL: '!target', // GENERAL_DELIMITER + number.
+    GOTO: '!jump', // GENERAL_DELIMITER + number.
+    DIVIDER: '!divider',
+  }
 }
 
 const PITCHES = {
@@ -52,7 +69,7 @@ const PITCHES = {
 
 const REGEX = {
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
-  DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${NOTES.MULTIPLY_TAG}?$`),
+  DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${SYMBOLS.NOTES.MULTIPLY_TAG}?$`),
   PITCH_WITHOUT_OCTAVE_LOWERCASE: /^[a-g]$/,
   PITCH_WITH_OCTAVE: /^[a-gA-G](-?\d+)?$/,
 }

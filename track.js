@@ -37,6 +37,13 @@ class Section extends TrackPiece {
   addData(trackData) {
     this.data.push(trackData);
   }
+
+  /**
+   * @returns {boolean}
+   */
+  hasData() {
+    return this.data.length !== 0;
+  }
 }
 
 class Segment extends TrackPiece {
