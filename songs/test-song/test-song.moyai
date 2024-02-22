@@ -7,6 +7,9 @@ transpose -36
 inst bell set mariopaint_star
 inst bell vol 30
 
+inst ding set mariopaint_star
+inst ding vol 25
+
 start
 inst bell:  .   .   .   .
 div
@@ -15,6 +18,7 @@ segstart 0
 inst bell:  c2  d2  e2  f2
 div
 inst bell:  c3  d3  e3  f3
+inst ding:  c2  d2  e2  f2
 segend
 div
 inst bell:  c3  c3  c3  c3

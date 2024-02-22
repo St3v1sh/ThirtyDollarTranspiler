@@ -44,6 +44,13 @@ class Section extends TrackPiece {
   hasData() {
     return this.data.length !== 0;
   }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return this.data.map(trackData => trackData.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
+  }
 }
 
 class Segment extends TrackPiece {
@@ -85,6 +92,18 @@ class Segment extends TrackPiece {
    */
   addAppend(label) {
     this.append.push(label)
+  }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    var pieces = [];
+    pieces.push((new Goto(this.label)).toString());
+    this.data.forEach(section => pieces.push(section.toString()));
+    pieces.push((new Label(this.label)).toString());
+
+    return pieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
   }
 }
 
@@ -181,7 +200,7 @@ class InstrumentTrack extends TrackData {
 
 class Goto extends TrackData {
   /**
-   * @param {number} data 
+   * @param {string} data 
    */
   constructor (data) {
     super();
@@ -191,7 +210,7 @@ class Goto extends TrackData {
 
 class Label extends TrackData {
   /**
-   * @param {number} data 
+   * @param {string} data 
    */
   constructor (data) {
     super();
@@ -202,25 +221,25 @@ class Label extends TrackData {
 // InstrumentTracks contain InstrumentNotes.
 
 class InstrumentNotes extends TrackData {
-  /** @type {{ name: string, pitchData: string[], volumeData: string[] }} */
-  data = { name: undefined, pitchData: [], volumeData: [] };
+  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[] }} */
+  data = { instrumentConfig: undefined, pitchData: [], volumeData: [] };
 
   constructor () {
     super();
   }
 
   /**
-   * @param {string} name 
+   * @param {InstrumentConfig} instrumentConfig 
    */
-  setName(name) {
-    this.data.name = name;
+  setInstrumentConfig(instrumentConfig) {
+    this.data.instrumentConfig = instrumentConfig;
   }
 
   /**
-   * @returns {string}
+   * @returns {InstrumentConfig}
    */
-  getName() {
-    return this.data.name;
+  getInstrumentConfig() {
+    return this.data.instrumentConfig;
   }
 
   /**

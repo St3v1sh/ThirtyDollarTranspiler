@@ -197,10 +197,10 @@ function transpile() {
 
           finalizeInstrumentTrack();
           section.addData(new Goto(gotoCounter));
-          foundSegment.addPrepend(gotoCounter);
+          foundSegment.addPrepend(new Label(gotoCounter));
           gotoCounter++;
           section.addData(new Label(gotoCounter));
-          foundSegment.addAppend(gotoCounter);
+          foundSegment.addAppend(new Goto(gotoCounter));
           gotoCounter++;
           break;
         }
@@ -249,7 +249,7 @@ function transpile() {
         }
 
         const instrumentNotes = new InstrumentNotes();
-        instrumentNotes.setName(instrumentName);
+        instrumentNotes.setInstrumentConfig(instrument);
         instrumentNotes.setPitchData(notes);
         instrumentTrack.addInstrumentNotes(instrumentNotes);
         break;
@@ -276,7 +276,7 @@ function transpile() {
         }
 
         if (lastInstrumentNotes.getVolumeData().length !== 0)
-          reportWarning(`Volume data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+          reportWarning(`Volume data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
 
         const pitchesLength = lastInstrumentNotes.getPitchData().length;
         lastInstrumentNotes.setVolumeData([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
@@ -304,7 +304,7 @@ function transpile() {
         }
 
         if (instrumentTrack.getGlobalVolume().length !== 0)
-          reportWarning(`Global volume data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+          reportWarning(`Global volume data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
 
         const pitchesLength = lastInstrumentNotes.getPitchData().length;
         instrumentTrack.setGlobalVolume([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
@@ -332,7 +332,7 @@ function transpile() {
         }
 
         if (instrumentTrack.getClear().length !== 0)
-          reportWarning(`Clear notes are being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+          reportWarning(`Clear notes are being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
 
         const pitchesLength = lastInstrumentNotes.getPitchData().length;
         instrumentTrack.setClear([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
@@ -360,7 +360,7 @@ function transpile() {
         }
 
         if (instrumentTrack.getTempo().length !== 0)
-          reportWarning(`Tempo data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+          reportWarning(`Tempo data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
 
         const pitchesLength = lastInstrumentNotes.getPitchData().length;
         instrumentTrack.setTempo([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
@@ -382,6 +382,8 @@ function transpile() {
   finalizeInstrumentTrack();
   if (section.hasData())
     track.push(section);
+
+  console.log(track);
 
   // Transpile the song to moyai format.
   const output = track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
