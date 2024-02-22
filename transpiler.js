@@ -120,12 +120,6 @@ function transpile() {
 
           finalizeInstrumentTrack();
           section.addData(new Divider());
-          if (isInSegment)
-            segment.addData(section);
-          else
-            track.push(section);
-
-          section = new Section();
           break;
         }
 
@@ -139,6 +133,13 @@ function transpile() {
             reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_START} cannot be nested.`);
             return;
           }
+
+          const [alias] = rest;
+          if (findSegment(track, alias)) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.SEGMENT_START} ${alias} has already been already defined.`);
+            return;
+          }
+
           isInSegment = true;
           finalizeInstrumentTrack();
 
@@ -147,7 +148,6 @@ function transpile() {
             section = new Section();
           }
 
-          const [alias] = rest;
           segment = new Segment();
 
           segment.alias = alias;
@@ -187,7 +187,7 @@ function transpile() {
             reportError(`Invalid track at "${commands}", Cannot play segments inside segments.`);
             return;
           }
-          
+
           const [alias] = rest;
           const foundSegment = findSegment(track, alias);
           if (!foundSegment) {
@@ -242,6 +242,12 @@ function transpile() {
           return;
         }
 
+        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
+        if (lastInstrumentNotes && lastInstrumentNotes.getPitchData().length !== notes.length) {
+          reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length.`);
+          return;
+        }
+
         const instrumentNotes = new InstrumentNotes();
         instrumentNotes.setName(instrumentName);
         instrumentNotes.setPitchData(notes);
@@ -252,7 +258,7 @@ function transpile() {
       // vol.
       case SYMBOLS.SONG.VOLUME: {
         if (rest.length !== 0) {
-          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.VOLUME} expects no parameters.`);
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.VOLUME} does not expect these additional parameters "${rest.join(', ')}".`);
           return;
         }
 
@@ -269,8 +275,92 @@ function transpile() {
           return;
         }
 
+        if (lastInstrumentNotes.getVolumeData().length !== 0)
+          reportWarning(`Volume data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+
         const pitchesLength = lastInstrumentNotes.getPitchData().length;
         lastInstrumentNotes.setVolumeData([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(NOTES.REST)]);
+        break;
+      }
+
+      case SYMBOLS.SONG.GLOBAL_VOLUME: {
+        if (rest.length !== 0) {
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.GLOBAL_VOLUME} does not expect these additional parameters "${rest}".`);
+          return;
+        }
+
+        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
+        if (!lastInstrumentNotes) {
+          reportError(`Invalid track at "${commands}", there is no instrument to modify.`);
+          return;
+        }
+
+        const [rawNotes] = trackArgs;
+        const notes = rawNotes.split(' ').filter(note => note.length > 0);
+        if (notes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || note === NOTES.REST || note === NOTES.DEFAULT))) {
+          reportError(`Invalid track at "${line}", invalid global volume specified.`);
+          return;
+        }
+
+        if (instrumentTrack.getGlobalVolume().length !== 0)
+          reportWarning(`Global volume data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+
+        const pitchesLength = lastInstrumentNotes.getPitchData().length;
+        instrumentTrack.setGlobalVolume([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(NOTES.REST)]);
+        break;
+      }
+
+      case SYMBOLS.SONG.CLEAR: {
+        if (rest.length !== 0) {
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.CLEAR} does not expect these additional parameters "${rest}".`);
+          return;
+        }
+
+        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
+        if (!lastInstrumentNotes) {
+          reportError(`Invalid track at "${commands}", there is no instrument to modify.`);
+          return;
+        }
+
+        const [rawNotes] = trackArgs;
+        const notes = rawNotes.split(' ').filter(note => note.length > 0);
+        if (notes.some(note => !(note === NOTES.REST || note === NOTES.DEFAULT))) {
+          reportError(`Invalid track at "${line}", invalid clear specified.`);
+          return;
+        }
+
+        if (instrumentTrack.getClear().length !== 0)
+          reportWarning(`Clear notes are being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+
+        const pitchesLength = lastInstrumentNotes.getPitchData().length;
+        instrumentTrack.setClear([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(NOTES.REST)]);
+        break;
+      }
+
+      case SYMBOLS.SONG.TEMPO: {
+        if (rest.length !== 0) {
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.TEMPO} does not expect these additional parameters "${rest}".`);
+          return;
+        }
+
+        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
+        if (!lastInstrumentNotes) {
+          reportError(`Invalid track at "${commands}", there is no instrument to modify.`);
+          return;
+        }
+
+        const [rawNotes] = trackArgs;
+        const notes = rawNotes.split(' ').filter(note => note.length > 0);
+        if (notes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || note === NOTES.REST || note === NOTES.DEFAULT))) {
+          reportError(`Invalid track at "${line}", invalid tempo specified.`);
+          return;
+        }
+
+        if (instrumentTrack.getTempo().length !== 0)
+          reportWarning(`Tempo data is being overridden for instrument "${lastInstrumentNotes.getName()}" on line "${line}".`);
+
+        const pitchesLength = lastInstrumentNotes.getPitchData().length;
+        instrumentTrack.setTempo([...notes.slice(0, pitchesLength), ...Array(Math.max(0, pitchesLength - notes.length)).fill(NOTES.REST)]);
         break;
       }
 
@@ -280,6 +370,16 @@ function transpile() {
       }
     }
   }
+
+  if (isInSegment) {
+    reportError(`Invalid track, end of file reached but the last segment was never ended.`);
+    return;
+  }
+
+  finalizeInstrumentTrack();
+  if (section.data.length > 0)
+    track.push(section);
+
   console.log(track);
 
   // Transpile the song to moyai format.

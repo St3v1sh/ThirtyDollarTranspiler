@@ -52,6 +52,7 @@ const PITCHES = {
 
 const REGEX = {
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
+  DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${NOTES.MULTIPLY_TAG}?$`),
   PITCH_WITHOUT_OCTAVE_LOWERCASE: /^[a-g]$/,
   PITCH_WITH_OCTAVE: /^[a-gA-G](-?\d+)?$/,
 }

@@ -108,8 +108,8 @@ class Divider extends TrackData {
 }
 
 class InstrumentTrack extends TrackData {
-  /** @type {{ instrumentNotes: InstrumentNotes[], globalVolume: GlobalVolume, clear: Clear, tempo: Tempo }} */
-  data = { instrumentNotes: [], globalVolume: undefined, clear: undefined, tempo: undefined };
+  /** @type {{ instrumentNotes: InstrumentNotes[], globalVolume: string[], clear: string[], tempo: string[] }} */
+  data = { instrumentNotes: [], globalVolume: [], clear: [], tempo: [] };
 
   constructor () {
     super();
@@ -118,15 +118,57 @@ class InstrumentTrack extends TrackData {
   /**
    * @param {InstrumentNotes} instrumentNotes 
    */
-  addInstrumentNotes (instrumentNotes) {
+  addInstrumentNotes(instrumentNotes) {
     this.data.instrumentNotes.push(instrumentNotes);
   }
 
   /**
    * @returns {InstrumentNotes | undefined}
    */
-  getLastInstrumentNotes () {
+  getLastInstrumentNotes() {
     return this.data.instrumentNotes.length === 0 ? undefined : this.data.instrumentNotes[this.data.instrumentNotes.length - 1];
+  }
+
+  /**
+   * @param {string[]} globalVolume 
+   */
+  setGlobalVolume(globalVolume) {
+    this.data.globalVolume = globalVolume;
+  }
+
+  /**
+   * @returns {string[]}
+   */
+  getGlobalVolume() {
+    return this.data.globalVolume;
+  }
+
+  /**
+   * @param {string[]} clear 
+   */
+  setClear(clear) {
+    this.data.clear = clear;
+  }
+
+  /**
+   * @returns {string[]}
+   */
+  getClear() {
+    return this.data.clear;
+  }
+
+  /**
+   * @param {string[]} tempo 
+   */
+  setTempo(tempo) {
+    this.data.tempo = tempo;
+  }
+
+  /**
+   * @returns {string[]}
+   */
+  getTempo() {
+    return this.data.tempo;
   }
 }
 
@@ -150,7 +192,7 @@ class Label extends TrackData {
   }
 }
 
-// InstrumentTracks contain InstrumentNotes, GlobalVolume, Clear, and Tempo.
+// InstrumentTracks contain InstrumentNotes.
 
 class InstrumentNotes extends TrackData {
   /** @type {{ name: string, pitchData: string[], volumeData: string[] }} */
@@ -165,6 +207,13 @@ class InstrumentNotes extends TrackData {
    */
   setName(name) {
     this.data.name = name;
+  }
+
+  /**
+   * @returns {string}
+   */
+  getName() {
+    return this.data.name;
   }
 
   /**
@@ -187,31 +236,11 @@ class InstrumentNotes extends TrackData {
   setVolumeData(volumeData) {
     this.data.volumeData = volumeData;
   }
-}
 
-class GlobalVolume extends TrackData {
-  /** @type {number[]} */
-  data = [];
-
-  constructor () {
-    super();
-  }
-}
-
-class Clear extends TrackData {
-  /** @type {string[]} */
-  data = [];
-
-  constructor () {
-    super();
-  }
-}
-
-class Tempo extends TrackData {
-  /** @type {string[]} */
-  data = [];
-
-  constructor () {
-    super();
+  /**
+   * @returns {string[]}
+   */
+  getVolumeData() {
+    return this.data.volumeData;
   }
 }
