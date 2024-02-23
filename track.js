@@ -63,10 +63,10 @@ class Segment extends TrackPiece {
   /** @type {number} */
   label;
 
-  /** @type {number[]} */
+  /** @type {Label[]} */
   prepend = [];
 
-  /** @type {number[]} */
+  /** @type {Goto[]} */
   append = [];
 
   constructor () {
@@ -81,17 +81,17 @@ class Segment extends TrackPiece {
   }
 
   /**
-   * @param {number} label 
+   * @param {Label} label 
    */
   addPrepend(label) {
     this.prepend.push(label)
   }
 
   /**
-   * @param {number} label 
+   * @param {Goto} goto 
    */
-  addAppend(label) {
-    this.append.push(label)
+  addAppend(goto) {
+    this.append.push(goto)
   }
 
   /**
@@ -99,8 +99,15 @@ class Segment extends TrackPiece {
    */
   toString() {
     var pieces = [];
+
     pieces.push((new Goto(this.label)).toString());
+    this.prepend.forEach(label => pieces.push(label.toString()));
+    pieces.push(new Divider().toString());
+
     this.data.forEach(section => pieces.push(section.toString()));
+
+    pieces.push(new Divider().toString());
+    this.append.forEach(goto => pieces.push(goto.toString()));
     pieces.push((new Label(this.label)).toString());
 
     return pieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
@@ -131,14 +138,25 @@ class Divider extends TrackData {
   constructor () {
     super();
   }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return SYMBOLS.TRANSLATION.DIVIDER;
+  }
 }
 
 class InstrumentTrack extends TrackData {
-  /** @type {{ instrumentNotes: InstrumentNotes[], globalVolume: string[], clear: string[], tempo: string[] }} */
-  data = { instrumentNotes: [], globalVolume: [], clear: [], tempo: [] };
+  /** @type {{ config: Config, instrumentNotes: InstrumentNotes[], globalVolume: string[], clear: string[], tempo: string[] }} */
+  data = { config: undefined, instrumentNotes: [], globalVolume: [], clear: [], tempo: [] };
 
-  constructor () {
+  /**
+   * @param {Config} config 
+   */
+  constructor (config) {
     super();
+    this.data.config = config;
   }
 
   /**
@@ -196,37 +214,103 @@ class InstrumentTrack extends TrackData {
   getTempo() {
     return this.data.tempo;
   }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    var pieces = [];
+
+    // Order of operations: Tempo > Global Volume > Instruments > Clear.
+
+    var lastVolume;
+    const zippedInstrumentNotes = zip(this.data.instrumentNotes.map((instrumentNotes => instrumentNotes.getZippedData())));
+    zip([
+      this.data.tempo.length === 0 ?
+        Array(zippedInstrumentNotes.length).fill(SYMBOLS.NOTES.REST) : this.data.tempo,
+
+      this.data.globalVolume.length === 0 ?
+        Array(zippedInstrumentNotes.length).fill(SYMBOLS.NOTES.REST) : this.data.globalVolume,
+
+      zippedInstrumentNotes,
+
+      this.data.clear.length === 0 ?
+        Array(zippedInstrumentNotes.length).fill(SYMBOLS.NOTES.REST) : this.data.clear
+    ]).forEach(([tempo, globalVolume, zippedNotes, clear]) => {
+      // Tempo.
+      if (tempo === SYMBOLS.NOTES.DEFAULT) {
+        pieces.push(SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + this.data.config.bpm);
+      } else if (tempo.slice(-1) === SYMBOLS.NOTES.MULTIPLY_TAG) {
+        pieces.push(SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + tempo.slice(0, -1) + SYMBOLS.TRANSLATION.TEMPO_MULTIPLY_TAG);
+      } else if (tempo !== SYMBOLS.NOTES.REST) {
+        pieces.push(SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + tempo);
+      }
+
+      // Global Volume.
+      if (globalVolume === SYMBOLS.NOTES.DEFAULT) {
+        pieces.push(SYMBOLS.TRANSLATION.GLOBAL_VOLUME + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + '100');
+      } else if (globalVolume.slice(-1) === SYMBOLS.NOTES.MULTIPLY_TAG) {
+        pieces.push(SYMBOLS.TRANSLATION.GLOBAL_VOLUME + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + globalVolume.slice(0, -1) + SYMBOLS.TRANSLATION.TEMPO_MULTIPLY_TAG);
+      } else if (globalVolume !== SYMBOLS.NOTES.REST) {
+        pieces.push(SYMBOLS.TRANSLATION.GLOBAL_VOLUME + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + globalVolume);
+      }
+
+      // Instruments.
+      var notes = [];
+      zippedNotes.forEach((config, pitch, volume) => {
+      });
+
+      // Clear.
+      if (clear === SYMBOLS.NOTES.DEFAULT) {
+        pieces.push(SYMBOLS.TRANSLATION.CLEAR);
+      }
+    });
+
+    return pieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
+  }
 }
 
 class Goto extends TrackData {
   /**
-   * @param {string} data 
+   * @param {number} data 
    */
   constructor (data) {
     super();
     this.data = data;
+  }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return SYMBOLS.TRANSLATION.GOTO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + this.data.toString();
   }
 }
 
 class Label extends TrackData {
   /**
-   * @param {string} data 
+   * @param {number} data 
    */
   constructor (data) {
     super();
     this.data = data;
   }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return SYMBOLS.TRANSLATION.LABEL + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + this.data.toString();
+  }
 }
 
 // InstrumentTracks contain InstrumentNotes.
 
-class InstrumentNotes extends TrackData {
+class InstrumentNotes {
   /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[] }} */
   data = { instrumentConfig: undefined, pitchData: [], volumeData: [] };
 
-  constructor () {
-    super();
-  }
+  constructor () { }
 
   /**
    * @param {InstrumentConfig} instrumentConfig 
@@ -236,7 +320,7 @@ class InstrumentNotes extends TrackData {
   }
 
   /**
-   * @returns {InstrumentConfig}
+   * @returns {InstrumentConfig | undefined}
    */
   getInstrumentConfig() {
     return this.data.instrumentConfig;
@@ -268,5 +352,19 @@ class InstrumentNotes extends TrackData {
    */
   getVolumeData() {
     return this.data.volumeData;
+  }
+
+  /**
+   * @returns {[InstrumentConfig, string[], string[]]}
+   */
+  getZippedData() {
+    return zip([
+      Array(this.data.pitchData.length).fill(this.data.instrumentConfig),
+
+      this.data.pitchData,
+
+      this.data.volumeData.length === 0 ?
+        Array(this.data.pitchData.length).fill(SYMBOLS.NOTES.REST) : this.data.volumeData
+    ]);
   }
 }

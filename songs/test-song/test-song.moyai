@@ -18,6 +18,7 @@ segstart 0
 inst bell:  c2  d2  e2  f2
 div
 inst bell:  c3  d3  e3  f3
+vol:        40  .   /   .
 inst ding:  c2  d2  e2  f2
 segend
 div

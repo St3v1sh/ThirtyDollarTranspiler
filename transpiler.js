@@ -91,7 +91,7 @@ function transpile() {
   var track = [];
 
   var section = new Section();
-  var instrumentTrack = new InstrumentTrack();
+  var instrumentTrack = new InstrumentTrack(config);
   var segment;
   var isInSegment = false;
   var gotoCounter = 1;
@@ -101,7 +101,7 @@ function transpile() {
       return;
 
     section.addData(instrumentTrack);
-    instrumentTrack = new InstrumentTrack();
+    instrumentTrack = new InstrumentTrack(config);
   };
 
   for (const line of songLines) {
@@ -382,8 +382,6 @@ function transpile() {
   finalizeInstrumentTrack();
   if (section.hasData())
     track.push(section);
-
-  console.log(track);
 
   // Transpile the song to moyai format.
   const output = track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);

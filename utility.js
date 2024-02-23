@@ -108,3 +108,12 @@ function reportOK(message) {
   output.textContent = `${dateFormatter.format(Date.now())} | ${MOYAI}: ${message}` + (warnings.length > 0 ? (' | Warnings: ' + warnings.join(' | ')) : '');
   warnings = [];
 }
+
+/**
+ * @param {Array<Array>} arrays 
+ * @returns {Array<Array>}
+ */
+function zip(arrays) {
+  return arrays.reduce((zipped, array) => array.map(
+    (value, index) => [...(zipped[index] || []), value]
+  ), [])}
