@@ -390,6 +390,9 @@ function transpile() {
   output += track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
   navigator.clipboard.writeText(output);
 
+  editorConfigs.fileName = config.name;
+  editorConfigs.fileExtension = MOYAI;
+
   reportOK('Song successfully transpiled and copied to clipboard.');
 }
 
