@@ -268,9 +268,6 @@ class InstrumentTrack extends TrackData {
           semitone = pitchToSemitone(this.data.config, pitch);
         }
 
-        if (semitone === undefined)
-          return;
-
         var finalVolume = lastVolumes[instrumentConfig.name];
         if (volume === SYMBOLS.NOTES.DEFAULT) {
           finalVolume = instrumentConfig.defaultVolume;
@@ -279,6 +276,9 @@ class InstrumentTrack extends TrackData {
           finalVolume = volume;
           lastVolumes[instrumentConfig.name] = finalVolume;
         }
+
+        if (semitone === undefined)
+          return;
 
         notePieces.push(instrumentConfig.instrument + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + semitone.toString() + (finalVolume === '100' ? '' : (SYMBOLS.TRANSLATION.VOLUME_DELIMITER + finalVolume)));
       });

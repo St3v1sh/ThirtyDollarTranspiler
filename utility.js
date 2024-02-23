@@ -138,14 +138,13 @@ function pitchToSemitone(config, pitch) {
 
   const inSharp = config.sharp.includes(letter.toLowerCase());
   const inFlat = config.flat.includes(letter.toLowerCase());
-
   const delta = inSharp ? 1 : (inFlat ? -1 : 0);
 
   if (Object.keys(PITCHES).map(key => key.toLowerCase()).includes(letter))
     return PITCHES[letter.toUpperCase()] + config.transpose + octave * PITCH_OCTAVE + delta;
 
   if (Object.keys(PITCHES).includes(letter))
-    return PITCHES[letter] + config.transpose + octave * PITCH_OCTAVE + delta;
+    return PITCHES[letter] + config.transpose + octave * PITCH_OCTAVE + (delta === 0 ? 1 : 0);
 
   throw new TypeError('Unrecognized pitch');
 }

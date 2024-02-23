@@ -388,7 +388,6 @@ function transpile() {
 
   output += SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + config.bpm + SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.DIVIDER + SYMBOLS.TRANSLATION.NOTE_DELIMITER;
   output += track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
-  console.log(output);
   navigator.clipboard.writeText(output);
 
   reportOK('Song successfully transpiled.');
