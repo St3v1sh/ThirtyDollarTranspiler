@@ -722,6 +722,6 @@ function cycleOption(value, min, max, delta, interval = 1) {
   return ((valueN + maxN + delta * interval) % maxN) + min;
 }
 
-// window.onbeforeunload = function() {
-//   return true;
-// }
+window.onbeforeunload = function() {
+  return true;
+}
