@@ -383,9 +383,13 @@ function transpile() {
   if (section.hasData())
     track.push(section);
 
-  // Transpile the song to moyai format.
-  const output = track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
+  // Transpile the song to moyai format and copy.
+  var output = '';
+
+  output += SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + config.bpm + SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.DIVIDER + SYMBOLS.TRANSLATION.NOTE_DELIMITER;
+  output += track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
   console.log(output);
+  navigator.clipboard.writeText(output);
 
   reportOK('Song successfully transpiled.');
 }

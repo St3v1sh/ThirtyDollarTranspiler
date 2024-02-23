@@ -67,6 +67,8 @@ const PITCHES = {
   B: 11,
 }
 
+const PITCH_OCTAVE = 12;
+
 const REGEX = {
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
   DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${SYMBOLS.NOTES.MULTIPLY_TAG}?$`),
@@ -116,4 +118,34 @@ function reportOK(message) {
 function zip(arrays) {
   return arrays.reduce((zipped, array) => array.map(
     (value, index) => [...(zipped[index] || []), value]
-  ), [])}
+  ), [])};
+
+/**
+ * @param {Config} config 
+ * @param {string} pitch 
+ * @returns {number}
+ */
+function pitchToSemitone(config, pitch) {
+  var letter;
+  var octave;
+  if (pitch.length > 1) {
+    letter = pitch.slice(0, 1);
+    octave = parseInt(pitch.slice(1));
+  } else {
+    letter = pitch;
+    octave = 0;
+  }
+
+  const inSharp = config.sharp.includes(letter.toLowerCase());
+  const inFlat = config.flat.includes(letter.toLowerCase());
+
+  const delta = inSharp ? 1 : (inFlat ? -1 : 0);
+
+  if (Object.keys(PITCHES).map(key => key.toLowerCase()).includes(letter))
+    return PITCHES[letter.toUpperCase()] + config.transpose + octave * PITCH_OCTAVE + delta;
+
+  if (Object.keys(PITCHES).includes(letter))
+    return PITCHES[letter] + config.transpose + octave * PITCH_OCTAVE + delta;
+
+  throw new TypeError('Unrecognized pitch');
+}

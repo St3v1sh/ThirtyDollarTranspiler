@@ -223,7 +223,7 @@ class InstrumentTrack extends TrackData {
 
     // Order of operations: Tempo > Global Volume > Instruments > Clear.
 
-    var lastVolume;
+    var lastVolumes = {};
     const zippedInstrumentNotes = zip(this.data.instrumentNotes.map((instrumentNotes => instrumentNotes.getZippedData())));
     zip([
       this.data.tempo.length === 0 ?
@@ -256,9 +256,38 @@ class InstrumentTrack extends TrackData {
       }
 
       // Instruments.
-      var notes = [];
-      zippedNotes.forEach((config, pitch, volume) => {
+      var notePieces = [];
+      zippedNotes.forEach(([instrumentConfig, pitch, volume]) => {
+        if (!(instrumentConfig.name in lastVolumes))
+          lastVolumes[instrumentConfig.name] = instrumentConfig.defaultVolume;
+
+        var semitone;
+        if (pitch === SYMBOLS.NOTES.DEFAULT) {
+          semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch);
+        } else if (pitch !== SYMBOLS.NOTES.REST) {
+          semitone = pitchToSemitone(this.data.config, pitch);
+        }
+
+        if (semitone === undefined)
+          return;
+
+        var finalVolume = lastVolumes[instrumentConfig.name];
+        if (volume === SYMBOLS.NOTES.DEFAULT) {
+          finalVolume = instrumentConfig.defaultVolume;
+          lastVolumes[instrumentConfig.name] = finalVolume;
+        } else if (volume !== SYMBOLS.NOTES.REST) {
+          finalVolume = volume;
+          lastVolumes[instrumentConfig.name] = finalVolume;
+        }
+
+        notePieces.push(instrumentConfig.instrument + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + semitone.toString() + (finalVolume === '100' ? '' : (SYMBOLS.TRANSLATION.VOLUME_DELIMITER + finalVolume)));
       });
+
+      if (notePieces.length === 0) {
+        pieces.push(SYMBOLS.TRANSLATION.REST);
+      } else {
+        pieces.push(notePieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.COMBINE + SYMBOLS.TRANSLATION.NOTE_DELIMITER));
+      }
 
       // Clear.
       if (clear === SYMBOLS.NOTES.DEFAULT) {
