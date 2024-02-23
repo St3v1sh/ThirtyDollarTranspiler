@@ -708,12 +708,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Status bar logic.
   document.getElementById('statusbar').addEventListener('click', function () {
-    document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
+    document.getElementById('workspace').style.gridTemplateRows = '3rem 1fr auto';
     document.getElementById('status').classList.add('hovered');
   });
 
   document.getElementById('statusbar').addEventListener('mouseenter', function () {
-    document.getElementById('workspace').style.gridTemplateRows = '2.5rem 1fr auto';
+    document.getElementById('workspace').style.gridTemplateRows = '3rem 1fr auto';
     document.getElementById('status').classList.add('hovered');
   });
 
