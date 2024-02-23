@@ -27,7 +27,7 @@ Notes are a key followed optionally by a non-negative octave number. If no octav
 
 There is also the default note and the rest note, notated by `/` and `.`, to play the default pitch of an instrument and to signal no action, respectively.
 
-Some instrument modifiers accept multipliers, notated by an integer or decimal number followed by an `x`. For example:
+Some modifiers accept multipliers, notated by an integer or decimal number followed by an `x`. For example:
 - `2x` `1.5x` `.5x`
 
 ### Configurations Section Symbols
@@ -45,13 +45,13 @@ Instruments configuration:
 
 ### Song Section Symbols
 - `start` Defines the start of the song section
-- `tempo: [vlaue] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire track
+- `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire track
 - `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire track
 - `inst [alias]: [note] [or .] [or /] [...]` Defines an instrument track
 - `vol: [value] [or .] [or /] [...]` Modifies the volume of the last instrument track
-- `clear: [.] [or /] [...]` Defines when to clear any notes currently playing
+- `clear: [.] [or /] [...]` Defines when to clear the sounds of the notes currently playing
 
-Song section symbols have an order of operation:
+Song section symbols have an order of operations:
 
 `tempo > gvol > inst > clear`
 
