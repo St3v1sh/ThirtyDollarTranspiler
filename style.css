@@ -213,6 +213,8 @@ textarea:focus {
 }
 
 #statusbar {
+    display: flex;
+    align-items: center;
     min-height: 1.5rem;
     padding: 0rem .5rem;
     overflow: hidden;
@@ -230,8 +232,6 @@ p {
 }
 
 #statusbar p {
-    width: 100%;
-    height: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
