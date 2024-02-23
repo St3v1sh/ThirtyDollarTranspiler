@@ -17,7 +17,7 @@ Paste the contents of dancing-in-the-moonlight.moyai into index.html to see an e
 - Multi-line tab indenting and outdenting
 - Space replacing (default off)
 - Editor color themes
-- File saving (ctrl + s)
+- File saving (ctrl + s) and opening (ctrl + o)
 
 ## Transpiler
 The moyai file has two sections: configurations and song

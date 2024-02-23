@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const dotIndicator = document.getElementById('dot-indicator');
   const lineCounter = document.getElementById('line-count-textarea');
   const lineCounterTemplate = document.getElementById('line-count-template');
+  const fileOpener = document.getElementById('file-opener');
 
   const preInputState = { selectionStart: 0, selectionEnd: 0, selectionDirection: 'forward', value: '' };
   var cutLine = '';
@@ -134,7 +135,30 @@ document.addEventListener('DOMContentLoaded', function () {
       saveToFile(textarea.value, editorConfigs.fileName, editorConfigs.fileExtension)
         .then(() => reportOK(`${editorConfigs.fileName}.${editorConfigs.fileExtension} saved.`))
         .catch(() => reportError('File save cancelled.'));
+    } else if (e.key === 'o' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      fileOpener.click();
     }
+  });
+
+  fileOpener.addEventListener('change', function () {
+    const file = this.files[0];
+    if (!file)
+      return;
+
+    const [fileName, fileExtension] = file.name.split('.');
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      textarea.value = e.target.result;
+      editorConfigs.fileName = fileName;
+      editorConfigs.fileExtension = fileExtension;
+
+      updateScrolling();
+      updateDots();
+      updateLineCounter();
+    };
+    reader.readAsText(file);
   });
 
   textarea.addEventListener('scroll', function () {
@@ -730,6 +754,6 @@ function cycleOption(value, min, max, delta, interval = 1) {
   return ((valueN + maxN + delta * interval) % maxN) + min;
 }
 
-window.onbeforeunload = function () {
-  return true;
-}
+// window.onbeforeunload = function () {
+//   return true;
+// }
