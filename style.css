@@ -55,8 +55,9 @@ body {
 #controlbar-left img {
     width: 1.5rem;
     height: 1.5rem;
-    padding-right: .75rem;
+    padding-right: .25rem;
     padding-left: .25rem;
+    margin-right: .5rem;
     user-select: none;
     -webkit-user-select: none;
     pointer-events: none;
