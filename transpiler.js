@@ -390,7 +390,7 @@ function transpile() {
   output += track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
   navigator.clipboard.writeText(output);
 
-  reportOK('Song successfully transpiled.');
+  reportOK('Song successfully transpiled and copied to clipboard.');
 }
 
 /**
