@@ -12,6 +12,42 @@
   <script src="./config.js"></script>
   <script src="./track.js"></script>
   <script src="./transpiler.js"></script>
+  <script>
+    var shiftDown = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const copyOrDownloadSpan = document.getElementById('copy-or-download');
+
+      function updateTranspileButton() {
+        if (shiftDown) {
+          copyOrDownloadSpan.textContent = 'copy';
+        } else {
+          copyOrDownloadSpan.textContent = 'download';
+        }
+      }
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Shift') {
+          shiftDown = true;
+          updateTranspileButton();
+        }
+      });
+
+      document.addEventListener('keyup', function (e) {
+        if (e.key === 'Shift') {
+          shiftDown = false;
+          updateTranspileButton();
+        }
+      });
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+          shiftDown = false;
+          updateTranspileButton();
+        }
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -56,7 +92,7 @@
             <img class="responsive-disappear" src="./assets/🗿.png" alt="Moyai emoji">
             <button id="options-button" onclick="toggleOptionsVisibility()">⚙️<span id="options-menu-text">Left/Right click on settings</span></button>
           </div>
-          <button id="transpile-button" onclick="transpile()"><span class="responsive-disappear">Transpile & copy</span><span>></span></button>
+          <button id="transpile-button" onclick="transpile(shiftDown)"><span class="responsive-disappear">Transpile & <span id="copy-or-download">download</span></span><span>></span></button>
         </div>
         <div id="text-input-container">
           <div id="line-count">

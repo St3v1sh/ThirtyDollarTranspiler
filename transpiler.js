@@ -1,4 +1,4 @@
-function transpile() {
+function transpile(copyToClipboard = false) {
   const input = document.getElementById('input').value;
   const lines = input.split('\n').map((line) => line.trim()).filter((line) => (line.length > 0 && !line.startsWith(SYMBOLS.COMMENT)));
 
@@ -383,17 +383,23 @@ function transpile() {
   if (section.hasData())
     track.push(section);
 
-  // Transpile the song to moyai format and copy.
+  // Transpile the song to moyai format and copy or download.
   var output = '';
 
   output += SYMBOLS.TRANSLATION.TEMPO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + config.bpm + SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.DIVIDER + SYMBOLS.TRANSLATION.NOTE_DELIMITER;
   output += track.map(trackPiece => trackPiece.toString()).join(SYMBOLS.TRANSLATION.NOTE_DELIMITER);
-  navigator.clipboard.writeText(output);
 
   editorConfigs.fileName = config.name;
-  editorConfigs.fileExtension = MOYAI;
+  editorConfigs.fileExtension = 'moyai';
 
-  reportOK('Song successfully transpiled and copied to clipboard.');
+  if (copyToClipboard) {
+    navigator.clipboard.writeText(output);
+    reportOK(`${editorConfigs.fileName}.${editorConfigs.fileExtension} successfully transpiled and copied to clipboard.`);
+  } else {
+    saveToFile(output, config.name, MOYAI)
+      .then(() => reportOK(`${editorConfigs.fileName}.${editorConfigs.fileExtension} successfully transpiled and saved.`))
+      .catch(() => reportError('Song save cancelled.'));
+  }
 }
 
 /**

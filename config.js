@@ -50,7 +50,7 @@ class Config {
 
     /** @type {number} */
     this.transpose = transpose;
-    
+
     /** @type {InstrumentConfig[]} */
     this.instrumentConfigs = instrumentConfigs;
   }

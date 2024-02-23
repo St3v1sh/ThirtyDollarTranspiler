@@ -112,13 +112,46 @@ function reportOK(message) {
 }
 
 /**
+ * @param {string} textData 
+ * @param {string} fileName 
+ * @param {string} fileExtension 
+ */
+async function saveToFile(textData, fileName, fileExtension) {
+  const suggestedName = `${fileName}.${fileExtension}`;
+  var filePickerSupported = window.showSaveFilePicker ? true : false;
+
+  if (filePickerSupported) {
+    await window.showSaveFilePicker({ suggestedName: suggestedName })
+      .then(file => {
+        file.createWritable()
+          .then(writable => {
+            writable.write(textData).then(() => writable.close());
+          })
+      })
+      .catch((err) => { throw err });
+  } else {
+    const blob = new Blob([textData], { type: 'text/plain' });
+    const downloadLink = document.createElement('a');
+
+    downloadLink.download = suggestedName;
+    downloadLink.href = window.URL.createObjectURL(blob);
+    downloadLink.onclick = ((e) => document.body.removeChild(e.target));
+    downloadLink.style.display = 'none';
+
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  }
+}
+
+/**
  * @param {Array<Array>} arrays 
  * @returns {Array<Array>}
  */
 function zip(arrays) {
   return arrays.reduce((zipped, array) => array.map(
     (value, index) => [...(zipped[index] || []), value]
-  ), [])};
+  ), [])
+};
 
 /**
  * @param {Config} config 

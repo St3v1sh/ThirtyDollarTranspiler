@@ -4,7 +4,7 @@
  * @abstract
  */
 class TrackPiece {
-  constructor () {
+  constructor() {
     if (new.target === TrackPiece)
       throw new TypeError('Cannot instantiate an abstract class');
   }
@@ -27,7 +27,7 @@ class Section extends TrackPiece {
   /** @type {TrackData[]} */
   data = [];
 
-  constructor () {
+  constructor() {
     super();
   }
 
@@ -69,7 +69,7 @@ class Segment extends TrackPiece {
   /** @type {Goto[]} */
   append = [];
 
-  constructor () {
+  constructor() {
     super();
   }
 
@@ -120,7 +120,7 @@ class Segment extends TrackPiece {
  * @abstract
  */
 class TrackData {
-  constructor () {
+  constructor() {
     if (new.target === TrackData)
       throw new TypeError('Cannot instantiate an abstract class');
   }
@@ -135,7 +135,7 @@ class TrackData {
 }
 
 class Divider extends TrackData {
-  constructor () {
+  constructor() {
     super();
   }
 
@@ -154,7 +154,7 @@ class InstrumentTrack extends TrackData {
   /**
    * @param {Config} config 
    */
-  constructor (config) {
+  constructor(config) {
     super();
     this.data.config = config;
   }
@@ -303,7 +303,7 @@ class Goto extends TrackData {
   /**
    * @param {number} data 
    */
-  constructor (data) {
+  constructor(data) {
     super();
     this.data = data;
   }
@@ -320,7 +320,7 @@ class Label extends TrackData {
   /**
    * @param {number} data 
    */
-  constructor (data) {
+  constructor(data) {
     super();
     this.data = data;
   }
@@ -339,7 +339,7 @@ class InstrumentNotes {
   /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[] }} */
   data = { instrumentConfig: undefined, pitchData: [], volumeData: [] };
 
-  constructor () { }
+  constructor() { }
 
   /**
    * @param {InstrumentConfig} instrumentConfig 

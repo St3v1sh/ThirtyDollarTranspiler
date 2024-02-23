@@ -9,7 +9,7 @@ const editorConfigs = {
   undoStack: [],
   redoStack: [],
   showOptions: false,
-  fileName: undefined,
+  fileName: 'untitled',
   fileExtension: 'txt',
 }
 
@@ -129,31 +129,11 @@ document.addEventListener('DOMContentLoaded', function () {
       else
         textarea.focus();
     } else if (e.key === 's' && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault()
+      e.preventDefault();
 
-      var filePickerSupported = window.showSaveFilePicker ? true : false;
-      if (filePickerSupported) {
-        window.showSaveFilePicker({ suggestedName: `${editorConfigs.fileName ? editorConfigs.fileName : 'untitled'}.${editorConfigs.fileExtension}` })
-          .then(file => {
-            file.createWritable()
-              .then(writable => {
-                writable.write(textarea.value).then(() => writable.close());
-                reportOK('File saved!');
-              })
-          })
-          .catch(() => reportError('File save cancelled.'));
-      } else {
-        const blob = new Blob([textarea.value], { type: 'text/plain' });
-        const downloadLink = document.createElement('a');
-
-        downloadLink.download = `${editorConfigs.fileName ? editorConfigs.fileName : 'untitled'}.${editorConfigs.fileExtension}`;
-        downloadLink.href = window.URL.createObjectURL(blob);
-        downloadLink.onclick = ((e) => document.body.removeChild(e.target));
-        downloadLink.style.display = 'none';
-
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-      }
+      saveToFile(textarea.value, editorConfigs.fileName, editorConfigs.fileExtension)
+        .then(() => reportOK(`${editorConfigs.fileName}.${editorConfigs.fileExtension} saved.`))
+        .catch(() => reportError('File save cancelled.'));
     }
   });
 
@@ -750,6 +730,6 @@ function cycleOption(value, min, max, delta, interval = 1) {
   return ((valueN + maxN + delta * interval) % maxN) + min;
 }
 
-window.onbeforeunload = function() {
+window.onbeforeunload = function () {
   return true;
 }
