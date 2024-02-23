@@ -173,6 +173,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       case 'enter': {
+        if (ctrlKey || e.shiftKey)
+          break;
         // Preserve line indent for new line.
         e.preventDefault();
 
@@ -191,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       case 'x': {
         // Ctrl + x to cut line if there's no selection.
-        if (!(ctrlKey && this.selectionStart === this.selectionEnd))
+        if (!(ctrlKey && this.selectionStart === this.selectionEnd) || e.shiftKey)
           break;
         e.preventDefault();
 
@@ -720,6 +722,6 @@ function cycleOption(value, min, max, delta, interval = 1) {
   return ((valueN + maxN + delta * interval) % maxN) + min;
 }
 
-window.onbeforeunload = function() {
-  return true;
-}
+// window.onbeforeunload = function() {
+//   return true;
+// }
