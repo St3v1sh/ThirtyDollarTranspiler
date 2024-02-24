@@ -214,6 +214,7 @@ textarea:focus {
     color: var(--light);
     letter-spacing: -1px;
     top: .1rem;
+    overflow-y: auto;
 }
 
 #input {
