@@ -565,21 +565,25 @@ document.addEventListener('DOMContentLoaded', function () {
     dotIndicator.value = textarea.value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
   }
 
-  function updateLineHighlight(line) {
+  function updateLineHighlight(targetRow) {
     const totalRows = (textarea.value.match(/\n/g) || []).length;
     var selectionStart = textarea.selectionStart;
-    var row = getRow(selectionStart);
-    if (line !== undefined) {
-      selectionStart = 0;
-      var marker = textarea.value.indexOf('\n', selectionStart);
-      for (var matches = 0; marker !== -1 && matches < line; matches++) {
-        selectionStart = marker + 1;
-        marker = textarea.value.indexOf('\n', selectionStart);
+    var row;
+
+    if (textarea.selectionStart === textarea.selectionEnd) {
+      var row = getRow(selectionStart);
+      if (targetRow !== undefined) {
+        selectionStart = 0;
+        var marker = textarea.value.indexOf('\n', selectionStart);
+        for (var matches = 0; marker !== -1 && matches < targetRow; matches++) {
+          selectionStart = marker + 1;
+          marker = textarea.value.indexOf('\n', selectionStart);
+        }
+        row = getRow(selectionStart);
       }
-      row = getRow(selectionStart);
+    } else {
+      var row = lastHighlightLine;
     }
-    if (lastHighlightLine === row)
-      return;
 
     lastHighlightLine = row;
     const longestLength = textarea.value.split('\n').reduce((maxLength, line) => {
