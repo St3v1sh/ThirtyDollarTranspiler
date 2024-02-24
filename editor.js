@@ -53,7 +53,7 @@ const configOptions = {
     'modern': {
       darker: '#16181f',
       dark: '#2b2d34',
-      light: '#414755',
+      light: '#3c414e',
       lighter: '#a0a0a0',
       lighterRGB: '160, 160, 160',
     },
@@ -78,12 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const textarea = document.getElementById('input');
   const transpileButton = document.getElementById('transpile-button');
   const dotIndicator = document.getElementById('dot-indicator');
+  const lineHighlight = document.getElementById('line-highlight');
   const lineCounter = document.getElementById('line-count-textarea');
   const lineCounterTemplate = document.getElementById('line-count-template');
   const fileOpener = document.getElementById('file-opener');
 
   const preInputState = { selectionStart: 0, selectionEnd: 0, selectionDirection: 'forward', value: '' };
   var cutLine = '';
+  var lastHighlightLine;
 
   // Load settings from localstorage.
   const fontSize = localStorage.getItem('fontSize');
@@ -157,16 +159,30 @@ document.addEventListener('DOMContentLoaded', function () {
       updateScrolling();
       updateDots();
       updateLineCounter();
+      updateLineHighlight();
     };
     reader.readAsText(file);
   });
 
   textarea.addEventListener('scroll', function () {
     updateScrolling();
+    updateLineHighlight();
   });
 
   textarea.addEventListener('input', function () {
     growUndoStack();
+  });
+
+  textarea.addEventListener('mouseup', function () {
+    updateLineHighlight();
+  });
+
+  textarea.addEventListener('mousemove', function () {
+    updateLineHighlight();
+  });
+
+  textarea.addEventListener('selectionchange', function () {
+    updateLineHighlight();
   });
 
   textarea.addEventListener('keydown', function (e) {
@@ -248,10 +264,25 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
       }
 
+      case 'arrowleft': {
+        updateLineHighlight(getRow(this.selectionStart - 1));
+        break;
+      }
+
+      case 'arrowright': {
+        updateLineHighlight(getRow(this.selectionStart + 1));
+        break;
+      }
+
       case 'arrowup':
+        updateLineHighlight(getRow(this.selectionStart) - 1);
       case 'arrowdown': {
-        if (e.shiftKey || !this.value.substring(this.selectionStart, this.selectionEnd).includes('\n'))
+
+        if (e.shiftKey || !this.value.substring(this.selectionStart, this.selectionEnd).includes('\n')) {
+          if (e.key.toLowerCase() === 'arrowdown')
+            updateLineHighlight(getRow(this.selectionStart) + 1);
           break;
+        }
         e.preventDefault();
 
         const lineMarkers = { column: 0, current: 0, next: 0 };
@@ -274,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const selectionStart = Math.min(lineMarkers.next + lineMarkers.column + 1, lineMarkers.current);
         setSelection(selectionStart, selectionStart, preInputState.selectionDirection);
+        updateLineHighlight();
         break;
       }
 
@@ -494,6 +526,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateScrolling();
     updateDots();
     updateLineCounter();
+    updateLineHighlight();
   }
 
   function growUndoStack() {
@@ -502,6 +535,7 @@ document.addEventListener('DOMContentLoaded', function () {
       updateScrolling();
       updateDots();
       updateLineCounter();
+      updateLineHighlight();
       return;
     }
 
@@ -514,16 +548,50 @@ document.addEventListener('DOMContentLoaded', function () {
     updateScrolling();
     updateDots();
     updateLineCounter();
+    updateLineHighlight();
   }
 
   function updateScrolling() {
     dotIndicator.scrollTop = textarea.scrollTop;
     dotIndicator.scrollLeft = textarea.scrollLeft;
+
+    lineHighlight.scrollTop = textarea.scrollTop;
+    lineHighlight.scrollLeft = textarea.scrollLeft;
+
     lineCounter.scrollTop = textarea.scrollTop;
   }
 
   function updateDots() {
     dotIndicator.value = textarea.value.replaceAll(/(?![\r\n])\s/g, '·').replaceAll(/[^·\n]/g, ' ');
+  }
+
+  function updateLineHighlight(line) {
+    const totalRows = (textarea.value.match(/\n/g) || []).length;
+    var selectionStart = textarea.selectionStart;
+    var row = getRow(selectionStart);
+    if (line !== undefined) {
+      selectionStart = 0;
+      var marker = textarea.value.indexOf('\n', selectionStart);
+      for (var matches = 0; marker !== -1 && matches < line; matches++) {
+        selectionStart = marker + 1;
+        marker = textarea.value.indexOf('\n', selectionStart);
+      }
+      row = getRow(selectionStart);
+    }
+    if (lastHighlightLine === row)
+      return;
+
+    lastHighlightLine = row;
+    const longestLength = textarea.value.split('\n').reduce((maxLength, line) => {
+      const lineLength = line.length;
+      return lineLength > maxLength ? lineLength : maxLength;
+    }, 0);
+
+    if (row > 0)
+      lineHighlight.value = '\n'.repeat(row - 1) + '_'.repeat(Math.max(1000, longestLength)) + '\n' + '_'.repeat(Math.max(1000, longestLength));
+    else
+      lineHighlight.value = '\n'.repeat(row) + '_'.repeat(Math.max(1000, longestLength));
+    lineHighlight.value += '\n'.repeat() + '\n'.repeat(totalRows - row);
   }
 
   function updateLineCounter() {
@@ -561,6 +629,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dotIndicator.style.fontSize = fontSize + 'rem';
     lineCounterTemplate.style.fontSize = fontSize + 'rem';
     lineCounter.style.fontSize = fontSize + 'rem';
+    lineHighlight.style.fontSize = fontSize + 'rem';
     document.getElementById('editor-font-button').textContent = objectKey;
   }
 

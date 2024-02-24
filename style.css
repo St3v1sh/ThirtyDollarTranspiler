@@ -1,7 +1,7 @@
 :root {
     --darker: #16181f;
     --dark: #2b2d34;
-    --light: #414755;
+    --light: #3c414e;
     --lighter: #a0a0a0;
     --lighterRGB: 160, 160, 160;
 }
@@ -186,7 +186,11 @@ textarea:focus {
     overflow: hidden;
 }
 
-#dot-indicator {
+#line-count-textarea::selection {
+    background-color: transparent;
+}
+
+.editor-decoration {
     position: absolute;
     top: 0;
     left: 0;
@@ -195,24 +199,28 @@ textarea:focus {
     user-select: none;
     -webkit-user-select: none;
     pointer-events: none;
+    overflow: hidden;
 }
 
-#dot-indicator::placeholder {
+.editor-decoration::placeholder {
     color: transparent;
 }
 
-#line-count-textarea::selection {
+.editor-decoration::selection {
     background-color: transparent;
 }
 
-#dot-indicator::selection {
-    background-color: transparent;
+#line-highlight {
+    color: var(--light);
+    letter-spacing: -1px;
+    top: .1rem;
 }
 
 #input {
     color: var(--lighter);
     padding: .5rem;
-    caret-color: white;
+    caret-color: var(--lighter);
+    z-index: 1;
 }
 
 #statusbar {

@@ -6,6 +6,7 @@ Paste the contents of dancing-in-the-moonlight.moyai into index.html to see an e
 
 ## Text Editor Features
 - Hide and show line numbers
+- Current line indicator
 - Visible highlighted space characters
 - Adjustable undo stack size
 - Adjustable font size
@@ -16,8 +17,8 @@ Paste the contents of dancing-in-the-moonlight.moyai into index.html to see an e
 - White space and word backspace delete
 - Multi-line tab indenting and outdenting
 - Space replacing (default off)
-- Editor color themes
 - File saving (ctrl + s) and opening (ctrl + o)
+- Editor color themes
 
 ## Transpiler
 The moyai file has two sections: configurations and song
