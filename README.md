@@ -32,6 +32,8 @@ There is also the default note and the rest note, notated by `/` and `.`, to pla
 Some modifiers accept multipliers, notated by an integer or decimal number followed by an `x`. For example:
 - `2x` `1.5x` `.5x`
 
+Any line starting with the character `-` will be regarded as a comment.
+
 ### Configurations Section Symbols
 General song configuration:
 - `name [songname]` Define the song's name
