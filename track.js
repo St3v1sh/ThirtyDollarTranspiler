@@ -223,7 +223,7 @@ class InstrumentTrack extends TrackData {
 
     // Order of operations: Tempo > Global Volume > Instruments > Clear.
 
-    var lastVolumes = {};
+    var lastVolumes = [];
     const zippedInstrumentNotes = zip(this.data.instrumentNotes.map((instrumentNotes => instrumentNotes.getZippedData())));
     zip([
       this.data.tempo.length === 0 ?
@@ -256,10 +256,13 @@ class InstrumentTrack extends TrackData {
       }
 
       // Instruments.
+      if (lastVolumes.length === 0)
+        lastVolumes = Array(zippedNotes.length).fill('');
+
       var notePieces = [];
-      zippedNotes.forEach(([instrumentConfig, pitch, volume]) => {
-        if (!(instrumentConfig.name in lastVolumes))
-          lastVolumes[instrumentConfig.name] = instrumentConfig.defaultVolume;
+      zippedNotes.forEach(([instrumentConfig, pitch, volume], index) => {
+        if (lastVolumes[index] === '')
+          lastVolumes[index] = instrumentConfig.defaultVolume;
 
         var semitone;
         if (pitch === SYMBOLS.NOTES.DEFAULT) {
@@ -268,13 +271,13 @@ class InstrumentTrack extends TrackData {
           semitone = pitchToSemitone(this.data.config, pitch);
         }
 
-        var finalVolume = lastVolumes[instrumentConfig.name];
+        var finalVolume = lastVolumes[index];
         if (volume === SYMBOLS.NOTES.DEFAULT) {
           finalVolume = instrumentConfig.defaultVolume;
-          lastVolumes[instrumentConfig.name] = finalVolume;
+          lastVolumes[index] = finalVolume;
         } else if (volume !== SYMBOLS.NOTES.REST) {
           finalVolume = volume;
-          lastVolumes[instrumentConfig.name] = finalVolume;
+          lastVolumes[index] = finalVolume;
         }
 
         if (semitone === undefined)
