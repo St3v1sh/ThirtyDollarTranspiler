@@ -24,9 +24,9 @@ inst shaker vol 20
 inst shaker pit F2
 
 - snare drum
-inst snare set noteblock_snare
-inst snare vol 40
-inst snare pit c2
+inst snare set hammer
+inst snare vol 20
+inst snare pit F2
 
 - first singer voice, FNF down note
 inst voice1 set fnf_down
@@ -97,7 +97,7 @@ inst piano:     f3  .   .   f3  .   f3  .   g3  .   g3  .   .   g3  .   g3  .
 inst shaker:    /   e2  /   e2  /   e2  /   e2  /   e2  /   e2  /   e2  /   e2  
 vol:            18  .   .   .   .   .   .   .   /   .   .   .   .   .   .   .   
 inst snare:     .   .   .   .   .   .   .   .   .   /   /   /   /   /   /   /   
-vol:            .   .   .   .   .   .   .   .   .   12  16  20  24  28  32  36  
+vol:            .   .   .   .   .   .   .   .   .   2   6   10  14  18  22  26  
 div
 - 9, 10
 inst bass1:     c1  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   
@@ -108,6 +108,7 @@ inst voice1:    .   g2  b2  c3  .   e3  .   g2  .   f2  .   f2  e2  f2  .   .
 vol:            .   40  70  /   .   .   .   .   .   .   .   .   .   .   .   .   
 inst shaker:    /   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   
 inst snare:     /   .   .   .   .   .   /   .   .   .   .   .   .   .   .   .   
+vol:            30
 inst hihat:     .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .   
 inst rstick:    .   .   .   .   .   .   .   .   .   .   /   .   .   .   /   .   
 clear:          .   /   /   .   .   .   .   .   /   .   /   /   /   .   .   /   
@@ -195,7 +196,7 @@ inst voice1:    .   c3  .   c3  .   .   .   .   e3  .   g2  .   f2  e2  f2  .   
 inst hihat:     /   .   /   .   .   .   .   /   .   /   .   /   .   /   .   /   .   /   c4  
 vol:            50  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   70  
 inst rstick:    .   .   /   .   .   .   .   .   .   /   .   .   .   /   .   .   .   /   .   
-clear:          .   .   /   .   .   .   .   /   .   /   .   /   /   /   .   .   .   .   .   
+clear:          /   .   /   .   .   .   .   /   .   /   .   /   /   /   .   .   .   .   .   
 tempo:          /   .   .   4x  .   .   .   /   .   .   .   .   .   .   .   .   .   .   .   
 div
 - 27, 28
@@ -212,12 +213,31 @@ div
 inst bass2:     c3  .   .   c3  .   c3  .   c3  f2  .   f2  .   .   a2  .   b2  
 inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   .   c2  c2  
 inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   e2  f2  
+inst voice1:    .   .   .   .   .   .   .   b3  .   a3  a3  g2  g2  .   b3  .   
+vol:            .   .   .   .   .   .   .   50
 inst voice1:    .   e3  .   e3  .   e3  .   g3  .   f3  f3  e3  e3  .   g3  .   
-vol:            .   150 .   80  .   50  /   .   .   .   .   .   .   .   .   .   
+vol:            .   150 .   .   .   120 .   /
+inst voice1:    .   .   .   .   .   .   .   e3  .   c3  c3  b2  b2  .   c3  .   
+vol:            .   .   .   .   .   .   .   50
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
+vol:            .   .   40  /
 clear:          .   .   .   .   .   .   /   .   /   /   /   /   .   /   .   .   
 div
 - 31, 32
 inst bass2:     .   .   b2  .   .   c3  d3  .   e3  .   .   e3  d3  .   .   d3
+inst piano:     .   d2  c2  c2  d2  f2  c2  .   e2  b1  e2  g2  f2  b1  d2  f2
+inst piano:     .   .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .
+inst voice1:    .   a3  g3  a3  .   g3  .   b3  .   b3  .   b3  .   g3  .   g3
+vol:            50
+inst voice1:    .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
+inst voice1:    .   c3  b2  c3  .   c3  .   e3  .   b2  .   b2  .   c3  .   c3
+vol:            50
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
 div
 - 33, 34
 inst bass2:     c3  .   .   c3  .   g2  .   F2  f2  .   f2  .   .   a2  .   b2
