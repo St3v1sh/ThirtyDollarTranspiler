@@ -65,3 +65,5 @@ Segments allow the reuse of repeated song sections. Segments cannot be nested or
 - `seg [label]` Plays a previously defined segment
 
 A divider is used only for organization purposes, defined alone on its own line as `div`.
+
+For extra control, the `override` keyword can be used together with a string (i.e. `override !bg@#000000,0.5`) to insert it directly into the song. Overrides must be on their own lines.
