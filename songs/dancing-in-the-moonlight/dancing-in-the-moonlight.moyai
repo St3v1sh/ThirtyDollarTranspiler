@@ -219,6 +219,7 @@ inst voice1:    .   e3  .   e3  .   e3  .   g3  .   f3  f3  e3  e3  .   g3  .
 vol:            .   150 .   .   .   120 .   /
 inst voice1:    .   .   .   .   .   .   .   e3  .   c3  c3  b2  b2  .   c3  .   
 vol:            .   .   .   .   .   .   .   50
+inst bass1:     .   .   .   .   .   .   .   g3  .   f3  f3  e3  e3  .   g3  .
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
@@ -234,6 +235,7 @@ vol:            50
 inst voice1:    .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
 inst voice1:    .   c3  b2  c3  .   c3  .   e3  .   b2  .   b2  .   c3  .   c3
 vol:            50
+inst bass1:     .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
@@ -241,6 +243,21 @@ clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
 div
 - 33, 34
 inst bass2:     c3  .   .   c3  .   g2  .   F2  f2  .   f2  .   .   a2  .   b2
+inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   c2  e2  c2
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
+inst voice1:    .   e3  .   e3  .   b3  .   a3  a3  a3  g3  a3  g3  b3  .   .
+vol:            50  .   .   .   .   .   .   .   30  10  50
+inst voice1:    .   c3  .   c3  .   e3  .   f3  f3  f3  e3  f3  e3  g3  .   .
+vol:            .   .   .   .   .   .   .   .   20  10  /
+inst voice1:    .   a2  .   a2  .   c3  .   e3  e3  e3  d3  c3  b2  e3  .   .
+vol:            50  .   .   .   .   .   .   .   20  10  50
+inst voice1:    .   .   .   .   .   .   .   c3  c3  c3  .   .   .   .   .   .
+vol:            50  .   .   .   .   .   .   .   20  10
+inst bass1:     .   c3  .   c3  .   e3  .   f3  .   .   e3  f3  e3  g3  .   .
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   .   /   .   /   .   /   .   .   /   /   /   /   .   .   .
 div
 - 35, 36
 inst bass2:     .   .   b2  .   .   c3  d3  e3  .   .   e3  d3  .   .   d3  c3
