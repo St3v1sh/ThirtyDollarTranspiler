@@ -134,6 +134,23 @@ class TrackData {
   }
 }
 
+class Override extends TrackData {
+  /**
+   * @param {string} data 
+   */
+  constructor (data) {
+    super();
+    this.data = data;
+  }
+
+  /**
+   * @returns {string}
+   */
+  toString() {
+    return this.data;
+  }
+}
+
 class Divider extends TrackData {
   constructor() {
     super();

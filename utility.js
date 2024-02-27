@@ -33,6 +33,7 @@ const SYMBOLS = {
     SEGMENT: 'seg',
     SEGMENT_START: 'segstart',
     SEGMENT_END: 'segend',
+    OVERRIDE: 'override',
   },
 
   NOTES: {

@@ -123,6 +123,18 @@ function transpile(copyToClipboard = false) {
           break;
         }
 
+        case SYMBOLS.SONG.OVERRIDE: {
+          if (rest.length !== 1) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.OVERRIDE} expects exactly one input.`);
+            return;
+          }
+
+          const [overrideString] = rest;
+          finalizeInstrumentTrack();
+          section.addData(new Override(overrideString));
+          break;
+        }
+
         // segstart [alias].
         case SYMBOLS.SONG.SEGMENT_START: {
           if (rest.length !== 1) {
