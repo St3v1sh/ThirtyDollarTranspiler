@@ -26,7 +26,7 @@ inst shaker pit F2
 - snare drum
 inst snare set hammer
 inst snare vol 20
-inst snare pit F2
+inst snare pit A2
 
 - first singer voice, FNF down note
 inst voice1 set fnf_down
@@ -325,6 +325,13 @@ tempo:          .   .   .   4x  .   .   .   /   .   .   .   .   .   .   .   .   
 div
 - 43, 44
 inst bass2:     b2  .   .   b2  .   c3  .   d3  e3  .   .   e3  d3  .   .   d3
+inst piano:     .   d2  c2  c2  d2  f2  c2  .   e2  b1  e2  g2  f2  b1  d2  f2
+inst piano:     .   .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .
+inst voice1:    .   f2  e2  f2  .   f2  e2  g2  .   b2  .   b2  .   c3  .   c3
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   .   .   .   .   .   .   .   .   .   .   .   .   /   .
+clear:          .   /   /   .   /   /   /   .   /   .   /   .   /   .   /   .
 div
 - 45, 46
 inst bass2:     c3  .   .   g3  c4  g3  c3  .   f2  .   f2  .   .   a2  A2  b2
