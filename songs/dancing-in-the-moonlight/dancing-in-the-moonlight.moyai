@@ -28,9 +28,20 @@ inst snare set hammer
 inst snare vol 20
 inst snare pit A2
 
-- first singer voice, FNF down note
-inst voice1 set fnf_down
-inst voice1 vol 100
+- kick drum
+inst kick set kick
+inst kick vol 80
+inst kick pit d3
+
+- ride bell
+inst bell set terraria_reforge
+inst bell vol 20
+inst bell pit C3
+
+- ride
+inst ride set ride2
+inst ride vol 80
+inst ride pit C3
 
 - loose hihat, shaker
 inst hihat set shaker
@@ -41,6 +52,10 @@ inst hihat pit A3
 inst rstick set sidestick
 inst rstick vol 16
 inst rstick pit c3
+
+- first singer voice, FNF down note
+inst voice1 set fnf_down
+inst voice1 vol 100
 
 - notation:
 - '-' comment, ignored at compilation
@@ -154,6 +169,7 @@ vol:            20  10  /   .   .   .   .   .   .   .   .   .   .   .   .   .
 inst bass1:     .   .   .   .   .   .   e3  .   g2  f2  .   f2  .   e2  f2  g2  
 vol:            60  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 clear:          .   /   /   .   .   .   .   .   .   .   .   .   .   .   .   .   
 div
@@ -164,7 +180,7 @@ inst piano:     f3  .   .   f3  .   .   .   g3  .   .   .   .   .   .   .   .
 inst bass1:     .   .   .   f2  f2  e2  .   .   g2  b2  .   b2  .   g2  b2  .   
 vol:            60  .   .   .   .   80  60  .   .   .   .   .   .   .   .   .   
 inst hihat:     /   c4  /   .   /   .   /   c4  /   .   /   .   /   .   /   .   
-vol:            50  70  50  .   .   .   .   70  50  .   .   .   .   .   .   .   
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 inst snare:     .   .   .   .   .   .   .   .   .   .   .   .   .   /   .   .   
 clear:          .   .   .   .   /   .   .   .   .   .   .   .   .   .   .   .   
@@ -177,6 +193,7 @@ inst voice1:    .   .   .   .   .   c3  b2  c3  e3  .   g2  .   f2  .   f2  e2  
 inst bass1:     b2  c3  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   
 inst snare:     /   /   .   .   .   .   .   .   .   /   .   .   .   .   .   .   .   .   .   
 inst hihat:     .   .   .   .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .   
+vol:            70
 inst rstick:    .   .   .   .   .   .   .   .   .   .   .   .   .   /   .   .   .   /   .   
 clear:          .   .   .   .   .   /   /   /   .   /   .   /   .   /   /   /   .   .   .   
 tempo:          4x  .   .   .   /   .   .   .   .   .   .   .   .   .   .   .   .   .   .   
@@ -187,6 +204,7 @@ inst piano:     c2  d2  c2  c2  d2  f2  c2  .   e2  b1  e2  g2  f2  b1  d2  f2
 inst piano:     f2  .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .   
 inst voice1:    .   .   f2  f2  .   f2  .   e2  g2  b2  .   c3  .   b2  .   c3  
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 clear:          .   .   /   .   /   .   /   /   /   .   /   .   /   .   /   .   
 div
@@ -196,7 +214,7 @@ inst piano:     e2  g1  c2  g2  .   .   .   e2  c2  g1  c2  a1  c2  .   .   c2  
 inst piano:     .   .   .   .   .   .   .   .   .   .   .   .   e2  .   .   e2  .   e2  .   
 inst voice1:    .   c3  .   c3  .   .   .   .   e3  .   g2  .   f2  e2  f2  .   .   .   .   
 inst hihat:     /   .   /   .   .   .   .   /   .   /   .   /   .   /   .   /   .   /   c4  
-vol:            50  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   70  
+vol:            70
 inst rstick:    .   .   /   .   .   .   .   .   .   /   .   .   .   /   .   .   .   /   .   
 clear:          /   .   /   .   .   .   .   /   .   /   .   /   /   /   .   .   .   .   .   
 tempo:          /   .   .   4x  .   .   .   /   .   .   .   .   .   .   .   .   .   .   .   
@@ -208,11 +226,15 @@ inst piano:     f2  .   .   f2  .   .   .   g2  .   .   .   .   .   .   .   .
 inst voice1:    .   f2  e2  f2  .   f2  e2  g2  .   b2  .   b2  .   c3  .   c3  
 vol:            .   .   .   .   .   .   .   .   .   110 .   120 .   130 .   140 
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 clear:          .   /   /   .   /   /   /   .   /   .   /   .   /   .   /   .   
 div
-override !bg@#131625,0.5
+override !bg@#131625,2.0
 div
+
+- DANCING!
+
 - 29, 30
 inst bass2:     c3  .   .   c3  .   c3  .   c3  f2  .   f2  .   .   a2  .   b2  
 inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   .   c2  c2  
@@ -226,6 +248,7 @@ vol:            .   .   .   .   .   .   .   50
 inst bass1:     .   .   .   .   .   .   .   g3  .   f3  f3  e3  e3  .   g3  .
 vol:            40
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .   
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .   
 vol:            .   .   40  /
@@ -243,6 +266,7 @@ vol:            50
 inst bass1:     .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
 vol:            40
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
@@ -262,6 +286,7 @@ vol:            50  .   .   .   .   .   .   .   20  10
 inst bass1:     .   c3  .   c3  .   e3  .   f3  .   .   e3  f3  e3  g3  .   .
 vol:            40
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 clear:          /   .   /   .   /   .   /   .   .   /   /   /   /   .   .   .
@@ -278,6 +303,7 @@ vol:            50
 inst bass1:     .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
 vol:            40
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
@@ -298,6 +324,7 @@ vol:            40
 inst voice1:    .   .   c3  c3  .   e3  .   g2  .   f2  e2  f2  e2  f2  .   .
 vol:            .   .   150 120 /
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   /   .   .   .   /   .   .   .   .   .   .   .   .   .
 clear:          /   .   /   .   /   .   /   .   /   /   /   /   /   .   .   .
@@ -308,6 +335,7 @@ inst piano:     c2  d2  c2  c2  d2  c2  b1  .   e2  b1  e2  g2  f2  b1  d2  f2
 inst piano:     f2  .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .
 inst voice1:    .   .   f2  f2  .   f2  .   e2  g2  b2  .   c3  .   b2  .   c3
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   F3  .   .   .   F3  .   .   .   F3  .   .   .   F3  .
 vol:            26
 clear:          .   .   /   .   /   .   /   /   /   .   /   .   /   .   /   .
@@ -318,6 +346,7 @@ inst piano:     e2  g1  c2  g2  .   .   .   e2  c2  g1  c2  a1  .   c2  .   .   
 inst piano:     .   .   .   .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
 inst voice1:    .   c3  .   c3  .   .   .   .   e3  .   g2  f2  .   e2  f2  .   .   .   .
 inst hihat:     /   .   /   .   .   .   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   F3  .   .   .   .   .   .   F3  .   .   .   F3  .   .   .   F3  .
 vol:            26
 clear:          /   .   /   .   .   .   .   /   .   /   /   .   /   /   .   /   .   .   .
@@ -329,49 +358,230 @@ inst piano:     .   d2  c2  c2  d2  f2  c2  .   e2  b1  e2  g2  f2  b1  d2  f2
 inst piano:     .   .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .
 inst voice1:    .   f2  e2  f2  .   f2  e2  g2  .   b2  .   b2  .   c3  .   c3
 inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
 inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 inst snare:     .   .   .   .   .   .   .   .   .   .   .   .   .   .   /   .
 clear:          .   /   /   .   /   /   /   .   /   .   /   .   /   .   /   .
 div
+override !bg@#131625,2.0
+div
+
+- DANCING!
+
 - 45, 46
 inst bass2:     c3  .   .   g3  c4  g3  c3  .   f2  .   f2  .   .   a2  A2  b2
+inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   c2  e2  c2
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
+inst voice1:    .   .   .   .   .   .   .   b3  .   a3  a3  g2  g2  .   b3  .
+vol:            50
+inst voice1:    .   f2  e2  .   .   .   .   g3  .   f3  f3  e3  e3  .   g3  .
+inst voice1:    .   .   .   .   .   .   .   e3  .   c3  c3  b2  b2  .   c3  .
+vol:            50
+inst bass1:     .   .   .   .   .   .   .   g3  .   f3  f3  e3  e3  .   g3  .
+vol:            40
+inst ride:      .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .
+inst hihat:     /   .   /   .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            70
+inst rstick:    .   .   /   .   /   .   .   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst kick:      .   .   .   .   /   .   /   .   .   .   .   .   .   .   .   .
+clear:          .   /   .   /   .   .   .   .   /   /   /   /   .   /   .   .
 div
 - 47, 48
 inst bass2:     .   .   b2  .   .   c3  d3  .   e3  .   .   e3  d3  .   .   d3
+inst piano:     .   d2  c2  c2  d2  f2  c2  .   e2  b1  e2  g2  f2  b1  d2  f2
+inst piano:     .   .   .   f2  .   .   .   .   g2  .   .   .   .   .   .   .
+inst voice1:    .   a3  g3  a3  .   g3  .   b3  .   b3  .   b3  .   g3  .   g3
+vol:            50
+inst voice1:    .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
+inst voice1:    .   c3  b2  c3  .   c3  .   e3  .   b2  .   b2  .   c3  .   c3
+vol:            50
+inst bass1:     .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
+vol:            40
+inst bell:      /   .   /   .   /   .   /   .   /   .   /   .   /   .   .   .
+inst ride:      .   .   .   .   .   .   .   .   .   .   .   .   .   .   /   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
 div
 - 49, 50
 inst bass2:     c3  .   .   c3  .   c3  .   g2  f2  .   f2  .   .   a2  A2  b2
+inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   c2  e2  c2
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
+inst voice1:    .   e3  .   e3  .   b3  .   a3  a3  a3  g3  a3  g3  b3  .   .
+vol:            50  .   .   .   .   .   .   .   30  10  50
+inst voice1:    .   c3  .   c3  .   e3  .   f3  f3  f3  e3  f3  e3  g3  .   .
+vol:            .   .   .   .   .   .   .   .   20  10  /
+inst voice1:    .   g2  .   g2  .   c3  .   e3  e3  e3  d3  c3  b2  e3  .   .
+vol:            50  .   .   .   .   .   .   .   20  10  50
+inst voice1:    .   .   .   .   .   .   .   c3  c3  c3  .   .   .   .   .   .
+vol:            50  .   .   .   .   .   .   .   20  10
+inst bass1:     .   c3  .   c3  .   e3  .   f3  .   .   e3  f3  e3  g3  .   .
+vol:            40
+inst bell:      /   .   .   .   /   .   /   .   /   .   /   .   /   .   /   .
+inst ride:      .   .   /   .   .   .   .   .   .   .   .   .   .   .   .   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   .   /   .   /   .   /   .   .   /   /   /   /   .   .   .
 div
 - 51, 52
 inst bass2:     .   .   b2  .   .   c3  d3  e3  .   .   e3  d3  .   .   d3  c3
+inst piano:     .   d2  c2  .   .   c2  b1  e2  .   b1  e2  d2  .   b1  d2  c2
+inst piano:     .   .   f2  .   .   f2  .   g2  .   .   g2  f2  .   .   f2  e2
+inst voice1:    .   a3  g3  a3  .   g3  .   b3  .   b3  .   b3  .   g3  .   g3
+vol:            50
+inst voice1:    .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
+inst voice1:    .   c3  b2  c3  .   c3  .   e3  .   b2  .   b2  .   c3  .   c3
+vol:            50
+inst bass1:     .   f3  e3  f3  .   e3  .   g3  .   f3  .   f3  .   e3  .   e3
+vol:            40
+inst bell:      /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   /   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+div
+override !bg@#252B48,0.5
 div
 - 53, 54
 inst bass2:     .   .   c3  .   .   c3  c3  g2  f2  .   .   g2  .   a2  A2  b2
+inst piano:     .   g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   c2  e2  c2
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
+inst voice1:    .   e3  .   .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            50
+inst voice1:    .   c3  .   .   .   .   .   .   .   .   .   .   .   .   .   .
+inst voice1:    .   g2  .   .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            50
+inst bass1:     .   c3  .   .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            40
+inst bass1:     .   b2  .   .   b2  b2  g2  e2  f2  f2  e2  f2  .   .   .   .
+vol:            20  .   60
+inst bass1:     .   c3  .   .   c3  .   .   .   a2  a2  .   a2  .   .   .   .
+vol:            20  .   60
+inst bass1:     .   e3  .   .   e3  .   .   .   .   .   .   .   .   .   .   .
+vol:            20  .   60
+inst bell:      /   .   /   .   .   .   .   .   .   .   .   .   .   .   .   .
+inst ride:      .   .   .   .   /   .   .   .   .   .   .   .   .   .   .   .
+inst hihat:     .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
 div
 - 55, 56
 inst bass2:     .   .   b2  .   .   c3  d3  .   e3  .   .   e3  d3  .   .   d3
+inst piano:     d2  c2  c2  d2  c2  c2  c2  e2  .   b1  e2  g2  f2  b1  d2  f2
+inst piano:     .   .   f2  .   .   f2  .   g2  .   .   .   .   .   .   .   .
+inst bass1:     .   .   .   b2  .   b2  g2  g2  .   f2  e2  g2  .   f2  e2  .
+vol:            40  .   .   .   60
+inst bass1:     .   .   .   c3  .   .   .   b2  .   b2  b2  b2  .   b2  b2  .
+vol:            40  .   .   .   60
+inst bass1:     .   .   .   e3  .   e3  .   .   .   .   .   .   .   .   .   .
+vol:            40  .   .   .   60
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 div
 - 57, 58
 inst bass2:     c3  .   .   c3  .   c3  .   g2  f2  .   f2  .   .   a2  A2  b2
+inst piano:     e2  g2  b2  g3  e3  b2  g2  b2  a2  .   c3  .   a2  c3  .   c3
+inst piano:     .   .   .   .   .   .   .   .   .   .   e3  .   .   e3  .   f3
+inst bass1:     e2  .   .   b2  .   g2  f2  e2  f2  f2  e2  f2  .   .   .   .
+vol:            60
+inst bass1:     b2  .   .   c3  .   b2  b2  b2  a2  a2  .   a2  .   .   .   .
+vol:            60
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
 div
 - 59, 60
 inst bass2:     .   .   b2  .   .   c3  d3  e3  .   .   .   e3  d3  .   .   d3
+inst piano:     d3  c3  c3  d3  c3  c3  c3  e3  .   b2  e3  g3  f3  b2  d3  f3
+inst piano:     .   .   f3  .   .   f3  .   g3  .   .   .   .   .   .   .   .
+inst bass1:     .   .   .   b2  .   b2  g2  g2  .   f2  e2  g2  .   f2  e2  .
+vol:            40  .   .   .   60
+inst bass1:     .   .   .   c3  .   .   .   b2  .   b2  b2  b2  .   b2  b2  .
+vol:            40  .   .   .   60
+inst bass1:     .   .   .   e3  .   e3  .   .   .   .   .   .   .   .   .   .
+vol:            40  .   .   .   60
+inst ride:      .   .   .   .   .   .   .   .   .   .   /   .   .   .   .   .
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   .   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   .   .
+inst snare:     .   .   /   .   .   .   /   .   .   .   /   /   /   /   /   .
+vol:            .   .   .   .   .   .   .   .   .   .   .   6   14  22  30
 div
 - 61, 62
 inst bass2:     c3  .   .   .   .   .   .   .   f2  .   .   g2  .   a2  .   A2
+inst piano:     e3  .   .   .   .   .   .   .   .   .   c2  .   .   .   c2  .
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   e2  .
+inst bass1:     e2  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            60
+inst voice1:    .   .   c3  b2  c3  e3  .   g2  .   f2  .   f2  e2  f2  .   .
+vol:            140 .   .   .   .   .   /
+inst snare:     /   .   .   .   .   .   /   .   .   .   .   .   .   .   .   .
+vol:            30
+inst hihat:     .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .
+inst rstick:    .   .   .   .   .   .   .   .   .   .   /   .   .   .   /   .
+clear:          .   .   /   /   /   .   /   .   /   .   /   /   /   .   .   /
 div
 - 63, 64
 inst bass2:     b2  .   .   b2  .   c3  .   d3  e3  .   .   e3  d3  .   .   d3
+inst piano:     c2  d2  c2  c2  d2  f2  c2  e2  .   b1  e2  g2  f2  b1  d2  f2
+inst piano:     f2  .   .   f2  .   .   .   g2  .   .   .   .   .   .   .   .
+inst voice1:    .   .   f2  f2  .   f2  .   e2  g2  b2  .   c3  .   b2  .   c3
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          .   .   /   .   /   .   /   /   /   .   /   .   /   .   /   .
 div
 - 65, 66
 inst bass2:     c3  .   .   d3  e3  .   .   .   c3  b2  g2  f2  .   .   g2  .   a2  .   A2
+inst piano:     e2  g1  c2  g2  .   .   .   e2  c2  g1  c2  a1  c2  .   a1  c2  .   c2  .
+inst piano:     .   .   .   .   .   .   .   .   .   .   .   .   e2  .   .   e2  .   e2  .
+inst voice1:    .   c3  .   c3  .   .   .   .   e3  .   g2  .   f2  e2  f2  .   .   .   .
+inst hihat:     /   .   /   .   .   .   .   /   .   /   .   /   .   /   .   /   .   /   c4
+vol:            70
+inst rstick:    .   .   /   .   .   .   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          /   .   /   .   .   .   .   /   .   /   .   /   /   /   .   .   /   .   .
 tempo:          .   .   .   4x  .   .   .   /   .   .   .   .   .   .   .   .   .   .   .
 div
 - 67, 68
 inst bass2:     b2  .   .   b2  .   c3  .   d3  e3  .   .   e3  d3  .   .   d3
+inst piano:     c2  d2  c2  c2  d2  f2  c2  e2  .   b1  e2  g2  f2  b1  d2  f2
+inst piano:     f2  .   .   f2  .   .   .   g2  .   .   .   .   .   .   .   .
+inst voice1:    .   f2  e2  f2  .   f2  e2  g2  .   b2  .   b2  .   c3  .   c3
+vol:            .   .   .   .   .   .   .   106 .   112 .   118 .   124 .   130
+inst hihat:     /   .   /   .   /   .   /   .   /   .   /   .   /   .   /   .
+vol:            70
+inst rstick:    .   .   /   .   .   .   /   .   .   .   /   .   .   .   /   .
+clear:          .   /   /   .   /   /   /   .   /   .   /   .   /   .   /   .
 div
+override !bg@#090a11,2.0
+div
+
+- FINAL DANCING!
+
 - 69, 70
 inst bass2:     c3  .   c3  g3  c4  g3  c3  .   f2  .   f2  .   .   a2  .   b2
+inst piano:     e2  g1  c2  g2  e2  c2  g1  c2  a1  .   c2  .   .   c2  e2  c2
+inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   .   f2
+inst voice1:    .   f2  e2  .   .   .   .   .   .   .   .   .   .   .   .   .
+vol:            .   130 120
+inst voice1:    .   .   .   .   .   .   .   b3  .   a3  a3  g2  g2  .   b3  .   
+vol:            .   .   .   .   .   .   .   50
+inst voice1:    .   .   c3  b2  c3  e3  .   g3  .   f3  f3  e3  e3  .   g3  .  
+inst voice1:    .   .   .   .   .   .   .   e3  .   c3  c3  b2  b2  .   c3  .   
+vol:            .   .   .   .   .   .   .   50
+inst ride:      /   .   .   .   .   .   .   .   /   .   .   .   .   .   .   .
+inst kick:      .   .   /   .   /   .   /   .   .   .   .   .   .   .   .   .
+inst bell:      .   .   .   .   .   .   .   .   .   .   /   .   /   .   /   .
+inst hihat:     .   .   .   .   .   .   .   .   /   c4  /   c4  /   c4  /   c4
+vol:            70
+inst rstick:    .   .   .   .   .   .   .   .   .   .   /   .   .   .   /   .
+inst snare:     .   .   .   .   .   .   .   .   .   .   /   .   .   .   /   .
+clear:          .   /   /   /   /   .   /   .   .   /   /   /   .   /   .   .
 div
 - 71, 72
 inst bass2:     .   .   b2  .   .   c3  d3  .   e3  .   .   e3  d3  .   .   d3
