@@ -144,7 +144,7 @@ textarea {
     font-size: 1rem;
     resize: none;
     overflow: auto;
-    white-space: nowrap;
+    white-space: pre;
 }
 
 textarea::-webkit-scrollbar {
