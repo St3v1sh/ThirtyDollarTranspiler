@@ -40,7 +40,7 @@ inst bell pit C3
 
 - ride
 inst ride set ride2
-inst ride vol 80
+inst ride vol 60
 inst ride pit C3
 
 - loose hihat, shaker
@@ -519,7 +519,7 @@ inst piano:     .   .   .   .   .   .   .   .   .   .   e2  .   .   .   e2  .
 inst bass1:     e2  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .
 vol:            60
 inst voice1:    .   .   c3  b2  c3  e3  .   g2  .   f2  .   f2  e2  f2  .   .
-vol:            140 .   .   .   .   .   /
+vol:            120 .   .   .   .   .   /
 inst snare:     /   .   .   .   .   .   /   .   .   .   .   .   .   .   .   .
 vol:            30
 inst hihat:     .   .   .   .   .   .   .   .   /   .   /   .   /   .   /   .
