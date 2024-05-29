@@ -7,6 +7,7 @@ This application assists in making [thirtydollar.website](https://thirtydollar.w
 Paste the contents of dancing-in-the-moonlight.moyai into index.html to see an example.
 
 ## Text Editor Features
+
 - Hide and show line numbers
 - Current line indicator
 - Visible highlighted space characters
@@ -23,21 +24,28 @@ Paste the contents of dancing-in-the-moonlight.moyai into index.html to see an e
 - Editor color themes
 
 ## Transpiler
+
 The moyai file has two sections: configurations and song
 
 ### Note Syntax
-Notes are a key followed optionally by a non-negative octave number. If no octave number is provided, it's assumed to be 0. For example:
-- `c` `c0` `a5` `g10`
+
+Notes are a key followed optionally by a non-negative octave number. If no octave number is provided, it's assumed to be 0. Absolute pitch values can also be provided. For example:
+
+- `c` `c0` `a5` `g10` are valid notes with keys and octaves.
+- `0` `0.2` `-1` `-.6` are valid absolute pitch values.
 
 There is also the default note and the rest note, notated by `/` and `.`, to play the default pitch of an instrument and to signal no action, respectively.
 
 Some modifiers accept multipliers, notated by an integer or decimal number followed by an `x`. For example:
+
 - `2x` `1.5x` `.5x`
 
 Any line starting with the character `-` will be regarded as a comment.
 
 ### Configurations Section Symbols
+
 General song configuration:
+
 - `name [songname]` Define the song's name
 - `bpm [value]` Define the song's BPM
 - `sharp [f] [c] [...]` Define the song's scale using sharp notes
@@ -45,11 +53,13 @@ General song configuration:
 - `transpose [value]` Define the semitone offset
 
 Instruments configuration:
+
 - `inst [alias] set [instrument]` Define an alias for an instrument
 - `inst [alias] vol [value]` Define the default volume for an instrument
 - `inst [alias] pit [note]` Define the default pitch for an instrument
 
 ### Song Section Symbols
+
 - `start` Defines the start of the song section
 - `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire track
 - `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire track
@@ -62,6 +72,7 @@ Song section symbols have an order of operations:
 `tempo > gvol > inst > clear`
 
 Segments allow the reuse of repeated song sections. Segments cannot be nested or called within other segments.
+
 - `segstart [label]` Defines the start of a segment
 - `segend` Defines the end of the segment
 - `seg [label]` Plays a previously defined segment

@@ -71,6 +71,7 @@ const PITCHES = {
 const PITCH_OCTAVE = 12;
 
 const REGEX = {
+  DECIMAL_NUMBER: /^((-?\d+)?(\.\d+)?|(\d+)?(-?\.\d+)?)$/,
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
   DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${SYMBOLS.NOTES.MULTIPLY_TAG}?$`),
   PITCH_WITHOUT_OCTAVE_LOWERCASE: /^[a-g]$/,
@@ -86,14 +87,14 @@ const dateFormatter = new Intl.DateTimeFormat('en', {
 var warnings = [];
 
 /**
- * @param {string} message 
+ * @param {string} message
  */
 function reportWarning(message) {
   warnings.push(message);
 }
 
 /**
- * @param {string} message 
+ * @param {string} message
  */
 function reportError(message) {
   const output = document.getElementById('status');
@@ -103,7 +104,7 @@ function reportError(message) {
 }
 
 /**
- * @param {string} message 
+ * @param {string} message
  */
 function reportOK(message) {
   const output = document.getElementById('status');
@@ -113,9 +114,9 @@ function reportOK(message) {
 }
 
 /**
- * @param {string} textData 
- * @param {string} fileName 
- * @param {string} fileExtension 
+ * @param {string} textData
+ * @param {string} fileName
+ * @param {string} fileExtension
  */
 async function saveToFile(textData, fileName, fileExtension) {
   const suggestedName = `${fileName}.${fileExtension}`;
@@ -145,7 +146,7 @@ async function saveToFile(textData, fileName, fileExtension) {
 }
 
 /**
- * @param {Array<Array>} arrays 
+ * @param {Array<Array>} arrays
  * @returns {Array<Array>}
  */
 function zip(arrays) {
@@ -155,11 +156,16 @@ function zip(arrays) {
 };
 
 /**
- * @param {Config} config 
- * @param {string} pitch 
+ * @param {Config} config
+ * @param {string} pitch
  * @returns {number}
  */
 function pitchToSemitone(config, pitch) {
+  const pitchAsFloat = parseFloat(pitch);
+  if (!isNaN(pitchAsFloat)) {
+    return pitchAsFloat.toFixed(2);
+  }
+
   var letter;
   var octave;
   if (pitch.length > 1) {

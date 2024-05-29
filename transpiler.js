@@ -35,7 +35,15 @@ function transpile(copyToClipboard = false) {
       }
 
       case SYMBOLS.CONFIG.TRANSPOSE: {
-        config.transpose = parseInt(args[0]);
+        const transpose = parseFloat(args[0]);
+
+        if (isNaN(transpose) || !isFinite(transpose)) {
+          reportWarning(`Invalid transpose "${args[0]}" ignored.`);
+          config.transpose = 0;
+          break;
+        }
+
+        config.transpose = transpose;
         break;
       }
 
@@ -249,20 +257,21 @@ function transpile(copyToClipboard = false) {
 
         const [rawNotes] = trackArgs;
         const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(REGEX.PITCH_WITH_OCTAVE.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (notes.some(note => !(REGEX.PITCH_WITH_OCTAVE.test(note) || REGEX.DECIMAL_NUMBER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", unrecognized note found.`);
           return;
         }
 
         const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
-        if (lastInstrumentNotes && lastInstrumentNotes.getPitchData().length !== notes.length) {
+        if (lastInstrumentNotes && notes.length > lastInstrumentNotes.getPitchData().length) {
           reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length.`);
           return;
         }
 
         const instrumentNotes = new InstrumentNotes();
+        const lastInstrumentNotesLength = lastInstrumentNotes?.getPitchData().length || notes.length;
         instrumentNotes.setInstrumentConfig(instrument);
-        instrumentNotes.setPitchData(notes);
+        instrumentNotes.setPitchData([...notes.slice(0, lastInstrumentNotesLength), ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
         instrumentTrack.addInstrumentNotes(instrumentNotes);
         break;
       }
@@ -415,10 +424,10 @@ function transpile(copyToClipboard = false) {
 }
 
 /**
- * @param {Config} config 
- * @param {string} name 
- * @param {string} command 
- * @param {string} value 
+ * @param {Config} config
+ * @param {string} name
+ * @param {string} command
+ * @param {string} value
  * @returns {{
  *  success: boolean,
  *  message: string,
@@ -450,11 +459,13 @@ function parseInstrumentConfig(config, name, command, value) {
       const instrumentConfig = config.findInstrument(name);
       if (!instrumentConfig)
         return { success: false, message: `No instrument named "${name}", default pitch config ignored.` };
-      if (!REGEX.PITCH_WITH_OCTAVE.test(value))
-        return { success: false, message: `Invalid pitch "${value}", default pitch config ignored.` };
 
-      instrumentConfig.defaultPitch = value;
-      break;
+      if (REGEX.PITCH_WITH_OCTAVE.test(value) || REGEX.DECIMAL_NUMBER.test(value)) {
+        instrumentConfig.defaultPitch = value;
+        break;
+      }
+
+      return { success: false, message: `Invalid pitch "${value}", default pitch config ignored.` };
     }
     default: {
       return { success: false, message: `Unrecognized instrument command "${command}" ignored.` };
@@ -464,8 +475,8 @@ function parseInstrumentConfig(config, name, command, value) {
 }
 
 /**
- * @param {TrackPiece[]} track 
- * @param {string} alias 
+ * @param {TrackPiece[]} track
+ * @param {string} alias
  * @returns {Segment | undefined}
  */
 function findSegment(track, alias) {
