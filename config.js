@@ -5,7 +5,7 @@ class InstrumentConfig {
    *  instrument: string,
    *  defaultVolume: string,
    *  defaultPitch: string,
-   * } | {}} config 
+   * } | {}} config
    */
   constructor(config) {
     const { name = '', instrument = '', defaultVolume = '100', defaultKey: defaultPitch = 'c' } = config || {};
@@ -32,7 +32,7 @@ class Config {
    *  flat: string[],
    *  transpose: number,
    *  instrumentConfigs: InstrumentConfig[],
-   * } | {}} config 
+   * } | {}} config
    */
   constructor(config) {
     const { name = 'untitled', bpm = '140', sharp = [], flat = [], transpose = 0, instrumentConfigs = [] } = config || {};
