@@ -119,6 +119,16 @@ function transpile(copyToClipboard = false) {
     if (trackArgs.length === 0) {
       const [first, ...rest] = commands.split(' ').filter(command => command.length > 0);
       switch (first) {
+        // br.
+        case SYMBOLS.SONG.BREAK: {
+          if (rest.length !== 0) {
+            reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.BREAK} expects no parameters.`);
+            return;
+          }
+          finalizeInstrumentTrack();
+          break;
+        }
+
         // div.
         case SYMBOLS.SONG.DIVIDER: {
           if (rest.length !== 0) {
@@ -274,6 +284,12 @@ function transpile(copyToClipboard = false) {
         instrumentNotes.setPitchData([...notes.slice(0, lastInstrumentNotesLength), ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
         instrumentTrack.addInstrumentNotes(instrumentNotes);
         break;
+      }
+
+      // TODO: ghst.
+      case SYMBOLS.SONG.GHOST_INSTRUMENT: {
+        reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.GHOST_INSTRUMENT} is not implemented.`);
+        return;
       }
 
       // vol.

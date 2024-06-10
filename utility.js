@@ -23,12 +23,14 @@ const SYMBOLS = {
     // Delimiter symbols.
     START: 'start',
     INSTRUMENT: 'inst',
+    GHOST_INSTRUMENT: 'ghst',
     VOLUME: 'vol',
     GLOBAL_VOLUME: 'gvol',
     CLEAR: 'clear',
     TEMPO: 'tempo',
 
     // Non-delimiter symbols.
+    BREAK: 'br',
     DIVIDER: 'div',
     SEGMENT: 'seg',
     SEGMENT_START: 'segstart',
