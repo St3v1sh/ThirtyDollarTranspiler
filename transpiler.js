@@ -1,4 +1,10 @@
+// global goto counter.
+let g_gotoCounter = 1;
+
 function transpile(copyToClipboard = false) {
+  // Reset the global goto counter.
+  g_gotoCounter = 1;
+
   const input = document.getElementById('input').value;
   const lines = input.split('\n').map((line) => line.trim()).filter((line) => (line.length > 0 && !line.startsWith(SYMBOLS.COMMENT)));
 
@@ -96,13 +102,12 @@ function transpile(copyToClipboard = false) {
   // Generate song data structures.
 
   /** @type {TrackPiece[]} */
-  var track = [];
+  let track = [];
 
-  var section = new Section();
-  var instrumentTrack = new InstrumentTrack(config);
-  var segment;
-  var isInSegment = false;
-  var gotoCounter = 1;
+  let section = new Section();
+  let instrumentTrack = new InstrumentTrack(config);
+  let segment;
+  let isInSegment = false;
 
   const finalizeInstrumentTrack = () => {
     if (!instrumentTrack.getLastInstrumentNotes())
@@ -181,8 +186,8 @@ function transpile(copyToClipboard = false) {
           segment = new Segment();
 
           segment.alias = alias;
-          segment.label = gotoCounter;
-          gotoCounter++;
+          segment.label = g_gotoCounter;
+          g_gotoCounter++;
           break;
         }
 
@@ -226,12 +231,12 @@ function transpile(copyToClipboard = false) {
           }
 
           finalizeInstrumentTrack();
-          section.addData(new Goto(gotoCounter));
-          foundSegment.addPrepend(new Label(gotoCounter));
-          gotoCounter++;
-          section.addData(new Label(gotoCounter));
-          foundSegment.addAppend(new Goto(gotoCounter));
-          gotoCounter++;
+          section.addData(new Goto(g_gotoCounter));
+          foundSegment.addPrepend(new Label(g_gotoCounter));
+          g_gotoCounter++;
+          section.addData(new Label(g_gotoCounter));
+          foundSegment.addAppend(new Goto(g_gotoCounter));
+          g_gotoCounter++;
           break;
         }
 
@@ -251,10 +256,17 @@ function transpile(copyToClipboard = false) {
     // Handle delimiter symbols.
     const [first, ...rest] = commands.split(' ').filter(command => command.length > 0);
     switch (first) {
-      // inst.
+      // inst and ghst.
+      case SYMBOLS.SONG.GHOST_INSTRUMENT:
       case SYMBOLS.SONG.INSTRUMENT: {
         if (rest.length !== 1) {
           reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.INSTRUMENT} expects exactly one instrument name.`);
+          return;
+        }
+
+        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
+        if (first === SYMBOLS.SONG.GHOST_INSTRUMENT && lastInstrumentNotes && lastInstrumentNotes.getGhostLevel() === 0) {
+          reportError(`Invalid track at "${line}", ${SYMBOLS.SONG.GHOST_INSTRUMENT} tracks must go before ${SYMBOLS.SONG.INSTRUMENT} tracks.`);
           return;
         }
 
@@ -272,7 +284,6 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
-        const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
         if (lastInstrumentNotes && notes.length > lastInstrumentNotes.getPitchData().length) {
           reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length.`);
           return;
@@ -282,14 +293,9 @@ function transpile(copyToClipboard = false) {
         const lastInstrumentNotesLength = lastInstrumentNotes?.getPitchData().length || notes.length;
         instrumentNotes.setInstrumentConfig(instrument);
         instrumentNotes.setPitchData([...notes.slice(0, lastInstrumentNotesLength), ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
+        instrumentNotes.setGhostLevel(first === SYMBOLS.SONG.GHOST_INSTRUMENT ? 1 : 0);
         instrumentTrack.addInstrumentNotes(instrumentNotes);
         break;
-      }
-
-      // TODO: ghst.
-      case SYMBOLS.SONG.GHOST_INSTRUMENT: {
-        reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.GHOST_INSTRUMENT} is not implemented.`);
-        return;
       }
 
       // vol.

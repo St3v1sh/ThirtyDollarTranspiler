@@ -63,7 +63,7 @@ Instruments configuration:
 - `start` Defines the start of the song section
 - `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire track
 - `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire track
-- `inst [alias]: [note] [or .] [or /] [...]` Defines an instrument track
+- `inst [alias]: [value] [note] [or .] [or /] [...]` Defines an instrument track
 - `vol: [value] [or .] [or /] [...]` Modifies the volume of the last instrument track
 - `clear: [.] [or /] [...]` Defines when to clear the sounds of the notes currently playing
 
@@ -77,6 +77,13 @@ Segments allow the reuse of repeated song sections. Segments cannot be nested or
 - `segend` Defines the end of the segment
 - `seg [label]` Plays a previously defined segment
 
-A divider is used only for organization purposes, defined alone on its own line as `div`.
+Sometimes you may want to skip instrument tracks the first time it's played in a segment. Ghost tracks are used for this purpose. Ghost tracks must be defined above any instrument tracks in a group of instrument tracks. (Multi-level ghosting is not implemented yet):
+
+`ghst [alias]: [value] [note] [or .] [or /] [...]`
+
+Groups of instrument tracks are played simultaneously. New groups can be split out in two ways:
+
+- `div` Finalizes the current track and creates a divider.
+- `br` Finalizes the current track without any visual indicators.
 
 For extra control, the `override` keyword can be used together with a string (i.e. `override !bg@#000000,0.5`) to insert it directly into the song. Overrides must be on their own lines.

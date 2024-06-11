@@ -32,7 +32,7 @@ class Section extends TrackPiece {
   }
 
   /**
-   * @param {TrackData} trackData 
+   * @param {TrackData} trackData
    */
   addData(trackData) {
     this.data.push(trackData);
@@ -74,21 +74,21 @@ class Segment extends TrackPiece {
   }
 
   /**
-   * @param {Section} section 
+   * @param {Section} section
    */
   addData(section) {
     this.data.push(section);
   }
 
   /**
-   * @param {Label} label 
+   * @param {Label} label
    */
   addPrepend(label) {
     this.prepend.push(label)
   }
 
   /**
-   * @param {Goto} goto 
+   * @param {Goto} goto
    */
   addAppend(goto) {
     this.append.push(goto)
@@ -98,7 +98,7 @@ class Segment extends TrackPiece {
    * @returns {string}
    */
   toString() {
-    var pieces = [];
+    let pieces = [];
 
     pieces.push((new Goto(this.label)).toString());
     this.prepend.forEach(label => pieces.push(label.toString()));
@@ -136,9 +136,9 @@ class TrackData {
 
 class Override extends TrackData {
   /**
-   * @param {string} data 
+   * @param {string} data
    */
-  constructor (data) {
+  constructor(data) {
     super();
     this.data = data;
   }
@@ -169,7 +169,7 @@ class InstrumentTrack extends TrackData {
   data = { config: undefined, instrumentNotes: [], globalVolume: [], clear: [], tempo: [] };
 
   /**
-   * @param {Config} config 
+   * @param {Config} config
    */
   constructor(config) {
     super();
@@ -177,7 +177,7 @@ class InstrumentTrack extends TrackData {
   }
 
   /**
-   * @param {InstrumentNotes} instrumentNotes 
+   * @param {InstrumentNotes} instrumentNotes
    */
   addInstrumentNotes(instrumentNotes) {
     this.data.instrumentNotes.push(instrumentNotes);
@@ -191,7 +191,7 @@ class InstrumentTrack extends TrackData {
   }
 
   /**
-   * @param {string[]} globalVolume 
+   * @param {string[]} globalVolume
    */
   setGlobalVolume(globalVolume) {
     this.data.globalVolume = globalVolume;
@@ -205,7 +205,7 @@ class InstrumentTrack extends TrackData {
   }
 
   /**
-   * @param {string[]} clear 
+   * @param {string[]} clear
    */
   setClear(clear) {
     this.data.clear = clear;
@@ -219,7 +219,7 @@ class InstrumentTrack extends TrackData {
   }
 
   /**
-   * @param {string[]} tempo 
+   * @param {string[]} tempo
    */
   setTempo(tempo) {
     this.data.tempo = tempo;
@@ -236,11 +236,11 @@ class InstrumentTrack extends TrackData {
    * @returns {string}
    */
   toString() {
-    var pieces = [];
+    let pieces = [];
 
     // Order of operations: Tempo > Global Volume > Instruments > Clear.
 
-    var lastVolumes = [];
+    let lastVolumes = [];
     const zippedInstrumentNotes = zip(this.data.instrumentNotes.map((instrumentNotes => instrumentNotes.getZippedData())));
     zip([
       this.data.tempo.length === 0 ?
@@ -276,19 +276,20 @@ class InstrumentTrack extends TrackData {
       if (lastVolumes.length === 0)
         lastVolumes = Array(zippedNotes.length).fill('');
 
-      var notePieces = [];
-      zippedNotes.forEach(([instrumentConfig, pitch, volume], index) => {
+      let notePieces = [];
+      let ghostPieces = 0;
+      zippedNotes.forEach(([instrumentConfig, pitch, volume, ghostLevel], index) => {
         if (lastVolumes[index] === '')
           lastVolumes[index] = instrumentConfig.defaultVolume;
 
-        var semitone;
+        let semitone;
         if (pitch === SYMBOLS.NOTES.DEFAULT) {
           semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch);
         } else if (pitch !== SYMBOLS.NOTES.REST) {
           semitone = pitchToSemitone(this.data.config, pitch);
         }
 
-        var finalVolume = lastVolumes[index];
+        let finalVolume = lastVolumes[index];
         if (volume === SYMBOLS.NOTES.DEFAULT) {
           finalVolume = instrumentConfig.defaultVolume;
           lastVolumes[index] = finalVolume;
@@ -300,13 +301,23 @@ class InstrumentTrack extends TrackData {
         if (semitone === undefined)
           return;
 
-        notePieces.push(instrumentConfig.instrument + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + semitone.toString() + (finalVolume === '100' ? '' : (SYMBOLS.TRANSLATION.VOLUME_DELIMITER + finalVolume)));
+        const outputVolumeText = (finalVolume === '100' ? '' : (SYMBOLS.TRANSLATION.VOLUME_DELIMITER + finalVolume));
+        if (ghostLevel > 0) {
+          const ghostPrefix = SYMBOLS.TRANSLATION.GOTO + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + g_gotoCounter + SYMBOLS.TRANSLATION.NOTE_DELIMITER;
+          const ghostPostfix = SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.COMBINE + SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.LABEL + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + g_gotoCounter;
+          notePieces.push(ghostPrefix + instrumentConfig.instrument + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + semitone.toString() + outputVolumeText + ghostPostfix);
+          g_gotoCounter++;
+          ghostPieces++;
+        } else {
+          notePieces.push(instrumentConfig.instrument + SYMBOLS.TRANSLATION.GENERAL_DELIMITER + semitone.toString() + outputVolumeText);
+        }
       });
 
       if (notePieces.length === 0) {
         pieces.push(SYMBOLS.TRANSLATION.REST);
       } else {
-        pieces.push(notePieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.COMBINE + SYMBOLS.TRANSLATION.NOTE_DELIMITER));
+        const ghostRest = notePieces.length === ghostPieces ? SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.REST + SYMBOLS.TRANSLATION.NOTE_DELIMITER : '';
+        pieces.push(notePieces.join(SYMBOLS.TRANSLATION.NOTE_DELIMITER + SYMBOLS.TRANSLATION.COMBINE + SYMBOLS.TRANSLATION.NOTE_DELIMITER) + ghostRest);
       }
 
       // Clear.
@@ -321,7 +332,7 @@ class InstrumentTrack extends TrackData {
 
 class Goto extends TrackData {
   /**
-   * @param {number} data 
+   * @param {number} data
    */
   constructor(data) {
     super();
@@ -338,7 +349,7 @@ class Goto extends TrackData {
 
 class Label extends TrackData {
   /**
-   * @param {number} data 
+   * @param {number} data
    */
   constructor(data) {
     super();
@@ -356,13 +367,13 @@ class Label extends TrackData {
 // InstrumentTracks contain InstrumentNotes.
 
 class InstrumentNotes {
-  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[] }} */
-  data = { instrumentConfig: undefined, pitchData: [], volumeData: [] };
+  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[], ghostLevel: number }} */
+  data = { instrumentConfig: undefined, pitchData: [], volumeData: [], ghostLevel: 0 };
 
   constructor() { }
 
   /**
-   * @param {InstrumentConfig} instrumentConfig 
+   * @param {InstrumentConfig} instrumentConfig
    */
   setInstrumentConfig(instrumentConfig) {
     this.data.instrumentConfig = instrumentConfig;
@@ -376,7 +387,7 @@ class InstrumentNotes {
   }
 
   /**
-   * @param {string[]} pitchData 
+   * @param {string[]} pitchData
    */
   setPitchData(pitchData) {
     this.data.pitchData = pitchData;
@@ -390,7 +401,7 @@ class InstrumentNotes {
   }
 
   /**
-   * @param {string[]} volumeData 
+   * @param {string[]} volumeData
    */
   setVolumeData(volumeData) {
     this.data.volumeData = volumeData;
@@ -404,7 +415,21 @@ class InstrumentNotes {
   }
 
   /**
-   * @returns {[InstrumentConfig, string[], string[]]}
+   * @param {number} ghostLevel
+   */
+  setGhostLevel(ghostLevel) {
+    this.data.ghostLevel = ghostLevel;
+  }
+
+  /**
+   * @returns {number}
+   */
+  getGhostLevel() {
+    return this.data.ghostLevel;
+  }
+
+  /**
+   * @returns {[InstrumentConfig[], string[], string[], number[]]}
    */
   getZippedData() {
     return zip([
@@ -413,7 +438,9 @@ class InstrumentNotes {
       this.data.pitchData,
 
       this.data.volumeData.length === 0 ?
-        Array(this.data.pitchData.length).fill(SYMBOLS.NOTES.REST) : this.data.volumeData
+        Array(this.data.pitchData.length).fill(SYMBOLS.NOTES.REST) : this.data.volumeData,
+
+      Array(this.data.pitchData.length).fill(this.data.ghostLevel)
     ]);
   }
 }
