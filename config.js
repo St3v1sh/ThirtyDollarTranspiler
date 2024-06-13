@@ -5,10 +5,11 @@ class InstrumentConfig {
    *  instrument: string,
    *  defaultVolume: string,
    *  defaultPitch: string,
+   *  defaultTranspose: number
    * } | {}} config
    */
   constructor(config) {
-    const { name = '', instrument = '', defaultVolume = '100', defaultKey: defaultPitch = 'c' } = config || {};
+    const { name = '', instrument = '', defaultVolume = '100', defaultKey: defaultPitch = 'c', defaultTranspose = 0 } = config || {};
     /** @type {string} */
     this.name = name;
 
@@ -20,6 +21,9 @@ class InstrumentConfig {
 
     /** @type {string} */
     this.defaultPitch = defaultPitch;
+
+    /** @type {number} */
+    this.defaultTranspose = defaultTranspose;
   }
 }
 

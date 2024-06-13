@@ -467,6 +467,7 @@ function parseInstrumentConfig(config, name, command, value) {
       config.instrumentConfigs.push(instrumentConfig);
       break;
     }
+
     case SYMBOLS.INSTRUMENTS.VOLUME: {
       const instrumentConfig = config.findInstrument(name);
       if (!instrumentConfig)
@@ -477,6 +478,7 @@ function parseInstrumentConfig(config, name, command, value) {
       instrumentConfig.defaultVolume = value;
       break;
     }
+
     case SYMBOLS.INSTRUMENTS.PITCH: {
       const instrumentConfig = config.findInstrument(name);
       if (!instrumentConfig)
@@ -488,6 +490,18 @@ function parseInstrumentConfig(config, name, command, value) {
       }
 
       return { success: false, message: `Invalid pitch "${value}", default pitch config ignored.` };
+    }
+
+    case SYMBOLS.INSTRUMENTS.TRANSPOSE: {
+      const instrumentConfig = config.findInstrument(name);
+      if (!instrumentConfig)
+        return { success: false, message: `No instrument named "${name}", default pitch config ignored.` };
+      if (!REGEX.DECIMAL_NUMBER.test(value)) {
+        return { success: false, message: `Invalid transpose "${value}", instrument transpose config ignored.` };
+      }
+
+      instrumentConfig.defaultTranspose = parseFloat(value);
+      break;
     }
     default: {
       return { success: false, message: `Unrecognized instrument command "${command}" ignored.` };

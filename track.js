@@ -284,9 +284,9 @@ class InstrumentTrack extends TrackData {
 
         let semitone;
         if (pitch === SYMBOLS.NOTES.DEFAULT) {
-          semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch);
+          semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch, instrumentConfig.defaultTranspose);
         } else if (pitch !== SYMBOLS.NOTES.REST) {
-          semitone = pitchToSemitone(this.data.config, pitch);
+          semitone = pitchToSemitone(this.data.config, pitch, instrumentConfig.defaultTranspose);
         }
 
         let finalVolume = lastVolumes[index];

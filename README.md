@@ -57,6 +57,7 @@ Instruments configuration:
 - `inst [alias] set [instrument]` Define an alias for an instrument
 - `inst [alias] vol [value]` Define the default volume for an instrument
 - `inst [alias] pit [note]` Define the default pitch for an instrument
+- `inst [alias] pos [value]` Define the semitone offset for an instrument
 
 ### Song Section Symbols
 
