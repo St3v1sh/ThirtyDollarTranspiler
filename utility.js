@@ -165,7 +165,7 @@ function zip(arrays) {
 function pitchToSemitone(config, pitch) {
   const pitchAsFloat = parseFloat(pitch);
   if (!isNaN(pitchAsFloat)) {
-    return pitchAsFloat.toFixed(2) + config.transpose;
+    return (pitchAsFloat + config.transpose).toFixed(2);
   }
 
   var letter;
