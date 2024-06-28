@@ -293,7 +293,7 @@ class InstrumentTrack extends TrackData {
 
         let finalVolume = lastVolumes[index];
         if (volume === SYMBOLS.NOTES.DEFAULT) {
-          finalVolume = instrumentConfig.defaultVolume;
+          finalVolume = defaultVolume || instrumentConfig.defaultVolume;
           lastVolumes[index] = finalVolume;
         } else if (volume !== SYMBOLS.NOTES.REST) {
           finalVolume = volume;
