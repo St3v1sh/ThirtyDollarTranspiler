@@ -29,12 +29,14 @@ The moyai file has two sections: configurations and song
 
 ### Note Syntax
 
-Notes are a key followed optionally by an octave number. If no octave number is provided, it's assumed to be 0. Absolute pitch values can also be provided. For example:
+Notes are a key followed optionally by an octave number. If no octave number is provided, it's assumed to be 0. Absolute pitch values can also be provided. If your pitch is between zero and one, you should provide the leading zero as a best practice. (This is to avoid confusion with a rest note.) For example:
 
 - `c` `c0` `a5` `g-10` are valid notes with keys and octaves.
-- `0` `0.2` `-1` `-.6` are valid absolute pitch values.
+- `0` `0.2` `-1` `-0.6` are valid absolute pitch values.
 
 There is also the default note and the rest note, notated by `/` and `.`, to play the default pitch of an instrument and to signal no action, respectively.
+
+Rest notes can be given a length greater than zero, i.e. `.4` defines a rest of length four.
 
 Some modifiers accept multipliers, notated by an integer or decimal number followed by an `x`. For example:
 

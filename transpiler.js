@@ -256,6 +256,8 @@ function transpile(copyToClipboard = false) {
 
     // Handle delimiter symbols.
     const [first, ...rest] = commands.split(' ').filter(command => command.length > 0);
+    const [rawNotes] = trackArgs;
+    const semiprocessedNotes = rawNotes.split(' ').filter(note => note.length > 0);
     switch (first) {
       // inst and ghst.
       case SYMBOLS.SONG.GHOST_INSTRUMENT:
@@ -297,16 +299,16 @@ function transpile(copyToClipboard = false) {
         }
 
         // Check if notes are valid.
-        const [rawNotes] = trackArgs;
-        const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(REGEX.PITCH_WITH_OCTAVE.test(note) || REGEX.DECIMAL_NUMBER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (semiprocessedNotes.some(note => !(REGEX.PITCH_WITH_OCTAVE.test(note) || REGEX.DECIMAL_NUMBER.test(note) || REGEX.REST_WITH_NUMBER.test(note) || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", unrecognized note found.`);
           return;
         }
+        const notes = formatRestNotes(semiprocessedNotes);
 
         // Check if note lengths are valid.
         if (lastInstrumentNotes && notes.length > lastInstrumentNotes.getPitchData().length) {
-          reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length.`);
+          reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length. `
+            + '(Did you mean to use a decimal pitch value? Add a leading zero to avoid ambiguity with rest notes.)');
           return;
         }
 
@@ -336,12 +338,11 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
-        const [rawNotes] = trackArgs;
-        const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(REGEX.NON_NEGATIVE_DECIMAL_NUMBER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (semiprocessedNotes.some(note => !(REGEX.NON_NEGATIVE_DECIMAL_NUMBER.test(note) || REGEX.REST_WITH_NUMBER.test(note) || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", invalid volume specified.`);
           return;
         }
+        const notes = formatRestNotes(semiprocessedNotes);
 
         if (lastInstrumentNotes.getVolumeData().length !== 0)
           reportWarning(`Volume data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
@@ -364,12 +365,11 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
-        const [rawNotes] = trackArgs;
-        const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (semiprocessedNotes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || REGEX.REST_WITH_NUMBER.test(note) || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", invalid global volume specified.`);
           return;
         }
+        const notes = formatRestNotes(semiprocessedNotes);
 
         if (instrumentTrack.getGlobalVolume().length !== 0)
           reportWarning(`Global volume data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
@@ -392,12 +392,11 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
-        const [rawNotes] = trackArgs;
-        const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (semiprocessedNotes.some(note => !(REGEX.REST_WITH_NUMBER.test(note) || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", invalid clear specified.`);
           return;
         }
+        const notes = formatRestNotes(semiprocessedNotes);
 
         if (instrumentTrack.getClear().length !== 0)
           reportWarning(`Clear notes are being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
@@ -420,12 +419,11 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
-        const [rawNotes] = trackArgs;
-        const notes = rawNotes.split(' ').filter(note => note.length > 0);
-        if (notes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
+        if (semiprocessedNotes.some(note => !(REGEX.DECIMAL_NUMBER_OR_MULTIPLIER.test(note) || REGEX.REST_WITH_NUMBER.test(note) || note === SYMBOLS.NOTES.DEFAULT))) {
           reportError(`Invalid track at "${line}", invalid tempo specified.`);
           return;
         }
+        const notes = formatRestNotes(semiprocessedNotes);
 
         if (instrumentTrack.getTempo().length !== 0)
           reportWarning(`Tempo data is being overridden for instrument "${lastInstrumentNotes.getInstrumentConfig()}" on line "${line}".`);
@@ -468,6 +466,16 @@ function transpile(copyToClipboard = false) {
       .then(() => reportOK(`${editorConfigs.fileName}.${editorConfigs.fileExtension} successfully transpiled and saved.`))
       .catch(() => reportError('Song save cancelled.'));
   }
+}
+
+/**
+ * @param {string[]} notes
+ * @return {string[]}
+ */
+function formatRestNotes(notes) {
+  return notes
+    .map(note => REGEX.REST_WITH_NUMBER.test(note) ? Array(parseInt(note.slice(1) || 1)).fill(SYMBOLS.NOTES.REST) : note)
+    .flat();
 }
 
 /**

@@ -32,8 +32,8 @@ inst bell:  c3  c3  c3  c3
 vol:        40  .   /   .
 clear:      .   /   .   /
 div
-inst bell 10 0: c3  /   c3  c3
-vol:            .   .   40  /
-clear:          .   /   .   /
-tempo:          2x  .   .25x /
-gvol:           90  .5x /   .
+inst bell 10 0: .4  c3  /   c3  c3
+vol:            .4  .   .   40  /
+clear:          .4  .   /   .   /
+tempo:          .4  2x  .   .25x /
+gvol:           .4  90  .5x /   .
