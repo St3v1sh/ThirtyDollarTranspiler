@@ -278,9 +278,11 @@ class InstrumentTrack extends TrackData {
 
       let notePieces = [];
       let ghostPieces = 0;
-      zippedNotes.forEach(([instrumentConfig, pitch, volume, ghostLevel], index) => {
+      zippedNotes.forEach(([instrumentConfig, pitch, volume, defaultVolume, ghostLevel], index) => {
+        defaultVolume = defaultVolume === SYMBOLS.NOTES.DEFAULT ? instrumentConfig.defaultVolume : defaultVolume;
+
         if (lastVolumes[index] === '')
-          lastVolumes[index] = instrumentConfig.defaultVolume;
+          lastVolumes[index] = defaultVolume || instrumentConfig.defaultVolume;
 
         let semitone;
         if (pitch === SYMBOLS.NOTES.DEFAULT) {
@@ -367,8 +369,8 @@ class Label extends TrackData {
 // InstrumentTracks contain InstrumentNotes.
 
 class InstrumentNotes {
-  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[], ghostLevel: number }} */
-  data = { instrumentConfig: undefined, pitchData: [], volumeData: [], ghostLevel: 0 };
+  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[], defaultVolume: string | undefined, ghostLevel: number }} */
+  data = { instrumentConfig: undefined, pitchData: [], volumeData: [], defaultVolume: undefined, ghostLevel: 0 };
 
   constructor() { }
 
@@ -415,6 +417,20 @@ class InstrumentNotes {
   }
 
   /**
+   * @param {string | undefined} defaultVolume
+   */
+  setDefaultVolume(defaultVolume) {
+    this.data.defaultVolume = defaultVolume;
+  }
+
+  /**
+   * @returns {string}
+   */
+  getDefaultVolume() {
+    return this.data.defaultVolume;
+  }
+
+  /**
    * @param {number} ghostLevel
    */
   setGhostLevel(ghostLevel) {
@@ -429,7 +445,7 @@ class InstrumentNotes {
   }
 
   /**
-   * @returns {[InstrumentConfig[], string[], string[], number[]]}
+   * @returns {[InstrumentConfig[], string[], string[], string[], number[]]}
    */
   getZippedData() {
     return zip([
@@ -439,6 +455,8 @@ class InstrumentNotes {
 
       this.data.volumeData.length === 0 ?
         Array(this.data.pitchData.length).fill(SYMBOLS.NOTES.REST) : this.data.volumeData,
+
+      Array(this.data.pitchData.length).fill(this.data.defaultVolume),
 
       Array(this.data.pitchData.length).fill(this.data.ghostLevel)
     ]);

@@ -5,6 +5,7 @@ function transpile(copyToClipboard = false) {
   // Reset the global goto counter.
   g_gotoCounter = 1;
 
+  /** @type {string} */
   const input = document.getElementById('input').value;
   const lines = input.split('\n').map((line) => line.trim()).filter((line) => (line.length > 0 && !line.startsWith(SYMBOLS.COMMENT)));
 
@@ -259,24 +260,43 @@ function transpile(copyToClipboard = false) {
       // inst and ghst.
       case SYMBOLS.SONG.GHOST_INSTRUMENT:
       case SYMBOLS.SONG.INSTRUMENT: {
-        if (rest.length !== 1) {
-          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.INSTRUMENT} expects exactly one instrument name.`);
+        // Check if instrument name was provided.
+        if (rest.length === 0) {
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.INSTRUMENT} expects an instrument name.`);
+          return;
+        }
+        // Check if too many parameters were provided.
+        if (rest.length > 3) {
+          reportError(`Invalid track at "${commands}", ${SYMBOLS.SONG.INSTRUMENT} expects at most an instrument name, a volume, and a pitch.`);
           return;
         }
 
+        const [instrumentName, volume, pitch] = rest;
+        const instrument = config.findInstrument(instrumentName);
+        // Check if the instrument config has been defined.
+        if (!instrument) {
+          reportError(`Invalid track at "${commands}", unrecognized instrument name "${instrumentName}" cannot be played.`);
+          return;
+        }
+        // Check if track volume is valid.
+        if (volume !== undefined && !REGEX.NON_NEGATIVE_DECIMAL_NUMBER.test(volume) && volume !== SYMBOLS.NOTES.DEFAULT) {
+          reportError(`Invalid track at "${commands}", invalid volume "${volume}".`);
+          return;
+        }
+        // Check if track pitch is valid.
+        if (pitch !== undefined && !REGEX.DECIMAL_NUMBER.test(pitch) && !REGEX.PITCH_WITH_OCTAVE.test(pitch)) {
+          reportError(`Invalid track at "${commands}", invalid pitch "${pitch}".`);
+          return;
+        }
+
+        // Check that ghost tracks go before instrument tracks.
         const lastInstrumentNotes = instrumentTrack.getLastInstrumentNotes();
         if (first === SYMBOLS.SONG.GHOST_INSTRUMENT && lastInstrumentNotes && lastInstrumentNotes.getGhostLevel() === 0) {
           reportError(`Invalid track at "${line}", ${SYMBOLS.SONG.GHOST_INSTRUMENT} tracks must go before ${SYMBOLS.SONG.INSTRUMENT} tracks.`);
           return;
         }
 
-        const [instrumentName] = rest;
-        const instrument = config.findInstrument(instrumentName);
-        if (!instrument) {
-          reportError(`Invalid track at "${commands}", unrecognized instrument name "${instrumentName}" cannot be played.`);
-          return;
-        }
-
+        // Check if notes are valid.
         const [rawNotes] = trackArgs;
         const notes = rawNotes.split(' ').filter(note => note.length > 0);
         if (notes.some(note => !(REGEX.PITCH_WITH_OCTAVE.test(note) || REGEX.DECIMAL_NUMBER.test(note) || note === SYMBOLS.NOTES.REST || note === SYMBOLS.NOTES.DEFAULT))) {
@@ -284,6 +304,7 @@ function transpile(copyToClipboard = false) {
           return;
         }
 
+        // Check if note lengths are valid.
         if (lastInstrumentNotes && notes.length > lastInstrumentNotes.getPitchData().length) {
           reportError(`Invalid track at "${line}", notes length does not match with the previous instrument's notes length.`);
           return;
@@ -292,7 +313,11 @@ function transpile(copyToClipboard = false) {
         const instrumentNotes = new InstrumentNotes();
         const lastInstrumentNotesLength = lastInstrumentNotes?.getPitchData().length || notes.length;
         instrumentNotes.setInstrumentConfig(instrument);
-        instrumentNotes.setPitchData([...notes.slice(0, lastInstrumentNotesLength), ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
+
+        const defaultPitch = pitch || SYMBOLS.NOTES.DEFAULT;
+        const filteredNotes = notes.slice(0, lastInstrumentNotesLength).map(note => note === SYMBOLS.NOTES.DEFAULT ? defaultPitch : note);
+        instrumentNotes.setPitchData([...filteredNotes, ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
+        instrumentNotes.setDefaultVolume(volume);
         instrumentNotes.setGhostLevel(first === SYMBOLS.SONG.GHOST_INSTRUMENT ? 1 : 0);
         instrumentTrack.addInstrumentNotes(instrumentNotes);
         break;

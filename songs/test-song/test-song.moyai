@@ -14,7 +14,7 @@ start
 inst bell:  .   .   .   .
 div
 div
-segstart 0 
+segstart 0
 inst bell:  c2  d2  e2  f2
 div
 inst bell:  c3  d3  e3  f3
@@ -32,8 +32,8 @@ inst bell:  c3  c3  c3  c3
 vol:        40  .   /   .
 clear:      .   /   .   /
 div
-inst bell:  c3  .   c3  c3
-vol:        40  .   .   /
-clear:      .   /   .   /
-tempo:      2x  .   .25x /
-gvol:       90  .5x /   .
+inst bell 10 0: c3  /   c3  c3
+vol:            .   .   40  /
+clear:          .   /   .   /
+tempo:          2x  .   .25x /
+gvol:           90  .5x /   .

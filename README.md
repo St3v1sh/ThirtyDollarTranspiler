@@ -29,9 +29,9 @@ The moyai file has two sections: configurations and song
 
 ### Note Syntax
 
-Notes are a key followed optionally by a non-negative octave number. If no octave number is provided, it's assumed to be 0. Absolute pitch values can also be provided. For example:
+Notes are a key followed optionally by an octave number. If no octave number is provided, it's assumed to be 0. Absolute pitch values can also be provided. For example:
 
-- `c` `c0` `a5` `g10` are valid notes with keys and octaves.
+- `c` `c0` `a5` `g-10` are valid notes with keys and octaves.
 - `0` `0.2` `-1` `-.6` are valid absolute pitch values.
 
 There is also the default note and the rest note, notated by `/` and `.`, to play the default pitch of an instrument and to signal no action, respectively.
@@ -48,9 +48,9 @@ General song configuration:
 
 - `name [songname]` Define the song's name
 - `bpm [value]` Define the song's BPM
-- `sharp [f] [c] [...]` Define the song's scale using sharp notes
-- `flat [a] [b] [e] [...]` Define the song's scale using flat notes
-- `transpose [value]` Define the semitone offset
+- `sharp [note] [...]` Define the song's scale using sharp notes
+- `flat [note] [...]` Define the song's scale using flat notes
+- `transpose [value]` Define the song's semitone offset
 
 Instruments configuration:
 
@@ -62,13 +62,14 @@ Instruments configuration:
 ### Song Section Symbols
 
 - `start` Defines the start of the song section
-- `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire track
-- `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire track
-- `inst [alias]: [value] [note] [or .] [or /] [...]` Defines an instrument track
-- `vol: [value] [or .] [or /] [...]` Modifies the volume of the last instrument track
+- `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire song
+- `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire song
+- `inst [alias] ([value or /] [value or note]): [value] [or note] [or .] [or /] [...]` Defines an instrument track
+  - Only an alias is required- however you may optionally override the default volume and pitch, respectively
+- `vol: [value] [or .] [or /] [...]` Modifies the volume of the previous instrument track
 - `clear: [.] [or /] [...]` Defines when to clear the sounds of the notes currently playing
 
-Song section symbols have an order of operations:
+Song section symbols have an order of operations each beat (note that `tempo` changes are always first and sound `clear`ing is always last):
 
 `tempo > gvol > inst > clear`
 
@@ -80,11 +81,13 @@ Segments allow the reuse of repeated song sections. Segments cannot be nested or
 
 Sometimes you may want to skip instrument tracks the first time it's played in a segment. Ghost tracks are used for this purpose. Ghost tracks must be defined above any instrument tracks in a group of instrument tracks. (Multi-level ghosting is not implemented yet):
 
-`ghst [alias]: [value] [note] [or .] [or /] [...]`
+`ghst [alias] ([value or /] [value or note]): [value] [note] [or .] [or /] [...]`
 
 Groups of instrument tracks are played simultaneously. New groups can be split out in two ways:
 
 - `div` Finalizes the current track and creates a divider.
 - `br` Finalizes the current track without any visual indicators.
 
-For extra control, the `override` keyword can be used together with a string (i.e. `override !bg@#000000,0.5`) to insert it directly into the song. Overrides must be on their own lines.
+For extra control, the `override` keyword can be used together with a string (i.e. `override !bg@#000000,0.5`) to insert it directly into the song. An override must be alone in its own line.
+
+Check out examples in the `/songs/` folder of this repository.
