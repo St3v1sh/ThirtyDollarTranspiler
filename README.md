@@ -1,6 +1,6 @@
 # ThirtyDollarTranspiler
 
-[Pages demo](https://sky3947.github.io/ThirtyDollarTranspiler/)
+[Pages demo](https://st3v1sh.github.io/ThirtyDollarTranspiler/)
 
 This application assists in making [thirtydollar.website](https://thirtydollar.website/) songs by allowing the process to be done with a text editor instead of messing around with emojis on a website.
 
