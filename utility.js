@@ -76,9 +76,10 @@ const PITCH_OCTAVE = 12;
 const REGEX = {
   DECIMAL_NUMBER: /^((-?\d+)?(\.\d+)?|(\d+)?(-?\.\d+)?)$/,
   NON_NEGATIVE_DECIMAL_NUMBER: /^(\d+)?(\.\d+)?$/,
-  DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?${SYMBOLS.NOTES.MULTIPLY_TAG}?$`),
+  DECIMAL_NUMBER_OR_MULTIPLIER: new RegExp(`^(\\d+)?(\\.\\d+)?\\${SYMBOLS.NOTES.MULTIPLY_TAG}?$`),
   PITCH_WITHOUT_OCTAVE_LOWERCASE: /^[a-g]$/,
   PITCH_WITH_OCTAVE: /^[a-gA-G](-?\d+)?$/,
+  REST_WITH_NUMBER: new RegExp(`^\\${SYMBOLS.NOTES.REST}([1-9]\\d*)?$`),
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en', {
