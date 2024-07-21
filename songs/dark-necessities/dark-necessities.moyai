@@ -1,0 +1,1521 @@
+- References:
+- Song: https://youtu.be/qJ_Tw0w3lLA
+- Base: https://youtu.be/FHohYlcdQkc
+- Drums: https://youtu.be/-T6CS6Wx5Zc
+- Piano: https://youtu.be/6Vm0nR1t6g4
+
+name DarkNecessities
+bpm 368
+
+- bass
+inst b set noteblock_bass
+inst b pos 0
+- low bass
+inst lb set noteblock_xylophone
+inst lb pos 0
+- slap bass
+inst sb set slapbass
+- slap
+inst sl set noice
+- slab bass oomph
+inst so set noteblock_guitar
+
+- piano (flats: a b e)
+inst p set noteblock_harp
+inst p pos 0
+- grand piano
+inst gp set noteblock_pling
+- synth piano
+inst sp set dimrainsynth
+inst sp pos 12
+
+- guitar
+inst g set mariopaint_plane
+- electric guitar
+inst eg set noteblock_banjo
+- long electric guitar
+inst lg set mariopaint_star
+- electric guitar blue-y (bluey mentioned)
+inst bg set stylophone
+
+- voice
+inst v set mariopaint_luigi
+- adlibs voice
+inst ad set mariopaint_flower
+- aah
+inst av set mariopaint_mario
+
+- closed hat
+inst ch set shaker
+inst ch pit 8
+- open hat
+inst oh set ride2
+inst oh pos -1
+- snare
+inst s set hammer
+inst s pit -2
+- kick
+inst k set adofaikick
+inst k pit 2
+- tom
+inst t set tom
+- reverse cymbal
+inst r set adofaicymbal
+inst r pit 18
+- main clap (hack to combine multiple instruments as one)
+inst c set 👏@4%50|!combine|🖐@-8%20|!combine|hitmarker
+inst c vol 20
+inst c pit -4
+
+start
+- 1
+override !looptarget
+inst b 30:              G-1
+inst lb 2:              G-2
+override !loopmany@15
+
+- 2
+override !looptarget
+inst b 30:              f-1
+inst lb 2:              G-2
+override !loopmany@15
+
+- 3
+override !looptarget
+inst b 30:              c0
+inst lb 2:              G-2
+override !loopmany@15
+div
+
+- 4
+inst p 6:               f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+br
+inst p 10:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+div
+
+- 5
+inst g 24:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 12:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+div
+
+- 6
+inst g 24:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       30
+inst p 14:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+div
+
+- 7
+inst g 30:              g-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 16:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+div
+
+- 8
+inst g 30:              A-1     .       .       f-1     .       .       .       .       .       .       .       .       .       .       .       .
+inst p 18:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst b 30:              A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst ch 4:              .       .       .       .       .       .       .       .       /       /       /       /       /       /       /       /
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       6
+div
+
+- 9
+inst g 34:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 24:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 26:             G-1     .       .       .       G-1     .       .       .       G-1     .       .       .       G-1     .       .       .
+vol:                    26      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 20:             G-2     .       .       .       G-2     .       .       .       G-2     .       .       .       G-2     .       .       .
+vol:                    20      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 40:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 8:               .       .       .       .       /
+inst k 8:               /       .       .       /       /       .       .       /       .       .       /       .       .       .       /       .
+vol:                    .       .       .       .       .       .       .       .       16
+inst ch 8:              /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+vol:                    .       .       .       .       .       .       .       .       10
+div
+
+- 10
+inst g 34:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 24:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 28:             f-1     .       .       .       f-1     .       .       .       f-1     .       .       .       f-1     .       .       .
+vol:                    28      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 22:             f-2     .       .       .       f-2     .       .       .       f-2     .       .       .       f-2     .       .       .
+vol:                    22      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 40:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 16:              .       .       .       .       /
+inst k 18:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       /       .
+inst ch 12:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 11
+inst g 34:              g-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 26:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 30:             c0      .       .       .       c0      .       .       .       c0      .       .       .       c0      .       .       .
+vol:                    30      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 24:             c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    24      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 40:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 20:              .       .       .       .       /
+inst k 26:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       /       .
+inst ch 14:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 12
+inst g 38:              A-1     .       .       f-1     .       .       .       .       .       .       .       .       .       .       .       .
+inst p 28:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 32:             A-1     .       .       .       A-1     .       .       .       A-1     .       .       .       A-1     .       .       .
+vol:                    32      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 26:             A-2     .       .       .       A-2     .       .       .       A-2     .       .       .       A-2     .       .       .
+vol:                    26      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 40:              A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 26:              .       .       .       .       /
+inst k 32:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       /       .
+inst ch 16:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 13 (repeat 9-12 louder with drums fill on 12)
+inst g 40:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 32:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 34:             G-1     .       .       .       G-1     .       .       .       G-1     .       .       .       G-1     .       .       .
+vol:                    34      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 28:             G-2     .       .       .       G-2     .       .       .       G-2     .       .       .       G-2     .       .       .
+vol:                    28      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 44:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 34:              .       .       .       .       /
+inst k 42:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 20:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 14
+inst g 40:              f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 36:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 36:             f-1     .       .       .       f-1     .       .       .       f-1     .       .       .       f-1     .       .       .
+vol:                    36      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 30:             f-2     .       .       .       f-2     .       .       .       f-2     .       .       .       f-2     .       .       .
+vol:                    30      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 44:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 38:              .       .       .       .       /
+inst k 46:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 24:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 15
+inst g 40:              g-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       D-1     .
+inst p 38:              f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1     f-1     g-1     G-1     A-1
+inst gp 38:             c0      .       .       .       c0      .       .       .       c0      .       .       .       c0      .       .       .
+vol:                    38      .       .       .       10      .       .       .       6       .       .       .       2
+inst gp 32:             c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    32      .       .       .       8       .       .       .       4       .       .       .       2
+inst b 44:              G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1
+inst lb 2:              G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2     G-2
+inst s 42:              .       .       .       .       /
+inst k 50:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       /       .
+inst ch 28:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 16
+inst g 40:              A-1     .       .       .       .       .       f-1     .       .       .       .       .       .       .       .       .       .       .       .       .5              .       .5
+inst p 44:              f-1     .       g-1     .       G-1     .       A-1     .       f-1     .       g-1     .       G-1     .       A-1     .       f-1     .       g-1     .5              G-1     .5
+inst gp 44:             A-1     .       .       .       .       .       .       .       A-1     .       .       .       .       .       .       .       A-1
+vol:                    44      .       .       .       .       .       .       .       10      .       .       .       .       .       .       .       6
+inst gp 38:             A-2     .       .       .       .       .       .       .       A-2     .       .       .       .       .       .       .       A-2
+vol:                    38      .       .       .       .       .       .       .       8       .       .       .       .       .       .       .       4
+inst b 44:              A-1     .       A-1     .       A-1     .       A-1     .       A-1     .       A-1     .       A-1     .       A-1     .       A-1     .       A-1     .5              A-1     .5
+inst lb 2:              G-2     .       G-2     .       G-2     .       G-2     .       G-2     .       G-2     .       G-2     .       G-2     .       G-2     .       G-2     .5              G-2     .5
+inst s 48:              .       .       .       .       .       .       .       .       /       .       /       .       .       .       .       .       .       .       /       /       .4      /       /       .4
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       70      30      .4      70      30
+inst k 56:              /       .       .       .       .       .       /       .       /       .       .       .       .       .       /       .       .       .       /       .5              /       .5
+inst ch 32:             /       .       /       .       /       .       /       .       /       .       /       .       /       .       /       .       /       .       /       .5              /       .5
+inst r:                 0       0.2     0.4     0.6     0.8     1       1.0     1.2     1.4     1.6     1.8     2       2.2     2.4     2.6     2.8     3       3.2     3.4     .2  3.6 .2      3.8     .2   4  .2
+vol:                    1       2       4       6       8       10      12      14      16      18      20      22      24      26      28      30      32      34      36      .5  38          40      .5   42
+tempo:                  2x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       3x      .5              .       .5
+br
+override !speed@368
+inst g 40:              .       .       .       .       .       .       .       .       .       .
+inst p 44:              A-1     .       f-1     .       g-1     .       G-1     .       A-1     .
+inst gp 2:              .       .       A-1     .       .       .       .       .       .       .
+inst gp 2:              .       .       A-2     .       .       .       .       .       .       .
+inst b 44:              A-1     .       A-1     .       A-1     .       A-1     .       A-1     .
+inst lb 2:              G-2     .       G-2     .       G-2     .       G-2     .       G-2     .
+inst t 80:              .       .       .       .       6       .       -6      .       .       .
+inst k 56:              .       .       .       .       /       .       /       .       .       .
+inst ch 36:             /       .       /       .       /       .       /       .       /       .
+inst r:                 4.2     4.4     4.8     5.6     6.2     7       7.8     8.6     9.2     10
+vol:                    44      46      48      50      52      54      56      58      60      62
+tempo:                  2x
+div
+
+- 17 (BASS TIME!)
+segstart basstime
+ghst v 70:              /       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+ghst ad 40:             /       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+clear:                  .       .       .       .       .       .       .       .       .       .       .       .       .       /
+tempo:                  /
+div
+
+- 18
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 19
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0      g-1     .
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+clear:                  .       .       .       .       .       .       .       .       /
+div
+
+- 20
+ghst eg 30:             .       .       .       .       .       .       .       .       .       .       f0      f0      f0      f0      f0      f0      f0      f0      f0      f0      f0      f0
+ghst oh 50:             .       .       .       .       .       .       .       .       /
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       A0      .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       A0      .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       .       .       a-4     .       .       .       .       .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       .       .       /       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       .       /       .       /       .       /       .       /       .       /       .
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .
+segend
+div
+seg basstime
+div
+
+- 21 (verse)
+segstart 0
+ghst eg 30:             A-1     /       .       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+ghst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+inst v 70:              .       .       /       /       /       .       /       /       A-1     /       .       /       .       /       /       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0      .       .
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1     .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2     .       .
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 22
+ghst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+ghst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+inst v 70:              .       .       /       /       /       .       /       /       A-1     /       .       /       .       /       /       .
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       f-1     .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       D-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 23
+ghst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /
+ghst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       .       /
+inst v 70:              .       .       /       /       /       .       /       /       A-1     /       .       /       .       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  /
+segend
+seg 0
+inst v 70:              A-1     .
+inst sb 120:            g-1     .
+inst so 60:             g-1     .
+inst sl 40:             .       .
+inst gp 54:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst k 60:              /       .
+inst ch 40:             /       /
+div
+
+- 24
+inst v 70:              g-1     .       g-1     g-1     A-1     .       A-1     g-1     F-1     f-1     f-1     f-1     F-1     g-1     .       .       .       .       .
+vol:                    .       .       .       .       .       .       .       .       24
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       c1      .       g0      G-1     .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       c1      .       g0      G-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     .       a-4     .       .       .       a-4     .       a-4     .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       .       .       .       G-2     .       .       f-1     .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       .       .       .       D-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       .       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       .       /       .       /       .       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       2x      .       .       .       .       .       /
+div
+
+- 25
+segstart 1
+ghst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       .       /       .       .
+inst v 70:              .       .       .       .       /       /       .       /       .       /       .       /       .       .       .       .
+inst sb 80:             f-1     .       .       .       f0      .       .       D0      .       f0      .       f0      .       f0      f-1     .
+inst so 40:             f-1     .       .       .       f0      .       .       D0      .       f0      .       f0      .       f0      f-1     .
+inst sl 40:             .       .       e-3     e-3     .       .       e-3     .       e-3     .       e-3     .       e-3     .       .       .
+inst gp 54:             D0      .       .       .       .       .       .       .       .       .       D0      .       .       D0      .       .
+inst gp 36:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 36:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 36:             f-2     .       .       .       .       .       .       .       .       .       f-2     .       .       c-1     .       .
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       f-2     .       .
+inst gp 36:             f-3     .       .       .       .       .       .       .       .       .       f-3     .       .       .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 26
+ghst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       .       .       /       .       .       /
+ghst bg 80:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       D0      .
+inst v 70:              .       .       .       .       D0      D0      .       D0      .       .       /       .       A-1     .       /       /
+inst sb 80:             G-1     .       .       .       G0      .       .       G0      .       G0      .       D0      .       d0      .       b-1
+inst so 40:             G-1     .       .       .       G0      .       .       G0      .       G0      .       D0      .       d0      .       b-1
+inst sl 40:             .       .       e-3     e-3     .       .       e-3     .       e-3     .       e-3     .       e-3     .       e-3     .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 36:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       G-3     .       .       G-3     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 27
+ghst eg 30:             A-1     /       .       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+inst v 70:              .       .       .       .       .       .       .       .       .       .       .       f-1     A-1     A-1     A-1     /
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0      A-1     .
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       f-2     .       .       f-2     .       .
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       A-2     .       .       A-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+segend
+div
+seg 1
+div
+
+- 28
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       .       .       a-4     .       .       .       a-4     .       g-3     .
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       .       .       .       A-1     .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       .       .       .       c-1     .       .       .       .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       f-2     .       .       .       .       .       f-2     .       .       .       .       .
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       A-2     .       .       .       .       .       A-2     .       .       .       .       .
+inst eg 30:             .       .       .       .       .       .       .       .       .       .       D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       .       .       .       /       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       .       /       .       /       .       /       .       /       .       /       .
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       .       .       .       2x
+div
+
+- 29-31
+seg 0
+inst v 70:              /       .
+inst sb 120:            g-1     .
+inst so 60:             g-1     .
+inst sl 40:             .       .
+inst gp 54:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst gp 36:             .       .
+inst eg 30:             /       /
+inst k 60:              /       .
+inst ch 40:             /       /
+div
+
+- 32
+inst v 70:              g-1     .       g-1     .       A-1     A-1     .       g-1     F-1     f-1     f-1     f-1     F-1     g-1     .       .       .       .       .       .       .       .       .       .       .
+vol:                    .       .       .       .       .       .       .       .       24
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     .       a-4     .       .       .       a-4     .       .       .       a-4     .       .       .       .       .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       .       .       .       c0      .       .       .       .       .       c0      .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       .       .       .       G-2     .       .       .       .       .       f-1     .       .       .       .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       .       .       .       D-2     .       .       .       .       .       G-2     .       .       .       .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .       .       .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       .       A-1     .       /       .       A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       .       .       .       /       .       .       .       .       .       /       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       .       /       .       /       .       /       .       /       .       /       .       /       .       /       .       /       .
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+div
+
+- 33-35
+seg 1
+div
+
+- 36
+inst v 70:              .       .       .       .       .       .       .       .       .       .       .5      .       .2      .       .2      .       .2      .       .2      g0      .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       D1      .5      .       .2      .       .2      d1      .2      .       .2      .       .2      .       .2      c1      .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst so 60:             c0      .       .       .       c1      .       .       .       .       D1      .5      .       .2      .       .2      d1      .2      .       .2      .       .2      .       .2      c1      .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       .5      a-4     .2      .       .2      .       .2      .       .2      a-4     .2      .       .2      .       .2      .       .2      a-4     .2      .       .2      g-3     .2      .       .2
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       .5      A-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2      A-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       .5      g-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2      g-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       .5      D-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2      D-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       .5      c-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2      c-1     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       .5      f-2     .2      .       .2      .       .2      .       .2      .       .2      .       .2      f-2     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       .5      A-2     .2      .       .2      .       .2      .       .2      .       .2      .       .2      A-2     .2      .       .2      .       .2      .       .2      .       .2      .       .2
+inst eg 30:             A-1     /       /       /       /       /       /       /       /       /       .5      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2      D0      .2
+inst s 50:              .       .       .       .       /       .       .       .       .       /   /   .4      /   /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .5      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      6       .2      .       .2      -6
+inst k 60:              /       .       .       /       /       .       .       /       .       /       .5      /       .2      .       .2      .       .2      .       .2      .       .2      .       .2      /       .2      .       .2      /       .2      .       .2      .       .2      .       .2
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       .5      /       .2      .       .2      /       .2      .       .2      /       .2      .       .2      /       .2      .       .2      /       .2      .       .2      /       .2      .       .2
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       .       .       6x      .5      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2      .       .2
+div
+
+- 37 (chorus)
+segstart chorus-1-3
+ghst ad 40:             .       .       .       .       c-1     c-1     .       D0      .       D0      .       D0      .       .       .       .
+inst v 70:              .       .       .       .       /       /       .       D0      .       D0      .       D0      .       .       .       .
+inst b 80:              G-1     G-1     G-1     G0      .       G-1     G-1     G-1     .       G0      .       G-1     G-1     G0      g-1     g0
+inst g 50:              D0      .       .       f0      .       .       D0      .       .       f0      .       .       D0      .       .       f0
+inst lg 20:             D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       f-1
+inst lg 40:             D-2     .       .       f-2     .       .       D-2     .       .       f-2     .       .       D-2     .       .       f-2
+inst r 140:             /       /       /       /       /       /       /       /       /       /
+vol:                    140     60      50      50      40      40      30      30      20      20
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             /       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+vol:                    140     /
+inst ch 40:             .       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 38
+ghst ad 40:             .       .       .       .       c-1     c-1     .       D0      .       /       .       /       .       .       .       .
+inst v 70:              .       .       .       .       /       /       .       D0      .       /       .       /       .       .       .       .
+inst b 80:              f-1     f-1     f-1     f0      .       f-1     f-1     f-1     .       f0      .       f-1     g-1     g0      D-1     D0
+inst g 50:              D0      .       .       f0      .       .       D0      .       .       f0      .       .       D0      .       .       .
+inst lg 20:             D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       .
+inst lg 40:             D-2     .       .       f-2     .       .       D-2     .       .       f-2     .       .       D-2     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 39
+ghst ad 40:             .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst v 70:              .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst b 80:              c0      c0      c0      c1      .       c0      c0      c0      .       c1      .       D0      D0      D1      d0      d1
+inst g 50:              g0      .       .       D0      .       .       g0      .       .       D0      .       .       g0      D0      .       .
+inst lg 20:             g-1     .       .       D-1     .       .       g-1     .       .       D-1     .       .       g-1     D-1     .       .
+inst lg 40:             g-2     .       .       D-2     .       .       g-2     .       .       D-2     .       .       g-2     D-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+segend
+div
+seg chorus-1-3
+div
+
+- 40
+inst v 70:              d0      .       d0      .       d0      .       D0      d0      .       .       .       .       /       .       .       .
+inst av 70:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       g-1
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       A-1     f0      f0      g0      g0
+inst g 50:              A0      .       .       f0      .       .       A0      .       .       f0      .       .       A0      .       .       .
+inst lg 20:             A-1     .       .       f-1     .       .       A-1     .       .       f-1     .       .       A-1     .       .       .
+inst lg 40:             A-2     .       .       f-2     .       .       A-2     .       .       f-2     .       .       A-2     .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       /       /       .       .       .       .       .
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 41
+segstart chorus-5-6
+inst v 70:              .       .       .       .       /       .       /       D0      .       D0      .       D0      .       .       .       .
+inst ad 40:             .       .       .       .       c-1     .       c-1     D0      .       D0      .       D0
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1
+inst b 80:              G-1     G-1     G-1     G0      .       G-1     G-1     G-1     .       G0      .       G-1     G-1     G0      g-1     g0
+inst g 50:              D0      .       .       f0      .       .       D0      .       .       f0      .       .       D0      .       .       .
+inst lg 20:             D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       .
+inst lg 40:             D-2     .       .       f-2     .       .       D-2     .       .       f-2     .       .       D-2     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+div
+
+- 42
+inst v 70:              .       .       .       .       /       /       .       D0      .       /       .       /       .       .       .       .
+inst ad 40:             .       .       .       .       c-1     c-1     .       D0      .       /       .       /
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1
+inst b 80:              f-1     f-1     f-1     f0      .       f-1     f-1     f-1     .       f0      .       f-1     D-1     D0      d-1     d0
+inst g 50:              D0      .       .       f0      .       .       D0      .       .       f0      .       .       D0      .       .       .
+inst lg 20:             D-1     .       .       f-1     .       .       D-1     .       .       f-1     .       .       D-1     .       .       .
+inst lg 40:             D-2     .       .       f-2     .       .       D-2     .       .       f-2     .       .       D-2     .       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+segend
+div
+seg chorus-5-6
+
+- 43
+inst v 70:              .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst ad 40:             .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1     .
+inst b 80:              c0      c0      c0      c1      .       c0      c0      c0      .       c1      .       c0      D0      D1      g0      g1
+inst g 50:              g0      .       .       D0      .       .       g0      .       .       D0      .       .       g0      D0      .       .
+inst lg 20:             g-1     .       .       D-1     .       .       g-1     .       .       D-1     .       .       g-1     D-1     .       .
+inst lg 40:             g-2     .       .       D-2     .       .       g-2     .       .       D-2     .       .       g-2     D-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+div
+
+- 44
+inst v 70:              d0      .       d0      .       d0      .       D0      d0      .       .       .       .       /       .       A-1     .
+inst ad 40:             d0      .       d0      .       d0      .       D0      d0      .       .       .       .       /       .       A-1     .
+inst av 70:             f-1
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       a-1     f0      f0      g0      g0
+inst g 50:              A0      .       .       f0      .       .       A0      .       .       f0      .       .       A0      .       .       .
+inst lg 20:             A-1     .       .       f-1     .       .       A-1     .       .       f-1     .       .       A-1     .       .       .
+inst lg 40:             A-2     .       .       f-2     .       .       A-2     .       .       f-2     .       .       A-2     .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       /       /       /       /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /       .       .       /       /       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 45-48 (back to bass-ics)
+seg basstime
+div
+
+- 49 (verse again)
+inst v 70:              .       .       /       /       /       .       /       /       A-1     .       /       /       .       /       /       /
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0      .       .
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1     .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2     .       .
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2     .       .
+inst eg 30:             A-1     .       .       .       /       /       /       /       .       /       /       /       /       /       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 50
+inst v 70:              .       .       /       .       /       .       /       /       A-1     .       /       /       .       /       /       .
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       f-1     .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       D-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 51
+inst v 70:              .       .       /       .       /       .       /       /       A-1     .       /       /       .       /       /       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0      g-1     .
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 52
+inst v 70:              g-1     .       g-1     .       A-1     .       A-1     g-1     F-1     f-1     f-1     f-1     F-1     g-1     .       .       .       .       .       .       .       .       .       .       .
+vol:                    .       .       .       .       .       .       .       .       24
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     .       a-4     .       .       .       a-4     .       .       .       a-4     .       .       .       .       .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       .       .       .       c0      .       .       .       .       .       c0      .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       .       .       .       G-2     .       .       .       .       .       f-1     .       .       .       .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       .       .       .       D-2     .       .       .       .       .       G-2     .       .       .       .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .       .       .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       .       A-1     .       /       .       A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       .       .       .       /       .       .       .       .       .       /       .       /       .       .       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       .       /       .       /       .       /       .       /       .       /       .       /       .       .       .       .       .
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+div
+
+- 53
+inst v 70:              .       .       .       .       /       .       /       /       .       /       .       /       .       .       .       .
+inst sb 80:             f-1     .       .       .       f0      .       .       D0      .       f0      .       f0      .       f0      f-1     .
+inst so 40:             f-1     .       .       .       f0      .       .       D0      .       f0      .       f0      .       f0      f-1     .
+inst sl 40:             .       .       e-3     e-3     .       .       e-3     .       e-3     .       e-3     .       e-3     .       .       .
+inst gp 54:             D0      .       .       .       .       .       .       .       .       .       D0      .       .       D0      .       .
+inst gp 36:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 36:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 36:             f-2     .       .       .       .       .       .       .       .       .       f-2     .       .       c-1     .       .
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       f-2     .       .
+inst gp 36:             f-3     .       .       .       .       .       .       .       .       .       f-3     .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       .       /       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 54
+inst v 70:              .       .       .       .       D0      .       D0      D0      .       .       /       .       A-1     .       /       /
+inst sb 80:             G-1     .       .       .       G0      .       .       G0      .       G0      .       D0      .       d0      .       b-1
+inst so 40:             G-1     .       .       .       G0      .       .       G0      .       G0      .       D0      .       d0      .       b-1
+inst sl 40:             .       .       e-3     e-3     .       .       e-3     .       e-3     .       e-3     .       e-3     .       e-3     .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 36:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       G-3     .       .       G-3     .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       .       .       /       .       .       /
+inst bg 80:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       D0      .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 55
+inst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       A-1     A-1     A-1     /
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0      A-1     .
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       f-2     .       .       f-2     .       .
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       A-2     .       .       A-2     .       .
+inst eg 30:             A-1     /       .       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 56
+inst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       g0      .       .       .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       /       /       .       .       .       .       .       .       .       .       .       .       .       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       .       .       a-4     .       .       .       a-4     .       g-3     .
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       .       .       .       A-1     .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       .       .       .       c-1     .       .       .       .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       f-2     .       .       .       .       .       f-2     .       .       .       .       .
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       A-2     .       .       .       .       .       A-2     .       .       .       .       .
+inst eg 30:             .       .       .       .       .       .       .       .       .       .       D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0
+inst s 50:              .       .       .       .       /       .       .       .       /       /       .       .       /       .       /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       6       .       -6
+inst k 60:              /       .       .       /       .       .       /
+inst oh 50:             .       .       .       .       .       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       .       .       /
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .
+div
+
+- 57-59 (chorus again)
+seg chorus-1-3
+div
+
+- 60
+segstart second-chorus-bridge
+inst v 70:              d0      .       d0      .       d0      .       D0      d0      .       .       .       .       .       .       .       .
+inst ad 40:             d0      .       d0      .       d0      .       D0      d0      .       .       .       .       .       .       .       .
+inst av 70:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       g-1
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       A-1     f0      f0      g0      g0
+inst g 50:              A0      .       .       f0      .       .       A0      .       .       f0      .       .       A0      .       .       .
+inst lg 20:             A-1     .       .       f-1     .       .       A-1     .       .       f-1     .       .       A-1     .       .       .
+inst lg 40:             A-2     .       .       f-2     .       .       A-2     .       .       f-2     .       .       A-2     .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       /       /       .       .       .       .       .
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+segend
+div
+seg second-chorus-bridge
+div
+
+- 61-62
+seg chorus-5-6
+div
+
+- 63
+inst v 70:              .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst ad 40:             .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .
+inst b 80:              c0      c0      c0      c1      .       c0      c0      c0      .       c1      .       c0      D0      D1      g0      g1
+inst g 50:              g0      .       .       D0      .       .       g0      .       .       D0      .       .       g0      D0      .       .
+inst lg 20:             g-1     .       .       D-1     .       .       g-1     .       .       D-1     .       .       g-1     D-1     .       .
+inst lg 40:             g-2     .       .       D-2     .       .       g-2     .       .       D-2     .       .       g-2     D-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+div
+
+- 64
+inst v 70:              d0      .       d0      .       d0      .       D0      d0      .       .       .       .       .       .       .       .
+inst ad 40:             d0      .       d0      .       d0      .       D0      d0      .       .       .       .       .       .       .       .
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       a-1     f0      f0      g0      g0
+inst g 50:              A0      .       .       f0      .       .       A0      .       .       f0      .       .       A0      .       .       .
+inst lg 20:             A-1     .       .       f-1     .       .       A-1     .       .       f-1     .       .       A-1     .       .       .
+inst lg 40:             A-2     .       .       f-2     .       .       A-2     .       .       f-2     .       .       A-2     .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       /       /       /       /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /       .       .       /       /       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 65 (piano solo bridge)
+inst gp 80:             g-1     .       .       .       .       g-1     .       .       .       g-1     .       g-1     G-1     A-1     .       G-1     g-1
+vol:                    80      .       .       .       .       30      .       .       .       16      /
+inst gp 60:             D-1     .       .       .       .       D-1     .       .       .       D-1     .       D-1     D-1     G-1
+vol:                    60      .       .       .       .       26      .       .       .       10      /
+inst gp 60:             A-2     .       .       .       .       A-2     .       .       .       A-2     .       A-2     A-2     D-1
+vol:                    60      .       .       .       .       26      .       .       .       10      /
+inst sp 20:             f-1     g-1     .       .       .       g-1     .       .       .       g-1     .       g-1     G-1     A-1     .       G-1     g-1
+vol:                    20      .       .       .       .       10      .       .       .       6      /
+inst s 50:              .       0       0       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+vol:                    .       26      .       /
+inst k 60:              /       .       .       .       /       .       .       .       /       .       .       /       .       .       /       .       .
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+tempo:                  .       2x      .       /
+div
+
+- 66
+inst gp 80:             f-1     .       .       .       f-1     .       .       .       f-1     .       f-1     G-1     A-1     .       G-1     f-1     .
+vol:                    80      .       .       .       30      .       .       .       16      /
+inst gp 60:             C-1     .       .       .       C-1     .       .       .       C-1     .       .       .       f-1
+vol:                    60      .       .       .       26      .       .       .       10      /
+inst gp 60:             G-2     .       .       .       G-2     .       .       .       G-2     .       .       .       C-1
+vol:                    60      .       .       .       26      .       .       .       10      /
+inst sp 20:             f-1     .       .       .       f-1     .       .       .       f-1     .       f-1     G-1     A-1     .       G-1     f-1     .
+vol:                    20      .       .       .       10      .       .       .       6      /
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       0       0
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       26
+inst k 60:              /       .       /       .       .       .       .       /       .       .       /       .       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       .
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       2x      .
+div
+
+- 67
+inst gp 80:             c0      .       .       .       c0      .       c0      A-1     .       A-1     .       c0      G-1     .       .       .
+vol:                    80      .       .       .       30      .       /       .       .       .       .       .       .       .       .       .
+inst gp 60:             G-1     .       .       .       G-1     .       G-1     f-1     .       f-1     .       f-1     f-1     .       .       .
+vol:                    60      .       .       .       26      .       /       .       .       .       .       .       .       .       .       .
+inst gp 60:             f-1     .       .       .       f-1     .       f-1     .       .       .       .       .       .       .       .       .
+vol:                    60      .       .       .       26      .       /       .       .       .       .       .       .       .       .       .
+inst sp 20:             c0      .       .       .       c0      .       .       .       c0      .       .       .       c0      .       .       .
+vol:                    20      .       .       .       10      .       .       .       6       .       .       .       6       .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+tempo:                  /
+div
+
+- 68
+inst gp 80:             D0      .       .       .       D0      .       .       G-1     c0      D0      G0      .       .       .       A0      .       .       .
+vol:                    80      .       .       .       30      /       .       .       .       .       .       .       .       .       50
+inst gp 60:             c0      .       .       .       c0
+vol:                    60      .       .       .       26      /
+inst gp 60:             G-1     .       .       .       G-1
+vol:                    60      .       .       .       26
+inst sp 20:             D0      .       .       .       D0      .       .       .       .       .       G0      .       .       .       G0      .       .       .
+vol:                    20      .       .       .       10      .       .       .       .       .       20      .       .       .       10      .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       .       /       /       .       .       /       .       .       .
+inst k 60:              /       .       /       .       .       .       .       /       .       .       .       .       .       /       .       /       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       .       .       /       /       /       /       /       /       /       /
+tempo:                  .       .       .       .       .       .       .       3x      .       .       /
+div
+
+- 69 (voice comes back)
+segstart 2
+inst v 70:              D0      D0      .       .       D0      .       .       D0      .       f0      .       D0      D0      .       .       .       D0
+inst gp 38:             g-1     .       .       .       .       .       .       .       .       .       .       g-1     G-1     A-1     .       G-1     g-1
+inst gp 38:             D-1     .       .       .       .       .       .       .       .       .       .       D-1     D-1     G-1     .       D-1     D-1
+inst gp 38:             A-2     .       .       .       .       .       .       .       .       .       .       A-2     A-2     D-1     .       A-2     A-2
+inst g 60:              D-1     .       .       .       .       d-1     .       .       .       c-1     .       .       .       A-2     .       .       .
+inst lg 60:             D-1     .       .       .       .       d-1     .       .       .       c-1     .       .       .       A-2     .       .       .
+inst lg 40:             D-2     .       .       .       .       d-2     .       .       .       c-2     .       .       .       A-3     .       .       .
+inst b 80:              D0      d0      .       c0      A-1     G-1     g-1     f-1     D-1     D-1     .       d-1     D-1     .       d-1     D-1     .
+inst s 50:              .       0       0       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+vol:                    .       26      .       /
+inst k 60:              /       .       .       .       /       .       .       .       /       .       .       /       .       .       /       .       .
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+tempo:                  .       2x      .       /
+div
+
+- 70
+inst v 70:              C0      C0      .       C0      .       .       C0      .       D0      .       C0      C0      .       .       .       .       .
+inst gp 38:             f-1     .       .       .       .       .       .       .       .       .       f-1     G-1     A-1     .       G-1     f-1     .
+inst gp 38:             C-1     .       .       .       .       .       .       .       .       .       C-1     f-1     f-1     .       f-1     C-1     .
+inst gp 38:             G-2     .       .       .       .       .       .       .       .       .       .       C-1     C-1     .       C-1     .       .
+inst g 60:              C-1     .       .       .       c-1     .       .       .       A-2     .       .       .       G-2     .       .       .       .
+inst lg 60:             C-1     .       .       .       c-1     .       .       .       A-2     .       .       .       G-2     .       .       .       .
+inst lg 40:             C-2     .       .       .       c-2     .       .       .       A-3     .       .       .       G-3     .       .       .       .
+inst b 80:              C0      c0      A-1     G-1     g-1     f-1     D-1     C-1     C-1     .       c-1     C-1     .       c-1     C-1     .       .
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       0       0
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       26
+inst k 60:              /       .       /       .       .       .       .       /       .       .       /       .       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       .
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       2x      .
+div
+
+- 71
+inst v 70:              /       /       .       /       .       .       G-1     .       /       /       .       /       .       .       G-1     .
+inst gp 38:             G-1     .       .       .       .       .       .       .       .       .       c0      .       .       G-1     .       .
+inst gp 38:             f-1     .       .       .       .       .       .       .       .       .       G-1     .       .       f-1     .       .
+inst gp 38:             c-1     .       .       .       .       .       .       .       .       .       f-1     .       .       .       .       .
+inst g 60:              c-1     .       .       .       A-2     .       .       .       G-2     .       .       .       f-2     .       .       .
+inst lg 60:             c-1     .       .       .       A-2     .       .       .       G-2     .       .       .       f-2     .       .       .
+inst lg 40:             c-2     .       .       .       A-3     .       .       .       G-3     .       .       .       f-3     .       .       .
+inst b 80:              f0      D0      C0      c0      A-1     G-1     g-1     f-1     f-1     .       D-1     f-1     .       D-1     f-1     .
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+tempo:                  /
+segend
+div
+seg 2
+div
+
+- 72
+inst v 70:              /       .       .       .       A-1     .       .       .       .       .       .       .       .       .       .       .
+inst gp 38:             D-1     .       .       .       .       .       .       .       D0      .       G-1     .       G0      .       .       .
+inst gp 38:             G-1     .       .       .       .       .       .       .       c0      .       .       .       .       .       .       .
+inst gp 38:             c0      .       .       .       .       .       .       .       G-1     .       .       .       .       .       .       .
+inst g 60:              c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    60      .       .       .       24      .       .       .       10      .       .       .       6
+inst lg 60:             c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    60      .       .       .       24      .       .       .       10      .       .       .       6
+inst lg 40:             c-2     .       .       .       c-2     .       .       .       c-2     .       .       .       c-2     .       .       .
+vol:                    40      .       .       .       18      .       .       .       8       .       .       .       6
+inst b 80:              G0      g0      f0      D0      C0      c0      A-1     G-1     G-1     .       g-1     G-1     .       g-1     G-1     .
+inst s 50:              .       .       .       .       /       .       .       .       /       /       .       .       /       .       .       .
+inst k 60:              /       .       /       .       .       .       .       /       .       .       .       /       .       /       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+div
+
+- 73-75
+seg 2
+div
+
+- 76
+inst v 70:              /       .       .       .       A-1     .       .       .       A-1     .       .       .       A-1     .       .       .
+vol:                    .       .       .       .       .       .       .       .       24      .       .       .       10      .       .       .
+inst g 60:              c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    60      .       .       .       24      .       .       .       10      .       .       .       6
+inst lg 60:             c-1     .       .       .       c-1     .       .       .       c-1     .       .       .       c-1     .       .       .
+vol:                    60      .       .       .       24      .       .       .       10      .       .       .       6
+inst lg 40:             c-2     .       .       .       c-2     .       .       .       c-2     .       .       .       c-2     .       .       .
+vol:                    40      .       .       .       18      .       .       .       8       .       .       .       6
+inst r 140:             /       /       /       /       /       /       /       /       /       /       /       /       /       /
+vol:                    140     60      50      50      40      40      30      30      20      20      10      10      6       6
+inst k 60:              /
+inst oh 140:            /
+div
+
+- 77 (one measure drum solo)
+inst v 24:              .       .       .       .       .       .       .       .       .       .       .       .       /       -0.8    -1.6    -2.4    -3.2    -4      -4.8    -5.6    -6.4    -7.2    -8      -8.8    -9.6    -10.4   -11.2   -12
+inst s 14:              0       0       0       0       0       0       0       0       0       0       0       0       0       .       .       .       0       .       .       .       0       .       .       .       0       .       .       .
+inst s 70:              /       /       .       .       .       /       .       .       .       /       .       .       /       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst t 140:             .       .       -6      .       .       .       .       -6      .       .       .       -6      .       .       .       .       .       .       .       .       -6      .       .       .       .       .       .       .
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       4x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+clear:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+div
+
+- 78 (verse again)
+inst v 70:              .       .       /       /       /       .       /       /       A-1     .       /       /       .       /       /       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0      .       .
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1     .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2     .       .
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2     .       .
+inst eg 30:             A-1     /       .       .       /       /       /       /       .       /       /       /       /       /       .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  /
+div
+
+- 79
+inst v 70:              .       .       /       .       /       /       /       /       A-1     .       /       /       .       /       /       .
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      A-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       f-1     .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       D-2     .       .       G-2     .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /       /       /
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 80
+inst v 70:              .       .       /       /       /       .       /       /       A-1     /       .       /       .       /       /       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       c0      A0      .       c1      .       g0      g-1     .
+vol:                    .       .       .       .       .       .       .       .       80      /
+inst so 60:             c0      .       .       .       c1      .       .       .       .       A0      .       c1      .       g0      g-1     .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       a-4     .
+inst gp 54:             d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0
+inst gp 36:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1
+inst gp 36:             d-1     .       .       .       .       .       .       .       .       .       d-1     .       .       d-1
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       g-2     .       .       g-2
+inst gp 36:             c-2     .       .       .       .       .       .       .       .       .       c-2     .       .       c-2
+inst eg 30:             A-1     /       /       /       /       /       /       /       A-1     /       /       /       /       /
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 81
+inst v 70:              g-1     .       g-1     .       A-1     .       A-1     g-1     F-1     f-1     f-1     f-1     F-1     g-1     .       .       .       .       .       .       .       .       .       .       .
+vol:                    .       .       .       .       .       .       .       .       24
+inst sb 120:            G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst so 60:             G-1     .       .       .       c1      .       .       .       .       .       .       A0      .       .       .       c1      .       .       .       g0      .       G-1     .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     .       a-4     .       .       .       a-4     .       .       .       a-4     .       .       .       .       .       .       .
+inst gp 54:             c0      .       .       .       .       .       .       .       .       .       .       .       .       c0      .       .       .       .       .       c0      .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             G-2     .       .       .       .       .       .       .       .       .       .       .       .       G-2     .       .       .       .       .       f-1     .       .       .       .       .
+inst gp 36:             D-2     .       .       .       .       .       .       .       .       .       .       .       .       D-2     .       .       .       .       .       G-2     .       .       .       .       .
+inst gp 36:             G-3     .       .       .       .       .       .       .       .       .       .       .       .       G-3     .       .       .       .       .       .       .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       .       A-1     .       /       .       A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1     A-1
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       /       .       .       /       .       .       .       .       .       /       .       .       .       .       .       /       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       .       /       .       /       .       /       .       /       .       /       .       /       .       .       .       .       .
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+div
+
+- 82-84
+seg 1
+div
+
+- 85
+inst v 70:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       g0      .       .       .       .       .       .       .
+inst eg 30:             A-1     /       /       /       /       /       /       /       /       /       .       .       .       .       .       .       .       .       .       .       .       .
+inst sb 120:            c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst so 60:             c0      .       .       .       c1      .       .       .       .       D1      .       .       d1      .       .       .       c1      .       .       .       .       .
+inst sl 40:             .       .       a-4     a-4     .       .       a-4     g-3     a-4     .       a-4     .       .       .       a-4     .       .       .       a-4     .       g-3     .
+inst gp 54:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       .       .       .       A-1     .       .       .       .       .
+inst gp 36:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       .       .       .       g-1     .       .       .       .       .
+inst gp 36:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       .       .       .       D-1     .       .       .       .       .
+inst gp 36:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       .       .       .       c-1     .       .       .       .       .
+inst gp 36:             g-2     .       .       .       .       .       .       .       .       .       f-2     .       .       .       .       .       f-2     .       .       .       .       .
+inst gp 36:             c-3     .       .       .       .       .       .       .       .       .       A-2     .       .       .       .       .       A-2     .       .       .       .       .
+inst eg 30:             .       .       .       .       .       .       .       .       .       .       D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0      D0
+inst s 50:              .       .       .       .       /       .       .       .       .       .       /       .       /       .       /       .
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       6       .       -6
+inst k 60:              /       .       .       /       /       .       .       /
+inst oh 50:             .       .       .       .       .       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .
+div
+
+- 86-88 (chorus again)
+seg chorus-1-3
+
+- 89
+seg second-chorus-bridge
+
+- 90-91
+seg chorus-5-6
+div
+
+- 92
+inst v 70:              .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst ad 40:             .       .       .       .       D0      .       D0      D0      .       D0      .       D0      .       .       D0      .
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1
+inst b 80:              c0      c0      c0      c1      .       c0      c0      c0      .       c1      .       c0      D0      D1      g0      g1
+inst g 50:              g0      .       .       D0      .       .       g0      .       .       D0      .       .       g0      D0      .       .
+inst lg 20:             g-1     .       .       D-1     .       .       g-1     .       .       D-1     .       .       g-1     D-1     .       .
+inst lg 40:             g-2     .       .       D-2     .       .       g-2     .       .       D-2     .       .       g-2     D-2     .       .
+inst s 50:              .       .       .       .       /
+inst k 60:              /       .       .       /       .       .       .       /       .       .       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       .
+inst c:                 .       .       .       .       /
+div
+
+- 93
+inst v 70:              d0      .       d0      .       d0      .       D0      d0      .       .       .       .       /       .       A-1     .
+inst ad 40:             d0      .       d0      .       d0      .       D0      d0      .       .       .       .       /       .       A-1     .
+inst av 70:             f-1     .       .       c-1
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       a-1     f0      f0      g0      g0
+inst g 50:              A0      .       .       f0      .       .       A0      .       .       f0      .       .       A0      .       .       .
+inst lg 20:             A-1     .       .       f-1     .       .       A-1     .       .       f-1     .       .       A-1     .       .       .
+inst lg 40:             A-2     .       .       f-2     .       .       A-2     .       .       f-2     .       .       A-2     .       .       .
+inst s 50:              .       .       .       .       /       .       .       .       /       /       .       .       /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /       .       .       /       /       .       .       /       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 94 (guitar solo)
+inst v 70:              /       .       .       .       /       .       .       .       /       .       .       .       .       .       .       .
+vol:                    .       .       .       .       30      .       .       .       10
+inst g 30:              D2      D2      d2      d2      c2      c2      A1      A1      f1      g1      g1      g1      D1      f1      f1      f1
+inst g 60:              D1      D1      d1      d1      c1      c1      A0      A0      f0      g0      g0      g0      D0      f0      f0      f0
+inst lg 20:             D0      D0      d0      d0      c0      c0      A-1     A-1     f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst r 140:             /       /       /       /       /       /       /       /       /       /       /       /       /       /
+vol:                    140     60      50      50      40      40      30      30      20      20      10      10      6       6
+inst s 50:              .       .       .       .       /       .       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       /       /       /       .       /       .       .       .       /       /       .       /       /       .       /
+inst oh 140:            /
+inst ch 40:             .       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 95
+inst g 30:              A0      c1      c1      c1      f0      g0      g0      g0      D0      f0      f0      f0      A-1     c0      c0      c0
+inst g 60:              A-1     c0      c0      c0      f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1     A-2     c-1     c-1     c-1
+inst lg 20:             A-2     c-1     c-1     c-1     f-2     g-2     g-2     g-2     D-2     f-2     f-2     f-2     A-3     c-2     c-2     c-2
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       120
+inst s 50:              .       .       .       .       /       /       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       .       /       .       .       .       /       .       .       /       /       .       .       /       .       /
+inst oh 50:             .       .       /
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 96
+inst g 30:              D2      D2      d2      d2      c2      c2      A1      A1      f1      g1      g1      g1      D1      f1      f1      f1
+inst g 60:              D1      D1      d1      d1      c1      c1      A0      A0      f0      g0      g0      g0      D0      f0      f0      f0
+inst lg 20:             D0      D0      d0      d0      c0      c0      A-1     A-1     f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 24:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst s 50:              .       .       .       .       /       /       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       .       /       .       .       .       /       .       .       /       /       .       .       /       .       /
+inst oh 50:             .       .       /
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 97
+inst g 30:              A0      c1      c1      c1      f0      g0      g0      g0      D0      f0      f0      f0      A-1     c0      c0      c0
+inst g 60:              A-1     c0      c0      c0      f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1     A-2     c-1     c-1     c-1
+inst lg 20:             A-2     c-1     c-1     c-1     f-2     g-2     g-2     g-2     D-2     f-2     f-2     f-2     A-3     c-2     c-2     c-2
+inst gp 24:             .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst s 50:              .       .       .       .       /       /       .       /       .       .       .       .       .       .       /       .
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       6       .       .
+inst k 60:              /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       /
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 98
+inst g 30:              D2      D2      d2      d2      c2      c2      A1      A1      f1      g1      g1      g1      D1      f1      f1      f1
+inst g 60:              D1      D1      d1      d1      c1      c1      A0      A0      f0      g0      g0      g0      D0      f0      f0      f0
+inst lg 20:             D0      D0      d0      d0      c0      c0      A-1     A-1     f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       c0      .       .
+inst s 50:              .       .       .       .       /       .       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       /       /       /       .       /       .       .       .       /       /       .       /       /       .       /
+inst ch 40:             .       /       /       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 99
+inst g 30:              A0      c1      c1      c1      f0      g0      g0      g0      D0      f0      f0      f0      A-1     c0      c0      c0
+inst g 60:              A-1     c0      c0      c0      f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1     A-2     c-1     c-1     c-1
+inst lg 20:             A-2     c-1     c-1     c-1     f-2     g-2     g-2     g-2     D-2     f-2     f-2     f-2     A-3     c-2     c-2     c-2
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 f-1     .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       120
+inst s 50:              .       .       .       .       /       /       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       .       /       .       .       .       /       .       .       /       /       .       .       /       .       /
+inst oh 50:             .       .       /
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 100
+inst g 30:              D2      D2      d2      d2      c2      c2      A1      A1      f1      g1      g1      g1      D1      f1      f1      f1
+inst g 60:              D1      D1      d1      d1      c1      c1      A0      A0      f0      g0      g0      g0      D0      f0      f0      f0
+inst lg 20:             D0      D0      d0      d0      c0      c0      A-1     A-1     f-1     g-1     g-1     g-1     D-1     f-1     f-1     f-1
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 24:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 c0      .       .       .       .       .       .       .       .       .       D-1     .       .       d-1     .       .
+inst s 50:              .       .       .       .       /       /       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       .       /       .       .       .       /       .       .       /       /       .       .       /       .       /
+inst oh 50:             .       .       /
+inst ch 40:             /       /       .       /       /       /       /       /       /       /       /       /       /       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 101
+inst g 30:              A0      c1      c1      c1      f0      g0      g0      g0      .       D0      f0      f0      f0      A-1     c0      c0      c0
+inst g 60:              A-1     c0      c0      c0      f-1     g-1     g-1     g-1     .       D-1     f-1     f-1     f-1     A-2     c-1     c-1     c-1
+inst lg 20:             A-2     c-1     c-1     c-1     f-2     g-2     g-2     g-2     .       D-2     f-2     f-2     f-2     A-3     c-2     c-2     c-2
+inst gp 24:             .       .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b:                 f-1     .       .       .       .       .       .       .       .       .       .       f-1     .       f-1     .       f-1     g-1
+inst s 50:              .       .       .       .       /       .       .       0       0       /       /       .       .       /       .       .       .
+vol:                    .       .       .       .       .       .       .       26      .       /
+inst t 80:              .       .       .       .       .       .       .       .       .       .       .       .       .       .       6       -6      .
+inst k 60:              /
+inst oh 50:             .       .       .       .       .       /
+inst ch 40:             /       /       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       .       .       .       2x      .       /
+div
+
+- 102 (outro)
+segstart outro-1
+ghst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 30:              c0      .       c0      c0      c0      .       c0      c0      .       g0      f0      g0      g0      .       g0      .
+inst g 60:              c-1     .       c-1     c-1     c-1     .       c-1     c-1     .       g-1     f-1     g-1     g-1     .       g-1     .
+inst lg 20:             c-2     .       c-2     c-2     c-2     .       c-2     c-2     .       g-2     f-2     g-2     g-2     .       g-2     .
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              G-1     G-1     G-1     G0      .       G-1     G-1     G-1     .       G0      .       G-1     G-1     G0      g-1     g0
+inst r 140:             /       /       /       /       /       /       /       /       /       /       /       /       /       /
+vol:                    140     60      50      50      40      40      30      30      20      20      10      10      6       6
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       .
+inst oh 140:            /       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       50      .
+inst ch 40:             .       /       /       /       /       /       /       /       /       /       /       /       /       /       .       /
+inst c:                 .       .       .       .       /
+segend
+div
+seg outro-1
+div
+
+- 103
+inst g 30:              c0      .       c0      c0      c0      c0      c0      c0      .       .       f0      g0      g0      .       g0      g0
+inst g 60:              c-1     .       c-1     c-1     c-1     c-1     c-1     c-1     .       .       f-1     g-1     g-1     .       g-1     g-1
+inst lg 20:             c-2     .       c-2     c-2     c-2     c-2     c-2     c-2     .       .       f-2     g-2     g-2     .       g-2     g-2
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              f-1     f-1     f-1     f0      .       f-1     f-1     f-1     .       f0      .       f-1     g-1     g0      D-1     D0
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       /
+inst c:                 .       .       .       .       /
+div
+
+- 104
+segstart outro-3
+ghst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1     .
+ghst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst g 30:              c0      c0      .       c0      c0      c0      c0      c0      c0      g0      f0      g0      g0      .       g0      .
+inst g 60:              c-1     c-1     .       c-1     c-1     c-1     c-1     c-1     c-1     g-1     f-1     g-1     g-1     .       g-1     .
+inst lg 20:             c-2     c-2     .       c-2     c-2     c-2     c-2     c-2     c-2     g-2     f-2     g-2     g-2     .       g-2     .
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 24:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              c0      c0      c0      c1      .       c0      c0      c0      .       c1      .       D0      D0      D1      d0      d1
+inst s 50:              .       .       .       .       /       .       .       /       .       .       .       .       .       .       .       .
+inst k 60:              /       .       .       /       .       .       .       .       .       /       /       .       .       /       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       /
+inst c:                 .       .       .       .       /
+segend
+div
+seg outro-3
+div
+
+- 105
+inst av 70:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 30:              c0      .       c0      c0      c0      .       c0      c0      f0      .       D0      .       d0      .       D0      .
+inst g 60:              c-1     .       c-1     c-1     c-1     .       c-1     c-1     f-1     .       D-1     .       d-1     .       D-1     .
+inst lg 20:             c-2     .       c-2     c-2     c-2     .       c-2     c-2     f-2     .       D-2     .       d-2     .       D-2     .
+inst gp 24:             .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              A-1     A-1     A-1     A0      .       A-1     A-1     A-1     .       A0      .       A-1     f0      f0      g0      g0
+inst s 50:              .       .       .       .       /       .       .       /       .       .       /       .       .       /       .       .
+inst t 80:              .       .       .       .       .       .       .       .       6       6       .       .       .       .       6       .
+inst k 60:              /       .       /       /       .       .       /       .       .       .       .       /       /       .       .       /
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       .       /       /       /
+inst c:                 .       .       .       .       /
+div
+
+- 106
+seg outro-1
+div
+
+- 107
+inst av 70:             f-1     .       .       .       .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 30:              c0      .       c0      c0      c0      c0      c0      c0      .       .       f0      g0      g0      .       g0      g0
+inst g 60:              c-1     .       c-1     c-1     c-1     c-1     c-1     c-1     .       .       f-1     g-1     g-1     .       g-1     g-1
+inst lg 20:             c-2     .       c-2     c-2     c-2     c-2     c-2     c-2     .       .       f-2     g-2     g-2     .       g-2     g-2
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              f-1     f-1     f-1     f0      .       f-1     f-1     f-1     .       f0      .       f-1     D-1     D0      d-1     d0
+inst s 50:              .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst k 60:              /       .       .       /       .       .       .       /       .       /       /       .       .       /       /       .
+inst oh 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       /       .
+inst ch 40:             /       /       /       /       /       /       /       /       /       /       /       /       /       /       .       /
+inst c:                 .       .       .       .       /
+div
+
+- 108
+seg outro-3
+div
+
+- 109
+inst av 70:             f-1     .       .       .       .       .5      .       .       .5      .       .       .       .       .       .       .       g-1     .
+inst g 30:              c0      .       c0      .       c0      .5      c0      c0      .5      c0      f0      .       D0      .       d0      .       D0      .
+inst g 60:              c-1     .       c-1     .       c-1     .5      c-1     c-1     .5      c-1     f-1     .       D-1     .       d-1     .       D-1     .
+inst lg 20:             c-2     .       c-2     .       c-2     .5      c-2     c-2     .5      c-2     f-2     .       D-2     .       d-2     .       D-2     .
+inst gp 24:             .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 24:             A-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              A-1     A-1     A-1     A0      .       .5      A-1     A-1     .5      A-1     .       A0      .       D0      D0      .       .       .
+inst s 50:              .       .       .       .       /   /   .4      .       /   /   .4      .       .       .       .       .       .       .       .       .
+inst t 80:              .       .       .       .       .       .5      .       .       .5      .       6       6       .       -6      -6      .       .       .
+inst k 60:              /       .       .       /       .       .5      .       .       .5      /       .       .       .       .       .       .       /       .
+inst oh 50:             /       .       /       .       /       .5      .       .       .5      .       .       .       .       .       .       .       .       .
+inst ch 40:             .       /       .       /       .       .5      /       /       .5      /       /       /       /       /       .       /       /       /
+inst c:                 .       .       .       .       /
+tempo:                  .       .       .       .       6x      .5      /       6x      .5      /
+div
+
+- 110 (drums fade, the end is near)
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 44:              c0      .       c0      c0      c0      .       c0      c0      .       c0      f0      g0      g0      .       g0      .
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              c0      .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst b 80:              G-2     .       .       .       .       .       .       .       .       .       G-2     .       .       G-2     .       .
+inst r 140:             /       /       /       /       /       /       /       /       /       /       /       /       /       /
+vol:                    140     60      50      50      40      40      30      30      20      20      10      10      6       6
+inst oh 140:            /
+div
+
+- 111
+inst av 70:             f-1     .       .       .       .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 44:              c0      .       .       .       c0      .       c0      c0      .       c0      f0      g0      g0      .       g0      .
+inst gp 24:             G-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 24:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 24:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 24:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 80:              G0      .       .       .       .       .       .       .       .       .       G0      .       .       G0      .       .
+inst b 80:              f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+div
+
+- 112
+inst av 70:             f-1     .       .       c-1     .       .       .       .       .       .       .       .       .       .       g-1     .
+inst g 44:              c0      d0      c0      .       c0      .       c0      c0      .       c0      f0      g0      g0      .       g0      .
+inst gp 10:             A-1     .       .       .       .       .       .       .       .       .       A-1     .       .       A-1     .       .
+inst gp 10:             g-1     .       .       .       .       .       .       .       .       .       g-1     .       .       g-1     .       .
+inst gp 10:             D-1     .       .       .       .       .       .       .       .       .       D-1     .       .       D-1     .       .
+inst gp 10:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 50:              D0      .       .       .       .       .       .       .       .       .       D0      .       .       D0      .       .
+inst b 50:              c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+div
+
+- 113
+inst av 70:             f-1     .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst g 44:              c0      .       .       .       c0      .       c0      .       f0      .       D0      .       d0      .       D0      .
+inst gp 10:             .       .       .       .       .       .       .       .       .       .       c0      .       .       c0      .       .
+inst gp 10:             A-1     .       .       .       .       .       .       .       .       .       G-1     .       .       G-1     .       .
+inst gp 10:             f-1     .       .       .       .       .       .       .       .       .       f-1     .       .       f-1     .       .
+inst gp 10:             c-1     .       .       .       .       .       .       .       .       .       c-1     .       .       c-1     .       .
+inst b 50:              d0      .       .       .       .       .       .       .       .       .       d0      .       .       d0      .       .
+inst b 50:              A-2     .       .       .       .       .       .       .       .       .       A-2     .       .       A-2     .       .
+div
+
+- 114
+inst g 30:              c0      .       .       .       c0      .       .       .       c0      .       .       .       c0      .       .       .
+vol:                    .       .       .       .       10      .       .       .       6       .       .       .       4       .       .       .
+inst gp 6:              G-1
+inst gp 6:              f-1
+inst gp 6:              D-1
+inst gp 6:              c-1
+inst b 50:              c0
+inst b 50:              G-2
+div
+
+override        !stop@16
