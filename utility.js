@@ -165,7 +165,7 @@ function zip(arrays) {
  * @param {number} instrumentTranspose
  * @returns {number}
  */
-function pitchToSemitone(config, pitch, instrumentTranspose) {
+function pitchToSemitone(config, pitch, instrumentTranspose, trackTranspose) {
   const pitchAsFloat = parseFloat(pitch);
   if (!isNaN(pitchAsFloat)) {
     return (pitchAsFloat + config.transpose + instrumentTranspose).toFixed(2);
@@ -186,11 +186,11 @@ function pitchToSemitone(config, pitch, instrumentTranspose) {
   const delta = inSharp ? 1 : (inFlat ? -1 : 0);
 
   if (Object.keys(PITCHES).map(key => key.toLowerCase()).includes(letter)) {
-    return (PITCHES[letter.toUpperCase()] + config.transpose + instrumentTranspose + octave * PITCH_OCTAVE + delta).toFixed(2);
+    return (PITCHES[letter.toUpperCase()] + config.transpose + instrumentTranspose + octave * PITCH_OCTAVE + delta + trackTranspose).toFixed(2);
   }
 
   if (Object.keys(PITCHES).includes(letter)) {
-    return (PITCHES[letter] + config.transpose + instrumentTranspose + octave * PITCH_OCTAVE + (delta === 0 ? 1 : 0)).toFixed(2);
+    return (PITCHES[letter] + config.transpose + instrumentTranspose + octave * PITCH_OCTAVE + (delta === 0 ? 1 : 0) + trackTranspose).toFixed(2);
   }
 
   throw new TypeError('Unrecognized pitch');

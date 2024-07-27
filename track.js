@@ -278,7 +278,7 @@ class InstrumentTrack extends TrackData {
 
       let notePieces = [];
       let ghostPieces = 0;
-      zippedNotes.forEach(([instrumentConfig, pitch, volume, defaultVolume, ghostLevel], index) => {
+      zippedNotes.forEach(([instrumentConfig, pitch, volume, defaultVolume, transpose, ghostLevel], index) => {
         defaultVolume = defaultVolume === SYMBOLS.NOTES.DEFAULT ? instrumentConfig.defaultVolume : defaultVolume;
 
         if (lastVolumes[index] === '')
@@ -286,9 +286,9 @@ class InstrumentTrack extends TrackData {
 
         let semitone;
         if (pitch === SYMBOLS.NOTES.DEFAULT) {
-          semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch, instrumentConfig.defaultTranspose);
+          semitone = pitchToSemitone(this.data.config, instrumentConfig.defaultPitch, instrumentConfig.defaultTranspose, transpose);
         } else if (pitch !== SYMBOLS.NOTES.REST) {
-          semitone = pitchToSemitone(this.data.config, pitch, instrumentConfig.defaultTranspose);
+          semitone = pitchToSemitone(this.data.config, pitch, instrumentConfig.defaultTranspose, transpose);
         }
 
         let finalVolume = lastVolumes[index];
@@ -369,8 +369,8 @@ class Label extends TrackData {
 // InstrumentTracks contain InstrumentNotes.
 
 class InstrumentNotes {
-  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[], defaultVolume: string | undefined, ghostLevel: number }} */
-  data = { instrumentConfig: undefined, pitchData: [], volumeData: [], defaultVolume: undefined, ghostLevel: 0 };
+  /** @type {{ instrumentConfig: InstrumentConfig, pitchData: string[], volumeData: string[], defaultVolume: string | undefined, transpose: number, ghostLevel: number }} */
+  data = { instrumentConfig: undefined, pitchData: [], volumeData: [], defaultVolume: undefined, transpose: 0, ghostLevel: 0 };
 
   constructor() { }
 
@@ -431,6 +431,20 @@ class InstrumentNotes {
   }
 
   /**
+   * @param {number} transpose
+   */
+  setTranspose(transpose) {
+    this.data.transpose = transpose;
+  }
+
+  /**
+   * @returns {number}
+   */
+  getTranspose() {
+    return this.data.transpose;
+  }
+
+  /**
    * @param {number} ghostLevel
    */
   setGhostLevel(ghostLevel) {
@@ -457,6 +471,8 @@ class InstrumentNotes {
         Array(this.data.pitchData.length).fill(SYMBOLS.NOTES.REST) : this.data.volumeData,
 
       Array(this.data.pitchData.length).fill(this.data.defaultVolume),
+
+      Array(this.data.pitchData.length).fill(this.data.transpose),
 
       Array(this.data.pitchData.length).fill(this.data.ghostLevel)
     ]);

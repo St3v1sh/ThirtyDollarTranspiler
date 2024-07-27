@@ -285,9 +285,9 @@ function transpile(copyToClipboard = false) {
           reportError(`Invalid track at "${commands}", invalid volume "${volume}".`);
           return;
         }
-        // Check if track pitch is valid.
-        if (pitch !== undefined && !REGEX.DECIMAL_NUMBER.test(pitch) && !REGEX.PITCH_WITH_OCTAVE.test(pitch)) {
-          reportError(`Invalid track at "${commands}", invalid pitch "${pitch}".`);
+        // Check if track transpose is valid.
+        if (pitch !== undefined && !REGEX.DECIMAL_NUMBER.test(pitch)) {
+          reportError(`Invalid track at "${commands}", invalid track transpose "${pitch}".`);
           return;
         }
 
@@ -316,9 +316,9 @@ function transpile(copyToClipboard = false) {
         const lastInstrumentNotesLength = lastInstrumentNotes?.getPitchData().length || notes.length;
         instrumentNotes.setInstrumentConfig(instrument);
 
-        const defaultPitch = pitch || SYMBOLS.NOTES.DEFAULT;
-        const filteredNotes = notes.slice(0, lastInstrumentNotesLength).map(note => note === SYMBOLS.NOTES.DEFAULT ? defaultPitch : note);
-        instrumentNotes.setPitchData([...filteredNotes, ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
+        const slicedNotes = notes.slice(0, lastInstrumentNotesLength);
+        instrumentNotes.setTranspose(parseFloat(pitch || 0));
+        instrumentNotes.setPitchData([...slicedNotes, ...Array(Math.max(0, lastInstrumentNotesLength - notes.length)).fill(SYMBOLS.NOTES.REST)]);
         instrumentNotes.setDefaultVolume(volume);
         instrumentNotes.setGhostLevel(first === SYMBOLS.SONG.GHOST_INSTRUMENT ? 1 : 0);
         instrumentTrack.addInstrumentNotes(instrumentNotes);

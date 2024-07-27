@@ -66,8 +66,8 @@ Instruments configuration:
 - `start` Defines the start of the song section
 - `tempo: [value] [or .] [or /] [or multiplier] [...]` Modifies the global tempo of the entire song
 - `gvol: [value] [or .] [or /] [or multiplier] [...]` Modifies the global volume of the entire song
-- `inst [alias] ([value or /] [value or note]): [value] [or note] [or .] [or /] [...]` Defines an instrument track
-  - Only an alias is required- however you may optionally override the default volume and pitch, respectively
+- `inst [alias] ([value or /] [value]): [value] [or note] [or .] [or /] [...]` Defines an instrument track
+  - Only an alias is required- however you may optionally override the default volume and define the track transpose, respectively
 - `vol: [value] [or .] [or /] [...]` Modifies the volume of the previous instrument track
 - `clear: [.] [or /] [...]` Defines when to clear the sounds of the notes currently playing
 
