@@ -1,0 +1,1072 @@
+- References:
+- Song: https://youtu.be/Jb6Kwd8KWNg
+- Score: https://musescore.com/user/15267486/scores/6801939
+- Score: https://musescore.com/user/22285326/scores/5045374
+
+name GameCornerHGSS
+bpm 520
+flat b e
+
+- piano
+inst pi set noteblock_bit
+- piano additive sound
+inst pii set dimrainsynth
+inst pii pos 12
+- main piano
+inst pm set mariopaint_mario
+- main piano additive sound
+inst pmm set noteblock_pling
+
+- vibraphone
+inst vi set noteblock_xylophone
+- alternative vibraphone
+inst vii set noteblock_bell
+- second alternative vibraphone
+inst viii set robtopphone
+
+- bass
+inst ba set noteblock_bass
+
+- snare
+inst sn set sidestick
+inst sn pos -10
+- snare additive sound
+inst snn set hammer
+inst snn pos 1
+- kick
+inst ki set adofaikick
+- toms
+inst to set tom
+inst to pos 1
+- open hat
+inst oh set ride2
+inst oh pos 2
+- open hat extension
+inst ohh set adofaicymbal
+inst oh pos 2
+- orc hit
+inst or set ultrainstinct
+inst or vol 30
+inst or pos 4
+- orc hit optional filler
+inst orr set taiko_don
+- shaker
+inst sh set shaker
+
+- short impact string
+inst st set mariopaint_swan
+- sustained string
+inst ss set noteblock_flute
+- electric guitar
+inst eg set amogus_emergency
+inst eg pos 12.4
+- secondary guitar
+inst egg set megalovania_note
+
+start
+- 1 intro
+inst sn 40:             /       .       /       .       /       .       /       /       .       .       .       .       .
+inst snn 30:            /       .       /       .       /       .       /       /       .       .       .       .       .
+inst ki 40:             /       .       .       .       .       .       .       .       /       .       .       /       /
+inst to 60:             .       .       .       .       .       .       .       .       /       /       /       -6      -12
+inst oh 120:            /
+inst ohh:               /
+tempo:                  3x      .       .       .       .       .       /       .       2x      .       /
+div
+
+- 2
+segstart 2-4
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       .       .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       /       .       /       .       .       .       .       .       .       .
+inst oh 140:            -6
+inst ohh:               -6
+inst or:                /
+tempo:                  /
+div
+
+- 3
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       .
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       .
+inst vi 22:             g0      c-1     c0      a0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       /       .       /       .       .       .       .       .       .       /
+div
+
+- 4
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      c0
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       /       .       /       .       .       .       .       .       .       .
+inst oh 140:            -6
+inst ohh:               -6
+inst or:                /
+segend
+div
+seg 2-4
+div
+
+- 5
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       c0
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       22
+inst vi 22:             .       .       a0      c0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       f-1     .       f-1     .       g-1     .       g-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       /       .       .       /       .       .       .       .       /       .       /       .       .       .
+inst sn 26 -12:         .       .       /       .       .       /       .       .       .       .       /       .       /       .       .       .
+inst ki 40:             /       /       .       /       .       .       .       /       /       /       .       .       /       /       .       .
+inst to 60:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       -6      -12
+div
+
+- 6 verse
+segstart 6
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       c0      .       d0      .       e0      .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       e-1     .       e-1     .       e-1     .
+inst ba 80:             c-1     .       .       .       .4      c-1     .       .       .       .4      c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      /       .       /       .       .       .       .       .       .       .
+inst oh 140:            -6
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+segend
+div
+seg 6
+div
+
+- 7
+segstart 7
+inst pm 90:             f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pmm 20:            f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       .       .       .       22      .
+inst vi 22:             .       a0      c0      .       c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      c1      c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       c0      .       d0      .       b-1     .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       e-1     .       f-1     .       e-1     .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       c-1     .       c-1     .       f-1     .       f-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       /       .       .       .       /       .       .       /       .       .       .       /       .       .
+inst sn 26 -12:         .       .       /       .       .       .       /       .       .       /       .       .       .       /       .       .
+inst ki 40:             /       /       .       .       /       /       .       .       /       .       .       /       /       .       .       /
+segend
+div
+seg 7
+div
+
+- 8
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       a0      c0      .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       c0      .       d0      .       e0      .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       e-1     .       e-1     .       e-1     .
+inst ba 80:             c-1     .       .       .       .4      c-1     .       .       .       .4      c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      /       .       /       .       .       .       .       .       .       /
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+div
+
+- 9
+inst pm 90:             .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pmm 20:            .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     b0      c0      c-1     c1      c0      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       22      /       .       .       .
+inst vi 22:             .       .       a0      .       c-1     c0      g0      c-1     c0      g0      c-1     b0      c0      c-1     c1      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     b0      .       c-1     c1      .       c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       c0      .       d0      .       b-1     .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       e-1     .       f-1     .       e-1     .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       f-1     .       f-1     .       g-1     .       g-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       /       .       .       .       /       .       .       .       /       .       .       .       .       .       .
+inst sn 26 -12:         .       /       .       .       .       /       .       .       .       /       .       .       .       .       .       .
+inst ki 40:             /       .       .       /       /       .       .       /       /       .       .       /       /       /       /       /
+div
+
+- 10
+seg 6
+div
+
+- 11
+segstart 11-13
+inst pm 90:             f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pmm 20:            f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       .       .       .       22      .
+inst vi 22:             .       a0      c0      .       c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      c1      c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       c0      .       d0      .       b-1     .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       e-1     .       f-1     .       e-1     .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       /       .       .       /       .       .       .       /       .       .       .       .       .       .
+inst sn 26 -12:         .       .       /       .       .       /       .       .       .       /       .       .       .       .       .       .
+inst ki 40:             /       /       .       .       /       .       .       /       /       .       .       /       /       .       .       /
+inst to 60:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       -6      -12
+div
+
+- 12
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       .       .       .       .       c0      .       d0      .       .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       .       .       .       .       c0      .       d0      .       .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       .       .       .       .       f0      .       .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       .       .       .       .       a0      .       .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       .       .       .       .       f0      .       .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       .       .       .       .       a0      .       .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      .       .       c-1     .       .       c0      a0      c-1     .       c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       .       .       .       .       22      /       .       .       22      /       .
+inst vi 22:             .       a0      c0      .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      .       .       g0      .       .       c-1     c0      g0      .       c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       .       .       c-1     .       .       c0      .       c-1     .       c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       .       .       .       .       c0      .       d0      .       .       e0      .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       .       .       .       .       e-1     .       e-1     .       .       e-1     .
+inst ba 80:             c-1     .       .       .       .4      c-1     .       .       .       .4      c-1     .       c-1     .       .       .       .       .       .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      .       .       /       .       .       -6      /       -6      .       /       -6      /
+inst sn 34:             .       .       .       .       .4      .       .       .       .       .4      .       .       /       .       /       .       /       .       /       /       .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst snn 26:            .       .       .       .       .4      .       .       .       .       .4      .       .       /       .       /       .       /       .       /       /       .       .       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      /       .       /       .       .       .       .       .       .       .       .       .       .       .       .
+inst to 60:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       .       .       .       .       /       /       /       -6      -12
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /       .       3x      .       .       .       .       .       /       .       2x      .       /
+div
+
+- 13
+inst pi 70:             .       .       c1      .       .       c1      .       e1      .       .       d1      .       e1      .       f1      .       .
+inst pi 70:             .       .       G0      f0      .       G0      .       G0      .       .       g0      .       b0      .       c1      .       .
+inst pmm 24:            .       .       c1      .       .       c1      .       e1      .       .       d1      .       e1      .       f1      .       .
+inst pmm 24:            .       .       G0      f0      .       G0      .       G0      .       .       g0      .       b0      .       c1      .       .
+inst pi 30:             .       .       .       .       c1      .       .       c1      .       e1      .       .       d1      .       .       e1      f1
+inst pi 30:             .       .       .       .       G0      f0      .       G0      .       G0      .       .       g0      .       .       b0      c1
+inst sn 34:             .       .       .       .       .       .       .       .       .       .       .       .       /       /       /       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       .       .       .       .       /       /       /       .       .
+inst ki 40:             /
+inst to 60:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       -6      -12
+inst oh 140:            -6
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       2x      .       /
+segend
+div
+seg 11-13
+div
+
+- 14 bridge
+segstart 14-19
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       .       .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 140:            -6      .       .       .       .       .       /       .       .       .       /       .       .       .       /       .
+vol:                    .       .       .       .       .       .       80
+inst ohh:               -6
+inst or:                /
+div
+
+- 15
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       .
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       .
+inst vi 22:             g0      c-1     c0      a0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+div
+
+- 16
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      c0
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     c-1     c-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+inst or:                /
+div
+
+- 17
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      c1      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      f0      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       c0
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       22
+inst vi 22:             g0      c-1     c0      a0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       .       c-1     .       c-1     .       .       c-1     .       .       .       c-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       /       /       /
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       /       /       /
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       .       .
+div
+
+- 18 verse
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       .4      .       c-1     .       .       .4      .       c-1     .       .       c-1     .       .       c-1     c-1     c-1
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      .       /       /       .       .       .       .       .       .       /
+inst oh 80:             -6      .       .       .       .4      .       .       .       .       .4      /       .       .       .       /       .       .       .       /       .
+vol:                    140     /
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+div
+
+- 19
+inst pm 90:             f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pmm 20:            f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       .       .       .       22      .
+inst vi 22:             .       a0      c0      .       c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      c1      c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       e0      .       d0      .       c0      d0      .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       g-1     .       f-1     .       e-1     f-1     .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       .       c-1     c-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+segend
+div
+seg 14-19
+div
+
+- 20
+segstart 20
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       a0      c0      .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       .4      .       c-1     .       .       .4      .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .4      .       .       .       .       .4      /       .       .       .       /       .       .       .       /       .
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+segend
+div
+seg 20
+div
+
+- 21
+segstart 21-23
+inst pm 90:             .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pmm 20:            .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     g0      c0      c-1     f0      c0      g0      g0      .       c0
+vol:                    22      .       /       .       22      /       .       .       .       22      /       .       22      .       .       .
+inst vi 22:             .       .       a0      .       c-1     c0      g0      c-1     c0      g0      c-1     g0      c0      c-1     f0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     g0      .       c-1     f0      c0      g0      .       .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       e0      .       d0      .       e0      g0      .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       g-1     .       f-1     .       g-1     b-1     .       .
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     d-1     .       d-1     .       .       d-1     .       d-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst to 60:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       -6      -12
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+clear:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+div
+
+- 22
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      g0      .       c0      .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       .4      .       c-1     .       .       .4      .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      .       /       /       .       .       .       .       .       .       /
+inst oh 80:             -6      .       .       .       .4      .       .       .       .       .4      /       .       .       .       /       .       .       .       /       .
+vol:                    140     /
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+div
+
+- 23
+inst pm 90:             f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pmm 20:            f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       .       .       .       22      .
+inst vi 22:             .       a0      c0      .       c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      c1      c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       e0      .       e0      .       d0      .       c0      d0      .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       g-1     .       g-1     .       f-1     .       e-1     f-1     .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       .       c-1     c-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+segend
+div
+seg 21-23
+div
+
+- 24
+seg 20
+div
+
+- 25
+segstart 25-33
+inst pm 90:             f0      .       e0      .       f0      e0      .       g0      .       .       .       f0      .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst pmm 20:            f0      .       e0      .       f0      e0      .       g0      .       .       .       f0      .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst pi 80:             .       .       c1      .       .       c1      .       e1      .       .       .       d1      .       e1      .3      .       .2      f1      .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       60
+inst pi 80:             .       .       G0      .       .       G0      .       G0      .       .       .       g0      .       b0      .3      .       .2      c1      .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       60
+inst pi 40:             .       .       .       f0      .       .       .               .       .       .       .       .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst pii 24:            .       .       c1      .       .       c1      .       e1      .       .       .       d1      .       e1      .3      .       .2      f1      .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst pii 24:            .       .       G0      .       .       G0      .       G0      .       .       .       g0      .       b0      .3      .       .2      c1      .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst pii 12:            .       .       .       f0      .       .       .               .       .       .       .       .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     b0      c0      c-1     .       c1      c0      c-1     .3      .       .2      a0      .       .3      .       .       e0      .       .       .3      .       f0      .2      .       .3
+vol:                    22      .       /       .       22      /       .       22      /       .       22
+inst vi 22:             .       .       .       .        c-1     c0      g0     c-1     c0      g0      .       c-1     b0      c0      .3      .       .2      c-1     .       .3      .       .       c1      .       .       .3      .       c0      .2      .       .3
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     b0      .       c-1     .       c1      .       c-1     .3      .       .2      a0      .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst st 30:             c0      .       .       c0      .       e0      .       e0      e0      .       .       d0      .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst st 30:             e-1     .       .       e-1     .       g-1     .       g-1     g-1     .       .       f-1     .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst ss 38:             .       .       .       .       .       .       .       .       .       .       .       .       .       g-1     .3      G-1     .2      .       b-1     .3      c0      .       .       .       d0      .3      e0      .       .2      f0      .3
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       6       .3      12      .3      .       18      .3      24      .       .       .       30      .3      36      /
+inst ss 38:             .       .       .       .       .       .       .       .       .       .       .       .       .       b-2     .3      c-1     .2      .       d-1     .3      e-1     .       .       .       f-1     .3      g-1     .       .2      a-1     .3
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       6       .3      12      .3      .       18      .3      24      .       .       .       30      .3      36      /
+inst ba 80:             f-1     f-1     f-1     .       f-1     .       .       f-1     .       .       .       f-1     .       .       .3      .       .2      .       .       .3      .       .       f-1     .       f-1     .3      .       .       .2      .       .3
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       .       -6      /       -6      .3      .       .2      /       .       .3      .       .       -6      .       .       .3      .       /       .2      .       .3
+inst sn 34:             .       .       .       .       /       .       .       .       .       /       /       /       /       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       /       /       /       /       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       /       .2      .       .3
+inst to 60:             .       .       .       .       .       .       .       .       .       .       .       .       .       /       .3      .       .2      /       .       .3      .       .       -6      .       .       .3      .       -12     .2      .       .3
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       .       /       .       .       .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+tempo:                  .       .       .       .       .       .       .       .       .       2x      .       /       .       7x      .3      .       .2      .       .       .3      .       .       .       .       .       .3      .       .       .2      .       .3
+div
+
+- 26 violin section
+override !speed@520
+inst vii 30:            f0      .       c0      .       G-1     .       c0      .       G-1     .       f-1     .       G-1     .       c0      .       f0      .       c0      .       G-1     .       c0      .       G-1     .       f-1     .       G-1     .       c0      .
+inst viii 50:           g0      .       .       .       .       .       .       .       .       .       .       .       f0      .       .       .       .       .       .       .       .       .       .       .       c0      .       .       .       .       .       .       .
+inst ss 46:             g0      g0      g0      g0      g0      g0      g0      g0      g0      g0      g0      g0      f0      f0      f0      f0      f0      f0      f0      f0      f0      f0      f0      f0      c0      c0      c0      c0      c0      c0      c0      c0
+inst ss 38:             b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     G-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1
+inst ba 80:             f-1     .       .       .       .       .       f-1     .       f0      .       f-1     .       .       .       f-1     .       f-1     .       f0      .       f-1     .       .       .       f0      .       f-1     .       .       .       f0      .
+inst sh 20:             -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .
+inst sn 34:             .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst ki 40:             /       .       .       .       .       .       /       .       .       .       /       .       .       .       /       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .
+inst oh 80:             -6      .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+vol:                    140     /
+inst ohh:               -6
+inst or:                /
+tempo:                  2x
+div
+
+- 27
+inst vii 30:            g0      .       d0      .       b-1     .       d0      .       b-1     .       g-1     .       b-1     .       d0      .       g0      .       d0      .       b-1     .       d0      .       b-1     .       g-1     .       b-1     .       d0      .
+inst viii 50:           d0      .       .       .       .       .       .       .       .       .       .       .       e0      .       .       .       .       .       .       .       .       .       .       .       f0      .       .       .       .       .       .       .
+inst ss 46:             d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      e0      e0      e0      e0      e0      e0      e0      e0      e0      e0      e0      e0      f0      f0      f0      f0      f0      f0      f0      f0
+inst ss 38:             f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     g-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1
+inst ba 80:             g-1     .       .       .       .       .       g-1     .       g0      .       g-1     .       .       .       g-1     .       g-1     .       g0      .       f-1     .       f0      .       e-1     .       e0      .       d-1     .       d0      .
+inst sh 20:             -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .
+inst sn 34:             .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst ki 40:             /       .       .       .       .       .       /       .       .       .       /       .       .       .       /       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .
+inst oh 80:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+div
+
+- 28
+inst vii 30:            c0      .       g-1     .       e-1     .       g-1     .       c-1     .       e-1     .       g-1     .       c0      .       g-1     .       e-1     .       g-1     .       c0      .       e0      .       c0      .       e-1     .       b-1     .
+inst viii 50:           d0      .       .       .       .       .       .       .       .       .       .       .       c0      .       .       .       .       .       .       .       .       .       .       .       b-1     .       .       .       .       .       .       .
+inst ss 46:             d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      d0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      c0      b-1     b-1     b-1     b-1     b-1     b-1     b-1     b-1
+inst ss 38:             f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     f-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     e-1     d-1     d-1     d-1     d-1     d-1     d-1     d-1     d-1
+inst ba 80:             c-1     .       .       .       .       .       c-1     .       c0      .       c-1     .       .       .       c-1     .       c-1     .       c0      .       c-1     .       .       .       c0      .       c-1     .       .       .       c0      .
+inst sh 20:             -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .
+inst sn 34:             .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst ki 40:             /       .       .       .       .       .       /       .       .       .       /       .       .       .       /       .       /       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .
+inst oh 80:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+div
+
+- 29 guitar section
+inst eg 50:             .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       e0      f0
+inst egg 30:            .       .       .       .       .       .       .       .       .       .       .       .       f2      .       f2      .       d2      c2      b1      a1      g1      f1      e1      d1      c1      b0      a0      g0      f0      e0      d0      c0      .       .       c0      d0
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       30      .
+inst vii 30:            c0      .       a-1     .       f-1     .       a-1     .       f-1     .       c-1     .       f-1     .       a-1     .       f0      .       .       .       f0      .       .       .       c0      .       .       .       a-1     .       .       .       c0      a-1     f-1     c-1
+inst viii 50:           a-1     .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst ss 46:             a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     a-1     .       a-1     .       a-1     .       a-1     .       .       .       .       .       .       .       .       .       .       .       .       .
+inst ss 38:             c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     c-1     .       c-1     .       c-1     .       c-1     .       .       .       .       .       .       .       .       .       .       .       .       .
+inst ba 80:             f-1     .       .       .       .       .       f-1     .       f0      .       f-1     .       .       .       f-1     .       f-1     .       .       .       f0      .       .       .       f-1     .       .       .       .       .       .       .       f0      f-1     .       f0
+inst sh 20:             -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       /       .       -6      .       .       .       /       .       .       .       -6      .       .       .       /       .       .       .       -6      /       -6      /
+inst sn 34:             .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       /       /
+inst sn 26 -12:         .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       /       /
+inst ki 40:             /       .       .       .       .       .       /       .       .       .       /       .       .       .       /       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst oh 80:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .       .       .       /       .
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       2x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+div
+
+- 30
+inst eg 50:             g0      g0      g0      g0      g0      g0      f0      f0      f0      f0      f0      f0      c0      c0      c0      c0
+inst eg 50:             e0      .       .       .       .       .       d0      .       .       .       .       .       G-1     .       .       .
+inst egg 40:            e0      .       .       .       .       .       d0      .       .       .       .       .       G-1     .       .       .
+inst eg 30:             .       .       g0      .       .       .       .       .       f0      .       .       .       .       .       G-1     .
+inst egg 40:            .       .       e0      .       .       .       .       .       d0      .       .       .       .       .       G-1     .
+inst vii 30:            f0      c0      G-1     c0      G-1     f-1     G-1     c0      f0      c0      G-1     c0      G-1     f-1     G-1     c0
+inst ba 80:             f-1     .       .       f-1     f0      f-1     .       f-1     f-1     f0      f-1     .       f0      f-1     .       f0
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       /       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       /       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       /       .       /       /       .       .       /       .       .       .       .
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+inst or:                /
+inst orr:               /
+div
+
+- 31
+inst eg 50:             d0      d0      d0      d0      d0      d0      e0      e0      e0      e0      e0      e0      f0      f0      c0      d0      e0      f0
+inst eg 50:             B-1     .       .       .       .       .       B-1     .       .       .       .       .       B-1     .       .       .       .       .
+inst egg 40:            B-1     .       .       .       .       .       B-1     .       .       .       .       .       B-1     .       .       .       .       .
+inst eg 30:             .       .       d0      .       .       .       .       .       e0      .       .       .       .       .       f0      .       .       .
+inst egg 30:            .       .       B-1     .       .       .       .       .       B-1     .       .       .       .       .       B-1     .       .       .
+inst vii 30:            g0      d0      b-1     d0      b-1     g-1     b-1     d0      g0      d0      b-1     d0      b-1     g-1     b-1     .       d0      .
+inst ba 80:             g-1     .       .       g-1     g0      g-1     .       g-1     g-1     g0      f-1     f0      e-1     e0      d-1     .       d0      .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      .       /       .
+inst sn 34:             .       .       .       .       /       .       .       .       .       /       .       .       /       .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       /       .       .       /       .       .       .       .       .
+inst ki 40:             /       .       .       /       .       /       .       /       /       .       .       /       .       .       .       .       .       .
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .       .       .
+tempo:                  .       .       .       .       .       .       .       .       .       .       .       .       .       .       2x      .       .       .
+div
+
+- 32
+inst eg 50:             g0      g0      g0      g0      g0      g0      g0      g0      g0      .3      .       g0      .2      .       .       g0      .       .       .2      g0      .       .3      g0      .       g0      g0      g0
+vol:                    /       /       42      42      42      34      34      34      26      .3      .       26      .2      .       .       26      .       .       .2      18      .       .3      18      .       18      10      10
+inst eg 50:             B-1     .       .       .       .       .       .       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      .       .       .       .       .
+inst egg 40:            B-1     .       .       .       .       .       .       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      .       .       .       .       .
+inst eg  30:            .       .       g0      .       .       .       .       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      .       .       .       .       .
+inst egg 30:            .       .       B-1     .       .       .       .       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      .       .       .       .       .
+inst vii 30:            g0      d0      B-1     d0      B-1     g-1     B-1     d0      B-1     .3      .       B-1     .2      .       .       g-1     .       .       .2      B-1     .       .3      d-1     .       g-1     B-1     d0
+inst ba 80:             g-1     .       .       g-1     g0      g-1     .       g-1     g-1     .3      .       g0      .2      .       .       g-1     .       .       .2      .       .       .3      g0      .       g-1     .       g0
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      .3      .       /       .2      .       .       -6      .       .       .2      /       .       .3      -6      .       /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       /       .3      /       .       .2      /       .       .       .       /       .2      .       /       .3      .       .       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       /       .3      /       .       .2      /       .       .       .       /       .2      .       /       .3      .       .       .       .       .
+inst ki 40:             /       .       .       /       .       /       .       /       /       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      /       .       .       /       /
+inst to 60:             .       .       .       .       .       .       .       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      /       /       /       -6      -12
+inst oh 80:             .       .       /       .       .       .       /       .       .       .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      .       .       .       .       .
+tempo:                  /       .       .       .       .       .       .       .       5x      .3      .       .       .2      .       .       .       .       .       .2      .       .       .3      0.4x    .       /
+div
+
+- 33
+inst eg 80:             g0      g0      g0      .       .       b0      .       b0      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst eg 60:             B-1     B-1     B-1     .       .       d0      .       d0      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst egg 80:            B-1     B-1     B-1     .       .       d0      .       d0      .       .       .       .       d2      c2      b1      a1      g1      f1      e1      d1      c1      b0      a0      g0      f0      e0      d0      c0
+vol:                    .       .       .       .       .       .       .       .       .       .       .       .       30      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst eg 20 12:          .       g0      g0      g0      .       .       b0      .       b0      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst vii 30:            g-1     g-1     g-1     .       .       b-1     .       b-1     .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst vii 30:            d-1     d-1     d-1     .       .       f-1     .       f-1     .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst ba 80:             B-1     B-1     B-1     .       .       g-1     .       g-1     .       .       .       .       d0      .       c0      .       B-1     .       a-1     .       g-1     .       f-1     .       e-1     .       d-1     .
+inst st 60:             g0      g0      g0      .       .       b0      .       b0      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst sh 20:             /       /       /       .       .       /       .       /       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+inst sn 40:             /       /       /       .       .       .       .       .       .       .       .       .       /       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst snn 30:            /       /       /       .       .       .       .       .       .       .       .       .       /       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .
+inst ki 40:             .       .       .       .       .       /       .       /       .       .       .       .       .       .       .       .       .       .       .       .       /       .       .       .       .       .       .       .
+inst or / -12:          g0      g0      g0      .       .       b0      .       b0      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+tempo:                  /       .       .       .       .       .       .       .       .       .       .       .       4x      .       .       .       .       .       .       .       .       .       .       .       .       .       .       .
+clear:                  /       /       .       .       .       .       /       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       .       /
+segend
+div
+seg 25-33
+div
+
+- 34-36 loop setup
+seg 2-4
+div
+
+- 37
+segstart 37
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       c0
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       22
+inst vi 22:             .       .       a0      c0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       f-1     .       f-1     .       g-1     .       g-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       /       .       .       /       .       .       .       .       /       .       .       .       /       .
+inst sn 26 -12:         .       .       /       .       .       /       .       .       .       .       /       .       .       .       /       .
+inst ki 40:             /       /       .       .       /       .       .       /       /       /       .       .       /       /       .       /
+segend
+div
+seg 37
+div
+
+- 38-39
+seg 6
+seg 7
+div
+
+- 40
+segstart 40-42
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       a0      c0      .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       c0      .       d0      .       e0      .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       e-1     .       e-1     .       e-1     .
+inst ba 80:             c-1     .       .       .       .4      c-1     .       .       .       .4      c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      /       .       /       .       .       .       .       .       .       .
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+div
+
+- 41
+inst pm 90:             .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pmm 20:            .       f0      e0      .       g0      e0      .       b0      .       .       a0      .       b0      c1      .       .
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     b0      c0      c-1     c1      c0      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       22      /       .       .       .
+inst vi 22:             .       .       a0      .       c-1     c0      g0      c-1     c0      g0      c-1     b0      c0      c-1     c1      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     b0      .       c-1     c1      .       c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       c0      .       d0      .       b-1     .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       e-1     .       f-1     .       e-1     .
+inst ba 80:             c-1     .       .       c-1     .       .       c-1     .       f-1     .       f-1     .       g-1     .       g-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       /       .       .       /       .       .       .       .       /       .       .       .       /       .
+inst sn 26 -12:         .       .       /       .       .       /       .       .       .       .       /       .       .       .       /       .
+inst ki 40:             /       /       .       .       /       .       .       /       /       /       .       .       /       /       .       /
+div
+
+- 42
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       c0      .       d0      .       e0      .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       e-1     .       e-1     .       e-1     .
+inst ba 80:             c-1     .       .       .       .4      c-1     .       .       .       .4      c-1     .       c-1     .       .       .       .       .       .       .
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       .       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      /       .       /       .       .       .       .       .       .       .
+inst oh 140:            -6
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+segend
+div
+seg 40-42
+
+- 43-45
+seg 11-13
+
+- loop from 14 until end
+seg 14-19
+seg 20
+seg 21-23
+seg 20
+seg 25-33
+seg 2-4
+seg 37
+seg 6
+seg 7
+seg 40-42
+seg 11-13
+div
+
+- (1) fade out
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             .       .       .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 140:            -6      .       .       .       .       .       /       .       .       .       /       .       .       .       /       .
+vol:                    .       .       .       .       .       .       80
+inst ohh:               -6
+inst or:                /
+gvol:                   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+- (2)
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      f0      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      a0      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       .
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       .
+inst vi 22:             g0      c-1     c0      a0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     .       .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+gvol:                   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+- (3)
+inst pi 80:             .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .       g0      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       c0      .       .       c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      c0
+vol:                    22      .       /       .       22      /       .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       c-1     c0      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      .       .       c0      a0      .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       c-1     c-1     c-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+inst or:                /
+gvol:                   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+- (4)
+inst pi 80:             .       .       e0      .       .       e0      .       .       f0      .       f0      .       f0      f0      .       .
+inst pi 80:             .       .       g0      .       .       g0      .       .       b0      .       a0      .       b0      c1      .       .
+inst pi 40:             .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .       e0      .       .       f0      .       f0      .       e0      c1      .       .
+inst pii 24:            .       .       g0      .       .       g0      .       .       b0      .       a0      .       g0      f0      .       .
+inst pii 10:            .       .       .       c0      .       .       c0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c0      a0      c0      g0      a0      .       c0
+vol:                    22      .       /       .       22      /       .       22      /       22      /       22      /       .       .       22
+inst vi 22:             g0      c-1     c0      a0      c-1     c0      g0      c-1     b0      .       a0      .       g0      a0      a0      c0
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      b0      .       a0      .       g0      a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       c0      g-1     c0      f0      c0      a0      c1      f1
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       c-1     g-2     c-1     f-1     c-1     a-1     c0      f0
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       .       c-1     .       c-1     .       .       c-1     .       .       .       c-1     .
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       /       /       /
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       /       /       /
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       .       .
+gvol:                   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+- (5)
+inst pm 80:             .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pm 80:             .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pmm 20:            .       .       .       d1      .4      .       .       .       b0      .4      .       .       g0      .       .       .       .       .       .       .
+inst pmm 20:            .       .       b0      .       .4      .       .       g0      .       .4      .       .       e0      .       c0      .       d0      .       e0      .
+inst pi 80:             .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pi 80:             .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pi 40:             .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst pii 24:            .       .       e0      .       .4      .       .       e0      .       .4      .       .       e0      .       .       f0      .       .       f0      .
+inst pii 24:            .       .       g0      .       .4      .       .       g0      .       .4      .       .       g0      .       .       a0      .       .       a0      .
+inst pii 12:            .       .       .       .       .4      c0      .       .       .       .4      c0      .       .       c0      .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      .       .4      c-1     c0      g0      .       .4      c-1     c0      g0      c-1     c0      a0      c-1     c0      a0      .
+vol:                    22      .       /       .       .4      .       22      /       .       .4      .       22      /       .       22      /       .       22      /       .
+inst vi 22:             g0      a0      .       .       .4      c0      c-1     c0      .       .4      g0      c-1     c0      g0      c-1     c0      g0      c-1     c0      a0
+inst vii 26:            c-1     c0      .       .       .4      c-1     c0      .       .       .4      c-1     c0      .       c-1     c0      .       c-1     c0      a0      .
+inst st 30:             c0      .       .       .       .4      c0      .       .       .       .4      c0      .       c0      .       .       .       .       .       .       .
+inst st 30:             e-1     .       .       .       .4      e-1     .       .       .       .4      e-1     .       e-1     .       .       .       .       .       .       .
+inst ba 80:             c-1     c-1     c-1     .       .4      .       c-1     .       .       .4      .       c-1     .       .       c-1     .       .       c-1     c-1     c-1
+inst sh 20:             -6      /       -6      .       .4      /       -6      /       .       .4      6       /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       .4      .       /       .       .       .4      .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       .       .4      /       .       .       .       .4      .       /       /       .       .       .       .       .       .       /
+inst oh 80:             -6      .       .       .       .4      .       .       .       .       .4      /       .       .       .       /       .       .       .       /       .
+vol:                    140     /
+inst ohh:               -6
+inst or:                /
+tempo:                  .       .       6x      .       .4      /       .       6x      .       .4      /
+gvol:                   0.94x   0.94x   0.94x   .       .4      0.94x   0.94x   0.94x   .       .4      0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+- (6)
+inst pm 90:             f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pmm 20:            f0      .       e0      .       f0      e0      .       f0      .       .       g0      .       .       .       F0      f0
+inst pi 80:             .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pi 80:             .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pi 40:             .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst pii 24:            .       .       c1      .       .       c1      .       .       e1      .       d1      .       c1      d1      .       .
+inst pii 24:            .       .       G0      .       .       G0      .       .       b0      .       b0      .       G0      b0      .       .
+inst pii 12:            .       .       .       f0      .       .       f0      .       .       .       .       .       .       .       .       .
+inst vi 50:             c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1      c-1     a0      c0      .
+vol:                    22      .       /       .       22      /       .       22      /       .       .       .       .       .       22      .
+inst vi 22:             .       a0      c0      .       c-1     c0      g0      c-1     c0      g0      c-1     c0      b0      c-1     c0      c1
+inst vii 26:            c-1     c0      .       c-1     c0      .       c-1     c0      .       c-1     c0      c1      c-1     a0      .       .
+inst st 30:             c0      .       .       c0      .       .       c0      .       e0      .       d0      .       c0      d0      .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst st 30:             e-1     .       .       e-1     .       .       e-1     .       g-1     .       f-1     .       e-1     f-1     .       .
+vol:                    .       .       .       .       .       .       .       .       40
+inst ba 80:             c-1     c-1     c-1     .       c-1     .       .       c-1     .       .       c-1     .       .       .       c-1     c-1
+inst sh 20:             -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /       -6      /
+inst sn 34:             .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst sn 26 -12:         .       .       .       .       /       .       .       .       .       .       .       .       /       .       .       .
+inst ki 40:             /       .       .       /       .       .       .       /       /       .       .       .       .       .       .       /
+inst oh 80:             .       .       /       .       .       .       /       .       .       .       /       .       .       .       /       .
+gvol:                   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x   0.94x
+div
+
+override !stop@16
